@@ -1,0 +1,39 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: game
+  output:
+    ansi:
+      enabled: ALWAYS
+  datasource:
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/game
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8088/eureka
+      fetch-registry: true
+      register-with-eureka: true
+
+logging:
+  level:
+    com:
+      cubs3d:
+        game: DEBUG
+    org:
+      springframework:
+        web:
+          client:
+            RestTemplate: ERROR
