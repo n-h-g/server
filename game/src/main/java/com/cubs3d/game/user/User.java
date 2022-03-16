@@ -3,6 +3,8 @@ package com.cubs3d.game.user;
 import com.cubs3d.game.networking.Client;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.entity.RoomEntity;
+import com.cubs3d.game.room.entity.RoomUserEntity;
+import com.cubs3d.game.utils.Gender;
 import com.cubs3d.game.utils.Int3;
 
 import lombok.*;
@@ -33,6 +35,13 @@ public class User {
     @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false, columnDefinition = "varchar(1) default 'm'")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    private String look;
+
+
     /**
      * Rooms owned by the user
      */
@@ -43,6 +52,8 @@ public class User {
     private Client client;
 
     @Transient
-    private RoomEntity entity;
+    @Getter
+    @Setter
+    private RoomUserEntity entity;
 
 }

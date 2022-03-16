@@ -3,6 +3,8 @@ package com.cubs3d.game.networking.message.incoming.clientpackets.rooms.users;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
 import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.SendRoomData;
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.LoadUsersInRoom;
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.NewRoomUser;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
@@ -31,7 +33,10 @@ public class UserEnterRoom extends ClientPacket {
 
             Room room = roomService.getRoomById(roomId);
 
-            client.SendMessage(new SendRoomData());
+            client.SendMessage(new SendRoomData(room));
+            client.SendMessage(new LoadUsersInRoom(room));
+
+            room.getUsers().SendBroadcastMessage(new NewRoomUser(user));
 
         } catch(Exception e) {
             log.error("Error: "+ e);
