@@ -1,4 +1,4 @@
-package com.cubs3d.game.networking.message.incoming.clientpackets.handshake;
+package com.cubs3d.game.networking.message.incoming.clientpackets;
 
 import com.cubs3d.game.dto.TokenDataResponse;
 import com.cubs3d.game.networking.WebSocketClient;

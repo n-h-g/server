@@ -16,7 +16,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     private final WebSocketHandler webSocketHandler;
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler, "/cubs3d");
+        registry.addHandler(webSocketHandler, "/ballstorm")
+                .setAllowedOrigins("*");
     }
 
 }

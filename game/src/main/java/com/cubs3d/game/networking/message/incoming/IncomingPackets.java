@@ -10,6 +10,9 @@ public final class IncomingPackets {
     public static final Pair[] HeaderAndClassPairs = new Pair[] {
             new Pair(0, TestToken.class),
             new Pair(1, Handshake.class),
-    };
+            new Pair(4, PingRequest.class),
+            new Pair(6, GetAllRooms.class),
+            new Pair(7, GetMyRooms.class)
+   };
 
 }

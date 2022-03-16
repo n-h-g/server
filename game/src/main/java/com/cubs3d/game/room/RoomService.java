@@ -3,20 +3,20 @@ package com.cubs3d.game.room;
 import com.cubs3d.game.GameConfig;
 import com.cubs3d.game.user.User;
 
+import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class RoomService {
 
     /**
@@ -43,13 +43,12 @@ public class RoomService {
     private final Map<Integer, ScheduledFuture<Room>> activeRoomsTasks = new ConcurrentHashMap<>();
 
     /**
-     * @see GameConfig#getTaskScheduler
+     * @see GameConfig#taskScheduler
      */
-    @Autowired
-    @Qualifier("getTaskScheduler")
-    private TaskScheduler scheduler;
+    @Qualifier("taskScheduler")
+    private final TaskScheduler taskScheduler;
 
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
 
     /**
@@ -57,18 +56,20 @@ public class RoomService {
      *
      * @param user user that is entering the room.
      * @param roomId target room's id.
+     * @return false on failure.
      * @see Room#userEnter
      * @see #startRoomTask
      */
-    public void userEnterRoom(@NonNull User user, @NonNull Integer roomId) {
+    public boolean userEnterRoom(@NonNull User user, @NonNull Integer roomId) {
         Room room = this.getRoomById(roomId);
 
-        if (room == null) return;
+        if (room == null) return false;
 
         room.userEnter(user);
         this.startRoomTask(room);
 
         log.debug("User "+ user.getId() +" entered room "+ roomId);
+        return true;
     }
 
     /**
@@ -83,7 +84,7 @@ public class RoomService {
         if (activeRoomsTasks.containsKey(room.getId())) return;
 
         @SuppressWarnings("unchecked")
-        ScheduledFuture<Room> task = (ScheduledFuture<Room>) scheduler
+        ScheduledFuture<Room> task = (ScheduledFuture<Room>) taskScheduler
                 .scheduleAtFixedRate(room, RoomFixedRateScheduleMS);
 
         activeRoomsTasks.put(room.getId(), task);
@@ -121,7 +122,7 @@ public class RoomService {
     private void checkEmptyRoomAndScheduleUnload(@NonNull Room room) {
         if (room.usersCount() > 0) return;
 
-        scheduler.schedule(() -> {
+        taskScheduler.schedule(() -> {
             // Check again if the room is empty
             if (room.usersCount() > 0) return;
 
@@ -146,5 +147,27 @@ public class RoomService {
         return roomRepository
                 .findById(id)
                 .orElse(null);
+    }
+
+    /**
+     * Get all active rooms. A room is <i>active</i> when it's contained in <code>activeRoomsTasks</code>.
+     *
+     * @return list of active rooms.
+     * @see #activeRoomsTasks
+     */
+    public List<Room> getActiveRooms() {
+        List<Integer> activeRoomsIds = activeRoomsTasks.keySet().stream().toList();
+
+        return roomRepository.findByIds(activeRoomsIds);
+    }
+
+    /**
+     * Get the rooms owned by the given user.
+     *
+     * @param owner rooms' owner
+     * @return rooms owned by the given user.
+     */
+    public List<Room> getRoomsByOwner(User owner) {
+        return roomRepository.findByOwner(owner);
     }
 }

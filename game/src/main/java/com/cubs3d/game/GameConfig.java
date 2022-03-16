@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 public class GameConfig {
 
     @Bean
-    public TaskScheduler getTaskScheduler() {
+    public TaskScheduler taskScheduler() {
         return new ThreadPoolTaskScheduler();
     }
 
