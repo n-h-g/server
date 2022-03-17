@@ -11,13 +11,16 @@ spring:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/game
+    initialization: ALWAYS
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+        lob:
+          non_contextual_creation: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
 
 eureka:
