@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserEnterRoom extends ClientPacket {
 
-    private RoomService roomService;
+    private final RoomService roomService;
 
     public UserEnterRoom() {
         roomService = this.getBean(RoomService.class);

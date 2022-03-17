@@ -10,5 +10,11 @@ public class SendRoomData extends ServerPacket {
     public SendRoomData(Room room) throws JSONException {
         header = OutgoingPacketHeaders.SendRoomData;
 
+        body.put("id", room.getId());
+        body.put("name", room.getName());
+        body.put("layout", room.getLayout());
+        body.put("doorx", 0);
+        body.put("doory", 0);
+
     }
 }
