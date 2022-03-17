@@ -5,6 +5,7 @@ import lombok.NonNull;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -79,6 +80,20 @@ public class UserGroup implements Iterable<User> {
     public void SendBroadcastMessage(@NonNull Packet<?,?> packet) {
         for (User user : users.values()) {
             if (user == null || user.getClient() == null) continue;
+
+            user.getClient().SendMessage(packet);
+        }
+    }
+
+    /**
+     * Send a message to all users in this group except the given user.
+     *
+     * @param packet the package to be sent.
+     * @see com.cubs3d.game.networking.Client#SendMessage
+     */
+    public void SendBroadcastMessageExcept(@NonNull Packet<?,?> packet, User exceptUser) {
+        for (User user : users.values()) {
+            if (user == null || user.getClient() == null || Objects.equals(user.getId(), exceptUser.getId())) continue;
 
             user.getClient().SendMessage(packet);
         }
