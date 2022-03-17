@@ -4,13 +4,14 @@ import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.user.User;
+import lombok.NonNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoadUsersInRoom extends ServerPacket {
 
-    public LoadUsersInRoom(Room room) throws JSONException {
+    public LoadUsersInRoom(@NonNull Room room) throws JSONException {
         header = OutgoingPacketHeaders.LoadUsersInRoom;
 
         JSONArray users = new JSONArray();
