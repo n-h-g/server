@@ -13,4 +13,5 @@ public final class OutgoingPacketHeaders {
     public static final int SendRoomData = 10;
     public static final int LoadUsersInRoom = 11;
     public static final int NewRoomUser = 13;
+    public static final int RemoveRoomUser = 14;
 }
