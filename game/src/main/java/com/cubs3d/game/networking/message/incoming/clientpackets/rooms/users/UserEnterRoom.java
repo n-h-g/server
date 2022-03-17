@@ -29,14 +29,16 @@ public class UserEnterRoom extends ClientPacket {
 
             int roomId = body.getInt("id");
 
-            if(!roomService.userEnterRoom(user, roomId)) return;
+            if(!roomService.userEnterRoom(user, roomId)) {
+                log.debug("User "+ user.getId() + " entered room with id " + roomId + " but it doesn't exist.");
+            }
 
             Room room = roomService.getRoomById(roomId);
 
             client.SendMessage(new SendRoomData(room));
             client.SendMessage(new LoadUsersInRoom(room));
 
-            room.getUsers().SendBroadcastMessage(new NewRoomUser(user));
+            room.getUsers().SendBroadcastMessageExcept(new NewRoomUser(user), user);
 
         } catch(Exception e) {
             log.error("Error: "+ e);
