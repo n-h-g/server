@@ -106,15 +106,16 @@ public class RoomService {
      * @see Room#userExit
      * @see #checkEmptyRoomAndScheduleUnload
      */
-    public void userExitRoom(@NonNull User user, @NonNull Integer roomId) {
+    public boolean userExitRoom(@NonNull User user, @NonNull Integer roomId) {
         Room room = this.getRoomById(roomId);
 
-        if (room == null) return;
+        if (room == null) return false;
 
         room.userExit(user);
         this.checkEmptyRoomAndScheduleUnload(room);
 
         log.debug("User "+ user.getId() +" exited room "+ roomId);
+        return true;
     }
 
     /**

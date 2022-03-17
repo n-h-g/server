@@ -5,17 +5,18 @@ import com.cubs3d.game.networking.message.incoming.ClientPacket;
 import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.SendRoomData;
 import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.LoadUsersInRoom;
 import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.NewRoomUser;
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.RemoveRoomUser;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class UserEnterRoom extends ClientPacket {
+public class UserExitRoom extends ClientPacket {
 
     private final RoomService roomService;
 
-    public UserEnterRoom() {
+    public UserExitRoom() {
         roomService = this.getBean(RoomService.class);
     }
 
@@ -29,17 +30,14 @@ public class UserEnterRoom extends ClientPacket {
 
             int roomId = body.getInt("id");
 
-            if(!roomService.userEnterRoom(user, roomId)) {
-                log.debug("User "+ user.getId() + " entered room with id " + roomId + " but it doesn't exist.");
+            if(!roomService.userExitRoom(user, roomId)) {
+                log.debug("User "+ user.getId() + " exited room with id " + roomId + " but it doesn't exist.");
                 return;
             }
 
             Room room = roomService.getRoomById(roomId);
 
-            client.SendMessage(new SendRoomData(room));
-            client.SendMessage(new LoadUsersInRoom(room));
-
-            room.getUsers().SendBroadcastMessageExcept(new NewRoomUser(user), user);
+            room.getUsers().SendBroadcastMessage(new RemoveRoomUser(user));
 
         } catch(Exception e) {
             log.error("Error: "+ e);
