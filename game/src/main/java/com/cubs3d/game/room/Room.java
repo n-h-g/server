@@ -6,6 +6,8 @@ import com.cubs3d.game.room.layout.RoomLayout;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserGroup;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 @Setter
 @Entity
+@Slf4j
 @Table(name = "rooms")
 public class Room implements Runnable {
 
@@ -42,7 +45,6 @@ public class Room implements Runnable {
     @Setter(AccessLevel.NONE)
     private final UserGroup users;
 
-
     @Transient
     private AtomicInteger entityIds;
 
@@ -54,6 +56,7 @@ public class Room implements Runnable {
     public Room() {
         this.users = new UserGroup();
         this.entities = new ConcurrentHashMap<>();
+        this.entityIds = new AtomicInteger();
     }
 
     public Room(String name, User owner, String layout) {
@@ -61,8 +64,6 @@ public class Room implements Runnable {
 
         this.name = name;
         this.owner = owner;
-
-        this.entityIds = new AtomicInteger();
 
         this.setLayout(layout);
     }
@@ -73,10 +74,12 @@ public class Room implements Runnable {
      * @param user the user entering the room.
      */
     public void userEnter(@NonNull User user) {
-        this.users.add(user);
+        users.add(user);
+
         Integer entityId = this.entityIds.getAndIncrement();
         RoomEntity entity = new RoomUserEntity(entityId, this, user);
         this.entities.putIfAbsent(entityId, entity);
+
         // TODO: set user position and rotation according to door
     }
 
@@ -86,7 +89,13 @@ public class Room implements Runnable {
      * @param user the user exiting the room.
      */
     public void userExit(@NonNull User user) {
-        this.users.remove(user.getId());
+        users.remove(user.getId());
+
+        RoomEntity entity = user.getEntity();
+
+        if (entity == null) return;
+
+        entities.remove(entity.getId());
     }
 
     /**
