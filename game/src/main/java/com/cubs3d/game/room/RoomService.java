@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledFuture;
 
 @Slf4j
@@ -40,7 +41,12 @@ public class RoomService {
      * @see #startRoomTask
      * @see #checkEmptyRoomAndScheduleUnload
      */
-    private final Map<Integer, ScheduledFuture<Room>> activeRoomsTasks = new ConcurrentHashMap<>();
+    private final Map<Integer, ScheduledFuture<?>> activeRoomsTasks = new ConcurrentHashMap<>();
+
+    /**
+     * Map of active rooms.
+     */
+    private final Map<Integer, Room> activeRooms = new ConcurrentHashMap<>();
 
     /**
      * @see GameConfig#taskScheduler
@@ -84,10 +90,10 @@ public class RoomService {
         if (activeRoomsTasks.containsKey(room.getId())) return;
 
         @SuppressWarnings("unchecked")
-        ScheduledFuture<Room> task = (ScheduledFuture<Room>) taskScheduler
-                .scheduleAtFixedRate(room, RoomFixedRateScheduleMS);
+        ScheduledFuture<?> task = taskScheduler.scheduleAtFixedRate(room, RoomFixedRateScheduleMS);
 
         activeRoomsTasks.put(room.getId(), task);
+        activeRooms.putIfAbsent(room.getId(), room);
 
         log.debug("Task started for room "+ room.getId());
     }
@@ -127,7 +133,9 @@ public class RoomService {
             if (room.usersCount() > 0) return;
 
             // Remove the room from activeRoomsTasks
-            ScheduledFuture<Room> task = activeRoomsTasks.remove(room.getId());
+            ScheduledFuture<?> task = activeRoomsTasks.remove(room.getId());
+
+            activeRooms.remove(room.getId());
 
             // Stop the room's task
             if (task.cancel(true)) {
@@ -144,9 +152,9 @@ public class RoomService {
      * @return the room the specified id, or null if it doesn't exist.
      */
     public Room getRoomById(Integer id) {
-        return roomRepository
-                .findById(id)
-                .orElse(null);
+        return activeRooms.containsKey(id)
+            ? activeRooms.get(id)
+            : roomRepository.findById(id).orElse(null);
     }
 
     /**
@@ -156,9 +164,7 @@ public class RoomService {
      * @see #activeRoomsTasks
      */
     public List<Room> getActiveRooms() {
-        List<Integer> activeRoomsIds = activeRoomsTasks.keySet().stream().toList();
-
-        return roomRepository.findByIds(activeRoomsIds);
+        return activeRooms.values().stream().toList();
     }
 
     /**
