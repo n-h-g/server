@@ -17,8 +17,8 @@ public class NewRoomUser extends ServerPacket {
         body.put("y", 1);
         body.put("z", 1);
         body.put("rot", 1);
-        body.put("look", user.getLook());
-        body.put("gender", Character.toString(user.getGender().toChar()));
+        body.put("look", 1);
+        body.put("gender", user.getGender());
 
     }
 }

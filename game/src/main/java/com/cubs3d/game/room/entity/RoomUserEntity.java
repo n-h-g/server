@@ -1,8 +1,10 @@
 package com.cubs3d.game.room.entity;
 
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.UpdatePosition;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.user.User;
 import lombok.Getter;
+import org.json.JSONException;
 
 public class RoomUserEntity extends RoomEntity {
 
@@ -13,5 +15,15 @@ public class RoomUserEntity extends RoomEntity {
         super(id, room);
 
         this.user = user;
+        user.setEntity(this);
+    }
+
+    @Override
+    protected void onPositionSet() {
+        try {
+            getRoom().getUsers().SendBroadcastMessage(new UpdatePosition(this.getPosition(), this.getBodyRotation()));
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }

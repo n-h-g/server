@@ -43,7 +43,7 @@ public class User {
     @Type(type = "pgsql_enum")
     private Gender gender;
 
-    @Column(nullable = false, columnDefinition = "varchar(255) default 'hd-185-10.hr-3163-61.ch-3030-92.lg-275-110'")
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'hd-180-1.ch-255-66.lg-280-110.sh-305-62.ha-1012-110.hr-828-61'")
     private String look;
 
 

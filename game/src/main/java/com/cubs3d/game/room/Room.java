@@ -80,6 +80,7 @@ public class Room implements Runnable {
         RoomEntity entity = new RoomUserEntity(entityId, this, user);
         this.entities.putIfAbsent(entityId, entity);
 
+
         // TODO: set user position and rotation according to door
     }
 

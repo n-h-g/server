@@ -7,6 +7,7 @@ import lombok.NonNull;
 import org.json.JSONException;
 
 public class RemoveRoomUser extends ServerPacket {
+
     public RemoveRoomUser(@NonNull User user) throws JSONException {
         header = OutgoingPacketHeaders.RemoveRoomUser;
 

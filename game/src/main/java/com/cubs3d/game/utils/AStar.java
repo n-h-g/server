@@ -1,16 +1,19 @@
 package com.cubs3d.game.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.*;
 
+@Slf4j
 public class AStar {
     private static final int OrthogonalMovementCost = 10;
     private static final int DiagonalMovementCost = 14;
 
-    private final List<Int3> _openTiles;
-    private final List<Int3> _closedTiles;
-    private final Map<Int3, Integer> _gScores;
-    private final Map<Int3, Integer> _hScores;
-    private final Map<Int3, Int3> _cameFrom;
+    private final List<Int2> _openTiles;
+    private final List<Int2> _closedTiles;
+    private final Map<Int2, Integer> _gScores;
+    private final Map<Int2, Integer> _hScores;
+    private final Map<Int2, Int2> _cameFrom;
 
     private final boolean _isDiagonalMovementAllowed;
 
@@ -27,14 +30,16 @@ public class AStar {
         this(false);
     }
 
-    public List<Int3> findPath(Int3 start, Int3 goal) {
+    public List<Int2> findPath(Int2 start, Int2 goal) {
         _gScores.put(start, 0);
         _hScores.put(start, CalculateHeuristicScore(start, goal));
 
         _openTiles.add(start);
 
         while (_openTiles.size() != 0) {
-            Int3 current = findLowestFScore();
+            Int2 current = findLowestFScore();
+
+            if (current == null) return null;
 
             _openTiles.remove(current);
             _closedTiles.add(current);
@@ -43,14 +48,14 @@ public class AStar {
                 return ReconstructPath(current);
             }
 
-            List<Int3> adjTiles = GetAdjacentNodes(current);
+            List<Int2> adjTiles = GetAdjacentNodes(current);
 
-            for (Int3 adj : adjTiles) {
+            for (Int2 adj : adjTiles) {
                 if (_closedTiles.contains(adj)) continue;
 
                 int gScoreTentatives = CalculateGScore(adj, current);
 
-                int gScoreValue = _gScores.get(adj);
+                int gScoreValue = _gScores.getOrDefault(adj, 0);
 
                 if (_openTiles.contains(adj) && gScoreTentatives >= gScoreValue) continue;
 
@@ -67,13 +72,13 @@ public class AStar {
         return null;
     }
 
-    private Int3 findLowestFScore() {
+    private Int2 findLowestFScore() {
         int lowestScore = Integer.MAX_VALUE;
-        Int3 lowestScoreVector = _openTiles.get(0);
+        Int2 lowestScoreVector = _openTiles.get(0);
 
-        for (Int3 pos : _openTiles) {
-            int gScore = _gScores.get(pos);
-            int hScore = _hScores.get(pos);
+        for (Int2 pos : _openTiles) {
+            int gScore = _gScores.getOrDefault(pos, Integer.MAX_VALUE / 2);
+            int hScore = _hScores.getOrDefault(pos, Integer.MAX_VALUE / 2);
 
             int fScore = gScore + hScore;
 
@@ -86,23 +91,27 @@ public class AStar {
         return lowestScoreVector;
     }
 
-    private int CalculateGScore(Int3 current, Int3 previous) {
-        int prevScore = _gScores.get(previous);
+    public void addClosedTile(Int2 tile) {
+        this._closedTiles.add(tile);
+    }
+
+    private int CalculateGScore(Int2 current, Int2 previous) {
+        int prevScore = _gScores.getOrDefault(previous, Integer.MAX_VALUE / 2);
 
         return prevScore + (IsDiagonalMovement(current, previous) ? DiagonalMovementCost : OrthogonalMovementCost);
     }
 
-    private static boolean IsDiagonalMovement(Int3 current, Int3 previous) {
-        return Objects.equals(previous, new Int3(current.getX() + 1, current.getY(), current.getZ() + 1))
-                || Objects.equals(previous, new Int3(current.getX() + 1, current.getY(), current.getZ() - 1))
-                || Objects.equals(previous, new Int3(current.getX() - 1, current.getY(), current.getZ() + 1))
-                || Objects.equals(previous, new Int3(current.getX() - 1, current.getY(), current.getZ() - 1));
+    private static boolean IsDiagonalMovement(Int2 current, Int2 previous) {
+        return Objects.equals(previous, new Int2(current.getX() + 1, current.getY() + 1))
+                || Objects.equals(previous, new Int2(current.getX() + 1, current.getY() - 1))
+                || Objects.equals(previous, new Int2(current.getX() - 1, current.getY() + 1))
+                || Objects.equals(previous, new Int2(current.getX() - 1, current.getY() - 1));
     }
 
 
-    private static int CalculateHeuristicScore(Int3 current, Int3 goal) {
+    private static int CalculateHeuristicScore(Int2 current, Int2 goal) {
         int dx = Math.abs((current.getX() - goal.getX()));
-        int dy = Math.abs((current.getZ() - goal.getZ()));
+        int dy = Math.abs((current.getY() - goal.getY()));
 
         int diagonal, orthogonal;
 
@@ -118,32 +127,32 @@ public class AStar {
     }
 
 
-    private List<Int3> ReconstructPath(Int3 current) {
+    private List<Int2> ReconstructPath(Int2 current) {
         if (!_cameFrom.containsKey(current)) return new ArrayList<>();
 
-        Int3 prev = _cameFrom.get(current);
+        Int2 prev = _cameFrom.get(current);
 
-        List<Int3> path = ReconstructPath(prev);
+        List<Int2> path = ReconstructPath(prev);
         path.add(current);
 
         return path;
     }
 
-    private List<Int3> GetAdjacentNodes(Int3 current) {
-        List<Int3> adj = new ArrayList<>();
+    private List<Int2> GetAdjacentNodes(Int2 current) {
+        List<Int2> adj = new ArrayList<>();
 
-        adj.add(new Int3(current.getX() - 1, current.getY(), current.getZ()));
-        adj.add(new Int3(current.getX() + 1, current.getY(), current.getZ()));
-        adj.add(new Int3(current.getX(), current.getY(),current.getZ() - 1));
-        adj.add(new Int3(current.getX(), current.getY(),current.getZ() + 1));
+        adj.add(new Int2(current.getX() - 1, current.getY()));
+        adj.add(new Int2(current.getX() + 1, current.getY()));
+        adj.add(new Int2(current.getX(), current.getY() - 1));
+        adj.add(new Int2(current.getX(), current.getY() + 1));
 
 
         if (!_isDiagonalMovementAllowed) return adj;
 
-        adj.add(new Int3(current.getX() + 1, current.getY(),current.getZ() + 1));
-        adj.add(new Int3(current.getX() + 1, current.getY(),current.getZ() - 1));
-        adj.add(new Int3(current.getX() - 1, current.getY(),current.getZ() + 1));
-        adj.add(new Int3(current.getX() - 1, current.getY(),current.getZ() - 1));
+        adj.add(new Int2(current.getX() + 1,current.getY() + 1));
+        adj.add(new Int2(current.getX() + 1,current.getY() - 1));
+        adj.add(new Int2(current.getX() - 1,current.getY() + 1));
+        adj.add(new Int2(current.getX() - 1,current.getY() - 1));
 
         return adj;
     }
