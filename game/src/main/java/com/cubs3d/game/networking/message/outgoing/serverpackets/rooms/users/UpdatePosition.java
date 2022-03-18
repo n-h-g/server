@@ -16,6 +16,7 @@ public class UpdatePosition extends ServerPacket {
         body.put("userId", user.getId()); //TODO  body.put("id", entity.getId());
         body.put("x", entity.getPosition().getX());
         body.put("y", entity.getPosition().getY());
+        body.put("z", entity.getPosition().getZ());
         body.put("rot", entity.getBodyRotation().getValue());
     }
 }

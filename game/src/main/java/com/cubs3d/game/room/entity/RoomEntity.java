@@ -3,6 +3,7 @@ package com.cubs3d.game.room.entity;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.layout.RoomLayout;
 import com.cubs3d.game.utils.Int2;
+import com.cubs3d.game.utils.Int3;
 import com.cubs3d.game.utils.Rotation;
 import com.cubs3d.game.utils.pathfinder.AStar;
 import com.cubs3d.game.utils.pathfinder.Tile;
@@ -21,11 +22,7 @@ public abstract class RoomEntity {
 
     @Getter
     @Setter
-    private Int2 position;
-
-    @Getter
-    @Setter
-    private Int2 nextPosition;
+    private Int3 position;
 
     @Getter
     @Setter
@@ -52,7 +49,7 @@ public abstract class RoomEntity {
         this.calculatedPath = new LinkedList<>();
         this.aStar = new AStar(true);
 
-        this.position = new Int2(0,0);
+        this.position = new Int3(0,0, 0);
         this.destination = new Int2(0,0);
     }
 
@@ -63,10 +60,9 @@ public abstract class RoomEntity {
     protected void move() {
         if (calculatedPath == null || calculatedPath.isEmpty()) return;
 
-        nextPosition = calculatedPath.poll().getPosition().ToInt2XY();
+        Int3 nextPosition = calculatedPath.poll().getPosition();
 
-        log.error(nextPosition.toString());
-        bodyRotation = Rotation.CalculateRotation(position, nextPosition);
+        bodyRotation = Rotation.CalculateRotation(position.ToInt2XY(), nextPosition.ToInt2XY());
 
         position = nextPosition;
         onPositionSet();
@@ -75,7 +71,6 @@ public abstract class RoomEntity {
     protected abstract void onPositionSet();
 
     public void calculatePath() {
-        room.setRoomLayout(new RoomLayout(room.getLayout()));
         RoomLayout layout = room.getRoomLayout();
 
         calculatedPath = aStar.findPath(

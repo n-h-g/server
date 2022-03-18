@@ -118,6 +118,13 @@ public class Room implements Runnable {
         this.layout = layout;
         this.roomLayout = new RoomLayout(layout);
     }
+z
+    public RoomLayout getRoomLayout() {
+        if (roomLayout == null) {
+            roomLayout = new RoomLayout(layout);
+        }
+        return roomLayout;
+    }
 
     @Override
     public void run() {
