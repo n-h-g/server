@@ -21,7 +21,7 @@ public class RoomUserEntity extends RoomEntity {
     @Override
     protected void onPositionSet() {
         try {
-            getRoom().getUsers().SendBroadcastMessage(new UpdatePosition(this.getPosition(), this.getBodyRotation()));
+            user.getClient().SendMessage(new UpdatePosition(user, this));
         } catch(Exception e) {
             e.printStackTrace();
         }

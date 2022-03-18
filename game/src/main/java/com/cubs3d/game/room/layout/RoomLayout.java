@@ -1,15 +1,23 @@
 package com.cubs3d.game.room.layout;
 
 import com.cubs3d.game.utils.Int3;
+import com.cubs3d.game.utils.pathfinder.Layout;
+import com.cubs3d.game.utils.pathfinder.Tile;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.stream.Stream;
 
 @Slf4j
-public class RoomLayout {
+public class RoomLayout implements Layout {
 
     private Tile[][] tiles;
 
+    @Getter
+    private int mapSizeX;
+
+    @Getter
+    private int mapSizeY;
 
     /**
      *
@@ -51,26 +59,26 @@ public class RoomLayout {
 
         if (layoutRows.length <= 0) throw new IllegalArgumentException("Wrong layout syntax");
 
-        int mapSizeZ = Stream.of(layoutRows).map(String::length).max(Integer::compareTo).get();
-        int mapSizeX = layoutRows.length;
+        mapSizeY = Stream.of(layoutRows).map(String::length).max(Integer::compareTo).get();
+        mapSizeX = layoutRows.length;
 
-        this.tiles = new Tile[mapSizeX][mapSizeZ];
+        this.tiles = new Tile[mapSizeX][mapSizeY];
 
         for (int x = 0; x < mapSizeX; x++) {
-            for (int z = 0; z < mapSizeZ; z++) {
+            for (int y = 0; y < mapSizeY; y++) {
                 char tile;
                 try {
-                    tile = layoutRows[x].substring(z, z + 1).trim().toUpperCase().charAt(0);
+                    tile = layoutRows[x].substring(y, y + 1).trim().toUpperCase().charAt(0);
                 } catch (IndexOutOfBoundsException ignored) {
                     tile = '0';
                 }
 
                 // height 0 represent empty tile
-                int y = Character.isAlphabetic(tile)
+                int z = Character.isAlphabetic(tile)
                         ? 10 + tile - 'A'
                         : Integer.parseInt(Character.toString(tile));
 
-                this.tiles[x][z] = new Tile(new Int3(x,y,z));
+                this.tiles[x][y] = new Tile(new Int3(x,y,z));
             }
         }
     }
@@ -79,12 +87,12 @@ public class RoomLayout {
      * Get the tile on the given position on this layout.
      *
      * @param x position
-     * @param z position
-     * @return the tile on the given x and z position.
-     * @throws IndexOutOfBoundsException when x or z are greater than the map size
+     * @param y position
+     * @return the tile on the given x and y position.
+     * @throws IndexOutOfBoundsException when x or y are greater than the map size
      */
-    public Tile getTile(int x, int z) throws IndexOutOfBoundsException {
-        return tiles[x][z];
+    public Tile getTile(int x, int y) throws IndexOutOfBoundsException {
+        return tiles[x][y];
     }
 
 
