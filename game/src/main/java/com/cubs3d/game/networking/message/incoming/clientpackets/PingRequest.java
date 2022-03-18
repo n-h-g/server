@@ -27,10 +27,9 @@ public class PingRequest extends ClientPacket {
         try {
             WebSocketClient wsClient = (WebSocketClient) client;
 
-            String doLogin = "true";
+            boolean doLogin = wsClient.getUser() == null;
 
-
-            ((WebSocketClient) client).SendMessage(new PongResponse(doLogin));
+            ((WebSocketClient) client).sendMessage(new PongResponse(doLogin));
 
         } catch (Exception e) {
             log.error("Error: "+ e);

@@ -37,7 +37,7 @@ public class UserExitRoom extends ClientPacket {
 
             Room room = roomService.getRoomById(roomId);
 
-            room.getUsers().SendBroadcastMessage(new RemoveRoomUser(user));
+            room.getUsers().sendBroadcastMessage(new RemoveRoomUser(user));
 
         } catch(Exception e) {
             log.error("Error: "+ e);

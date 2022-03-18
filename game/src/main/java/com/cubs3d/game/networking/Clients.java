@@ -35,7 +35,7 @@ public class Clients {
 
     public void SendBroadcastMessage(@NonNull Packet<?,?> packet) {
         for (Client client : clients.values()) {
-            client.SendMessage(packet);
+            client.sendMessage(packet);
         }
     }
 

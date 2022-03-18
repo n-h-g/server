@@ -36,10 +36,10 @@ public class UserEnterRoom extends ClientPacket {
 
             Room room = roomService.getRoomById(roomId);
 
-            client.SendMessage(new SendRoomData(room));
-            client.SendMessage(new LoadUsersInRoom(room));
+            client.sendMessage(new SendRoomData(room));
+            client.sendMessage(new LoadUsersInRoom(room));
 
-            room.getUsers().SendBroadcastMessageExcept(new NewRoomUser(user), user);
+            room.getUsers().sendBroadcastMessageExcept(new NewRoomUser(user), user);
 
         } catch(Exception e) {
             log.error("Error: "+ e);

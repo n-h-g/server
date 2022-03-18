@@ -13,11 +13,11 @@ public class NewRoomUser extends ServerPacket {
 
         body.put("id", user.getId());
         body.put("name", user.getUsername());
-        body.put("x", 1);
-        body.put("y", 1);
-        body.put("z", 1);
-        body.put("rot", 1);
-        body.put("look", 1);
+        body.put("x", user.getEntity().getPosition().getX());
+        body.put("y", user.getEntity().getPosition().getY());
+        body.put("z", user.getEntity().getPosition().getZ());
+        body.put("rot", user.getEntity().getBodyRotation());
+        body.put("look", user.getLook());
         body.put("gender", user.getGender());
 
     }

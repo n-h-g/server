@@ -75,13 +75,13 @@ public class UserGroup implements Iterable<User> {
      * Send a message to all users in this group.
      *
      * @param packet the package to be sent.
-     * @see com.cubs3d.game.networking.Client#SendMessage 
+     * @see com.cubs3d.game.networking.Client#sendMessage
      */
-    public void SendBroadcastMessage(@NonNull Packet<?,?> packet) {
+    public void sendBroadcastMessage(@NonNull Packet<?,?> packet) {
         for (User user : users.values()) {
             if (user == null || user.getClient() == null) continue;
 
-            user.getClient().SendMessage(packet);
+            user.getClient().sendMessage(packet);
         }
     }
 
@@ -89,13 +89,13 @@ public class UserGroup implements Iterable<User> {
      * Send a message to all users in this group except the given user.
      *
      * @param packet the package to be sent.
-     * @see com.cubs3d.game.networking.Client#SendMessage
+     * @see com.cubs3d.game.networking.Client#sendMessage
      */
-    public void SendBroadcastMessageExcept(@NonNull Packet<?,?> packet, User exceptUser) {
+    public void sendBroadcastMessageExcept(@NonNull Packet<?,?> packet, User exceptUser) {
         for (User user : users.values()) {
             if (user == null || user.getClient() == null || Objects.equals(user.getId(), exceptUser.getId())) continue;
 
-            user.getClient().SendMessage(packet);
+            user.getClient().sendMessage(packet);
         }
     }
 

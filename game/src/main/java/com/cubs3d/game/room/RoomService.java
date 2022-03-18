@@ -118,6 +118,12 @@ public class RoomService {
         return true;
     }
 
+    public boolean userExitRoom(@NonNull User user) {
+        if (user.getEntity() == null) return false;
+
+        return userExitRoom(user, user.getEntity().getRoom().getId());
+    }
+
     /**
      * Check the room: if it doesn't contain users after '<code>SecondsBeforeEmptyRoomGetsUnloaded</code>' seconds
      * it will check again that it's not empty then stop the room task.

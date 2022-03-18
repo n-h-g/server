@@ -1,12 +1,19 @@
 package com.cubs3d.game.networking;
 
 import com.cubs3d.game.networking.message.Packet;
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.RemoveRoomUser;
+import com.cubs3d.game.room.Room;
+import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
 
+import com.cubs3d.game.utils.ApplicationContextUtils;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -16,15 +23,15 @@ public class WebSocketClient implements Client {
 
     private final WebSocketSession session;
 
-    @Getter @Setter
-    private User user;
-
-    public WebSocketClient(@NonNull WebSocketSession session) {
+    public WebSocketClient(WebSocketSession session) {
         this.session = session;
     }
 
+    @Getter @Setter
+    private User user;
+
     @Override
-    public void SendMessage(@NonNull Packet<?,?> packet) {
+    public void sendMessage(@NonNull Packet<?,?> packet) {
         try {
             session.sendMessage(new TextMessage(packet.toString()));
         } catch (IOException e) {
@@ -35,8 +42,8 @@ public class WebSocketClient implements Client {
     @Override
     public void disconnect() {
         try {
-            session.close();
             this.unlinkUser();
+            session.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,6 +56,10 @@ public class WebSocketClient implements Client {
 
     private void unlinkUser() {
         if (user == null) return;
+
+        RoomService roomService = ApplicationContextUtils.getApplicationContext().getBean(RoomService.class);
+        roomService.userExitRoom(user);
+
         user.setClient(null);
         user = null;
     }

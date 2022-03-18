@@ -9,7 +9,7 @@ public interface Client {
      *
      * @param packet packet that contains the message.
      */
-    void SendMessage(Packet<?,?> packet);
+    void sendMessage(Packet<?,?> packet);
 
     /**
      * Disconnect this client.

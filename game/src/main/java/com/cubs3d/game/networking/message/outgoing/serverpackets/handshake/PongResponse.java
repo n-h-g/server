@@ -7,7 +7,7 @@ import org.json.JSONException;
 
 public class PongResponse extends ServerPacket {
 
-    public PongResponse(@NonNull String message) throws JSONException {
+    public PongResponse(boolean message) throws JSONException {
         header = OutgoingPacketHeaders.PongResponse;
 
         body.put("login", message);

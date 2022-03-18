@@ -21,7 +21,7 @@ public class GetAllRooms extends ClientPacket {
         try {
             List<Room> rooms = roomService.getActiveRooms();
 
-            client.SendMessage(new SendAllRooms(rooms));
+            client.sendMessage(new SendAllRooms(rooms));
 
         } catch (Exception e) {
             log.error("Error: "+ e);

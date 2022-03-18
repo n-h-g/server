@@ -1,13 +1,11 @@
 package com.cubs3d.game.networking.message.incoming.clientpackets;
 
 import com.cubs3d.game.dto.TokenDataResponse;
-import com.cubs3d.game.dto.TokenResponse;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
 import com.cubs3d.game.networking.message.outgoing.serverpackets.handshake.LoginMessageCheck;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserService;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,15 +27,15 @@ public class Handshake extends ClientPacket {
         try {
             WebSocketClient wsClient = (WebSocketClient) client;
 
-            String jwtToken = body.getString("sso");
+            String id = body.getString("sso");
 
-            TokenDataResponse tokenData = this.getTokenData(jwtToken);
+            /*TokenDataResponse tokenData = this.getTokenData(jwtToken);
 
             if (tokenData == null) return;
 
-            log.error(tokenData.username());
+            log.error(tokenData.username());*/
 
-            User user = userService.getUserByUsername(tokenData.username());
+            User user = userService.getUserById(Integer.parseInt(id));
 
             if (!this.tryLinkUserAndClient(user, wsClient)) {
                 log.error("Error: Can't link user and client, user is null.");
@@ -45,7 +43,7 @@ public class Handshake extends ClientPacket {
                 return;
             }
 
-            client.SendMessage(new LoginMessageCheck(true));
+            client.sendMessage(new LoginMessageCheck(true));
 
 
         } catch (Exception e) {

@@ -28,7 +28,7 @@ public class TestToken extends ClientPacket {
 
             if (token == null) return;
 
-            client.SendMessage(new TestTokenResponse(token.token()));
+            client.sendMessage(new TestTokenResponse(token.token()));
 
         } catch (Exception e) {
             log.error("Error: " + e);

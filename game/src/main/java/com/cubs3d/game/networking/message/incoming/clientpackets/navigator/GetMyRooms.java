@@ -28,7 +28,7 @@ public class GetMyRooms extends ClientPacket {
 
             List<Room> rooms = roomService.getRoomsByOwner(user);
 
-            client.SendMessage(new SendMyRooms(rooms));
+            client.sendMessage(new SendMyRooms(rooms));
 
         } catch (Exception e) {
             log.error("Error: "+ e);

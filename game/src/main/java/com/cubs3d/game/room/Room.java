@@ -1,5 +1,6 @@
 package com.cubs3d.game.room;
 
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.RemoveRoomUser;
 import com.cubs3d.game.room.entity.RoomEntity;
 import com.cubs3d.game.room.entity.RoomUserEntity;
 import com.cubs3d.game.room.layout.RoomLayout;
@@ -7,6 +8,7 @@ import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserGroup;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -97,6 +99,14 @@ public class Room implements Runnable {
         if (entity == null) return;
 
         entities.remove(entity.getId());
+
+        try {
+            users.sendBroadcastMessageExcept(new RemoveRoomUser(user), user);
+        } catch (JSONException e) {
+            log.error("Error while sending RemoveRoomUser packet.");
+        }
+
+        user.setEntity(null);
     }
 
     /**
@@ -118,7 +128,7 @@ public class Room implements Runnable {
         this.layout = layout;
         this.roomLayout = new RoomLayout(layout);
     }
-z
+
     public RoomLayout getRoomLayout() {
         if (roomLayout == null) {
             roomLayout = new RoomLayout(layout);

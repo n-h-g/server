@@ -24,18 +24,17 @@ public class AStar {
     private Heuristic getHeuristic() {
         return (start, target, current) -> {
 
-            int dx = target.getPosition().getX() - current.getPosition().getX();
-            int dy = target.getPosition().getY() - current.getPosition().getY();
+            int dx = Math.abs(target.getPosition().getX() - current.getPosition().getX());
+            int dy = Math.abs(target.getPosition().getY() - current.getPosition().getY());
 
             if (isDiagonalMovementAllowed) {
-                return Math.sqrt(dx * dx + dy * dy);
+                // Diagonal distance
+                return OrthogonalMovementCost * (dx + dy)
+                        + (DiagonalMovementCost - 2 * OrthogonalMovementCost) * Math.min(dx, dy);
             }
 
             // Manhattan distance
-            dx = Math.abs(dx);
-            dy = Math.abs(dy);
-
-            return dx + dy;
+            return OrthogonalMovementCost * (dx + dy);
         };
     }
 
