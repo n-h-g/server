@@ -1,7 +1,7 @@
 package com.cubs3d.account.service;
 
 import com.cubs3d.account.model.Account;
-import com.cubs3d.account.AccountRegistrationRequest;
+import com.cubs3d.account.dto.AccountRegistrationRequest;
 import com.cubs3d.account.repository.AccountRepository;
 import com.cubs3d.account.service.security.JwtService;
 import lombok.AllArgsConstructor;

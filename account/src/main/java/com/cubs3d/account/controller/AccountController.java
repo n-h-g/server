@@ -1,6 +1,6 @@
 package com.cubs3d.account.controller;
 
-import com.cubs3d.account.AccountRegistrationRequest;
+import com.cubs3d.account.dto.AccountRegistrationRequest;
 import com.cubs3d.account.dto.TokenDataResponse;
 import com.cubs3d.account.dto.TokenResponse;
 import com.cubs3d.account.dto.TokenValidResponse;
@@ -8,7 +8,6 @@ import com.cubs3d.account.service.AccountService;
 import com.cubs3d.account.service.security.JwtService;
 import lombok.AllArgsConstructor;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

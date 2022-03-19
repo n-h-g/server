@@ -1,4 +1,4 @@
-package com.cubs3d.account;
+package com.cubs3d.account.dto;
 
 public record AccountRegistrationRequest(
         String username,
