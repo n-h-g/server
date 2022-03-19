@@ -1,3 +1,4 @@
+
 package com.cubs3d.game.networking.message.outgoing;
 
 import com.cubs3d.game.networking.message.WebSocketJsonPacket;
@@ -7,6 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class ServerPacket extends WebSocketJsonPacket {
@@ -21,7 +24,27 @@ public class ServerPacket extends WebSocketJsonPacket {
         this.body = jsonObject;
     }
 
-    public ServerPacket(int header, Object data) {
+    public ServerPacket(int header, String data) {
+        this(header);
+
+        try {
+            this.body.put("data", data);
+        } catch (JSONException e) {
+            log.error("Error creating packet with id: "+ header);
+        }
+
+    }
+    public ServerPacket(int header, boolean data) {
+        this(header);
+
+        try {
+            this.body.put("data", data);
+        } catch (JSONException e) {
+            log.error("Error creating packet with id: "+ header);
+        }
+
+    }
+    public ServerPacket(int header, int data) {
         this(header);
 
         try {
@@ -42,7 +65,7 @@ public class ServerPacket extends WebSocketJsonPacket {
         }
     }
 
-    public ServerPacket(int header, Collection<? extends JsonSerializable> col) {
+    public ServerPacket(int header, List<JsonSerializable> col) {
         this(header);
 
         JSONArray data = new JSONArray();
@@ -59,4 +82,3 @@ public class ServerPacket extends WebSocketJsonPacket {
 
     }
 }
-
