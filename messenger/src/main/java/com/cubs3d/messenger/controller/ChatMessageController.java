@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/messenger/chat/")
+@RequestMapping("api/v1/messenger/chat")
 public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
