@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 @Slf4j
-public abstract class RoomEntity implements JsonSerializable {
+public abstract class Entity implements JsonSerializable {
 
     @Getter
     private final Integer id;
@@ -51,7 +51,7 @@ public abstract class RoomEntity implements JsonSerializable {
     @Getter
     private final Room room;
 
-    protected RoomEntity(@NonNull Integer id, @NonNull String name, @NonNull Room room) {
+    protected Entity(@NonNull Integer id, @NonNull String name, @NonNull Room room) {
         this.id = id;
         this.name = name;
         this.room = room;

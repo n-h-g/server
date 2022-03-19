@@ -37,7 +37,7 @@ public class UserEnterRoom extends ClientPacket {
             Room room = roomService.getRoomById(roomId);
 
             client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomEntities, room.getEntities()));
+            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomEntities, room.getEntities().values()));
 
             room.getUsers().sendBroadcastMessageExcept(
                     new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, user.getEntity()), user);

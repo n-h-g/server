@@ -6,12 +6,12 @@ import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RoomUserEntity extends RoomEntity {
+public class UserEntity extends Entity {
 
     @Getter
     private final User user;
 
-    public RoomUserEntity(Integer id, Room room, User user) {
+    public UserEntity(Integer id, Room room, User user) {
         super(id, user.getUsername(), room);
 
         this.user = user;

@@ -2,7 +2,7 @@ package com.cubs3d.game.user;
 
 import com.cubs3d.game.networking.Client;
 import com.cubs3d.game.room.Room;
-import com.cubs3d.game.room.entity.RoomUserEntity;
+import com.cubs3d.game.room.entity.UserEntity;
 import com.cubs3d.game.utils.Gender;
 import com.cubs3d.game.utils.PostgreSQLEnumType;
 import lombok.*;
@@ -59,6 +59,6 @@ public class User {
     @Transient
     @Getter
     @Setter
-    private RoomUserEntity entity;
+    private UserEntity entity;
 
 }

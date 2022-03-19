@@ -3,8 +3,8 @@ package com.cubs3d.game.room;
 import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.cubs3d.game.networking.message.outgoing.ServerPacket;
-import com.cubs3d.game.room.entity.RoomEntity;
-import com.cubs3d.game.room.entity.RoomUserEntity;
+import com.cubs3d.game.room.entity.Entity;
+import com.cubs3d.game.room.entity.UserEntity;
 import com.cubs3d.game.room.layout.RoomLayout;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserGroup;
@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Setter
-@Entity
+@javax.persistence.Entity
 @Slf4j
 @Table(name = "rooms")
 public class Room implements Runnable, JsonSerializable {
@@ -57,7 +57,7 @@ public class Room implements Runnable, JsonSerializable {
 
     @Transient
     @Setter(AccessLevel.NONE)
-    private final Map<Integer, RoomEntity> entities;
+    private final Map<Integer, Entity> entities;
 
     public Room() {
         this.users = new UserGroup();
@@ -83,7 +83,7 @@ public class Room implements Runnable, JsonSerializable {
         users.add(user);
 
         Integer entityId = this.entityIds.getAndIncrement();
-        RoomEntity entity = new RoomUserEntity(entityId, this, user);
+        Entity entity = new UserEntity(entityId, this, user);
         this.entities.putIfAbsent(entityId, entity);
 
 
@@ -98,7 +98,7 @@ public class Room implements Runnable, JsonSerializable {
     public void userExit(@NonNull User user) {
         users.remove(user.getId());
 
-        RoomEntity entity = user.getEntity();
+        Entity entity = user.getEntity();
 
         if (entity == null) return;
 
@@ -140,7 +140,7 @@ public class Room implements Runnable, JsonSerializable {
     @Override
     public void run() {
         synchronized(entities) {
-            for (RoomEntity entity : entities.values()) {
+            for (Entity entity : entities.values()) {
                 if (entity == null) continue;
 
                 entity.cycle();
