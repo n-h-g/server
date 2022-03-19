@@ -3,7 +3,8 @@ package com.cubs3d.game.networking.message.incoming.clientpackets;
 import com.cubs3d.game.dto.TokenDataResponse;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.handshake.PongResponse;
+import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class PingRequest extends ClientPacket {
 
             boolean doLogin = wsClient.getUser() == null;
 
-            ((WebSocketClient) client).sendMessage(new PongResponse(doLogin));
+            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.PongResponse, doLogin));
 
         } catch (Exception e) {
             log.error("Error: "+ e);

@@ -1,5 +1,8 @@
 package com.cubs3d.game.room.entity;
 
+import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
+import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.layout.RoomLayout;
 import com.cubs3d.game.utils.Int2;
@@ -18,7 +21,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 @Slf4j
-public abstract class RoomEntity {
+public abstract class RoomEntity implements JsonSerializable {
 
     @Getter
     private final Integer id;
@@ -75,7 +78,9 @@ public abstract class RoomEntity {
         onPositionSet();
     }
 
-    protected abstract void onPositionSet();
+    protected void onPositionSet() {
+        room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.UpdateEntity, this));
+    }
 
     public void calculatePath() {
         RoomLayout layout = room.getRoomLayout();
@@ -88,7 +93,7 @@ public abstract class RoomEntity {
         log.debug("Calculate Path current position "+ position +", destination "+ destination);
     }
 
-    public JSONObject toJsonObject() throws JSONException {
+    public JSONObject toJson() throws JSONException {
         return new JSONObject()
                 .put("id", id)
                 .put("name", name)

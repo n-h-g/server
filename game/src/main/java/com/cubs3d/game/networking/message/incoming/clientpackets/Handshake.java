@@ -3,7 +3,8 @@ package com.cubs3d.game.networking.message.incoming.clientpackets;
 import com.cubs3d.game.dto.TokenDataResponse;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.handshake.LoginMessageCheck;
+import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +44,7 @@ public class Handshake extends ClientPacket {
                 return;
             }
 
-            client.sendMessage(new LoginMessageCheck(true));
+            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoginMessageCheck, true));
 
 
         } catch (Exception e) {

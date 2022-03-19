@@ -1,6 +1,8 @@
 package com.cubs3d.game.room;
 
-import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.entities.RemoveRoomEntity;
+import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
+import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.room.entity.RoomEntity;
 import com.cubs3d.game.room.entity.RoomUserEntity;
 import com.cubs3d.game.room.layout.RoomLayout;
@@ -9,6 +11,7 @@ import com.cubs3d.game.user.UserGroup;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 import java.util.Map;
@@ -20,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Entity
 @Slf4j
 @Table(name = "rooms")
-public class Room implements Runnable {
+public class Room implements Runnable, JsonSerializable {
 
     @Id
     @GeneratedValue(
@@ -101,11 +104,8 @@ public class Room implements Runnable {
 
         entities.remove(entity.getId());
 
-        try {
-            users.sendBroadcastMessageExcept(new RemoveRoomEntity(user.getEntity()), user);
-        } catch (JSONException e) {
-            log.error("Error while sending RemoveRoomUser packet.");
-        }
+        users.sendBroadcastMessageExcept(
+                new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, user.getEntity().getId()), user);
 
         user.setEntity(null);
     }
@@ -147,5 +147,17 @@ public class Room implements Runnable {
             }
         }
 
+    }
+
+    @Override
+    public JSONObject toJson() throws JSONException {
+        return new JSONObject()
+                .put("id", id)
+                .put("name", name)
+                .put("layout", layout)
+                .put("owner_id", owner.getId())
+                .put("door_x", 0)
+                .put("door_y", 0)
+                .put("users_count", users.count());
     }
 }

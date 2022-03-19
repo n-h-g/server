@@ -2,7 +2,8 @@ package com.cubs3d.game.networking.message.incoming.clientpackets.navigator;
 
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.navigator.SendMyRooms;
+import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
@@ -28,7 +29,7 @@ public class GetMyRooms extends ClientPacket {
 
             List<Room> rooms = roomService.getRoomsByOwner(user);
 
-            client.sendMessage(new SendMyRooms(rooms));
+            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendMyRooms, rooms));
 
         } catch (Exception e) {
             log.error("Error: "+ e);
