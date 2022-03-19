@@ -28,6 +28,10 @@ public class UserEnterRoom extends ClientPacket {
 
             int roomId = body.getInt("id");
 
+            if (user.getEntity() != null) {
+                roomService.userExitRoom(user);
+            }
+
             if(!roomService.userEnterRoom(user, roomId)) {
                 log.debug("User "+ user.getId() + " entered room with id " + roomId + " but it doesn't exist.");
                 return;
