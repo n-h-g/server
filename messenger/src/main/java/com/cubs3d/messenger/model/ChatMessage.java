@@ -32,6 +32,6 @@ public class ChatMessage {
     @Column(nullable = false)
     private Integer destinationId;
 
-    @Column(columnDefinition = "boolean default 0", nullable = false)
+    @Column(nullable = false)
     private boolean isRoomMessage;
 }
