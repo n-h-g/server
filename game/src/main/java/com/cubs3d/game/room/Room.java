@@ -1,6 +1,6 @@
 package com.cubs3d.game.room;
 
-import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.RemoveRoomUser;
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.entities.RemoveRoomEntity;
 import com.cubs3d.game.room.entity.RoomEntity;
 import com.cubs3d.game.room.entity.RoomUserEntity;
 import com.cubs3d.game.room.layout.RoomLayout;
@@ -48,10 +48,11 @@ public class Room implements Runnable {
     private final UserGroup users;
 
     @Transient
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private AtomicInteger entityIds;
 
     @Transient
-    @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private final Map<Integer, RoomEntity> entities;
 
@@ -101,7 +102,7 @@ public class Room implements Runnable {
         entities.remove(entity.getId());
 
         try {
-            users.sendBroadcastMessageExcept(new RemoveRoomUser(user), user);
+            users.sendBroadcastMessageExcept(new RemoveRoomEntity(user.getEntity()), user);
         } catch (JSONException e) {
             log.error("Error while sending RemoveRoomUser packet.");
         }

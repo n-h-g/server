@@ -1,19 +1,14 @@
 package com.cubs3d.game.networking;
 
 import com.cubs3d.game.networking.message.Packet;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.RemoveRoomUser;
-import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
 
 import com.cubs3d.game.utils.ApplicationContextUtils;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-import org.json.JSONException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 

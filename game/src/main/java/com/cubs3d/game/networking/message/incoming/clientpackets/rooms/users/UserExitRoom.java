@@ -2,10 +2,7 @@ package com.cubs3d.game.networking.message.incoming.clientpackets.rooms.users;
 
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.SendRoomData;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.LoadUsersInRoom;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.NewRoomUser;
-import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.users.RemoveRoomUser;
+import com.cubs3d.game.networking.message.outgoing.serverpackets.rooms.entities.RemoveRoomEntity;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
@@ -37,7 +34,7 @@ public class UserExitRoom extends ClientPacket {
 
             Room room = roomService.getRoomById(roomId);
 
-            room.getUsers().sendBroadcastMessage(new RemoveRoomUser(user));
+            room.getUsers().sendBroadcastMessage(new RemoveRoomEntity(user.getEntity()));
 
         } catch(Exception e) {
             log.error("Error: "+ e);

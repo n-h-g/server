@@ -11,6 +11,9 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -19,6 +22,9 @@ public abstract class RoomEntity {
 
     @Getter
     private final Integer id;
+
+    @Getter
+    private final String name;
 
     @Getter
     @Setter
@@ -42,8 +48,9 @@ public abstract class RoomEntity {
     @Getter
     private final Room room;
 
-    protected RoomEntity(@NonNull Integer id, @NonNull Room room) {
+    protected RoomEntity(@NonNull Integer id, @NonNull String name, @NonNull Room room) {
         this.id = id;
+        this.name = name;
         this.room = room;
 
         this.calculatedPath = new LinkedList<>();
@@ -79,6 +86,17 @@ public abstract class RoomEntity {
                 room.getRoomLayout());
 
         log.debug("Calculate Path current position "+ position +", destination "+ destination);
+    }
+
+    public JSONObject toJsonObject() throws JSONException {
+        return new JSONObject()
+                .put("id", id)
+                .put("name", name)
+                .put("x", position.getX())
+                .put("y", position.getY())
+                .put("z", position.getZ())
+                .put("body_rot", bodyRotation)
+                .put("head_rot", headRotation);
     }
 
 }
