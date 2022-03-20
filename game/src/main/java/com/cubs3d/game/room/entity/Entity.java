@@ -154,6 +154,16 @@ public abstract class Entity implements JsonSerializable {
         log.debug("Calculate Path current position "+ position +", destination "+ destination);
     }
 
+    /**
+     * Sets body and head rotation to the given rotation.
+     *
+     * @param rotation the rotation to set.
+     */
+    public void setRotation(Rotation rotation) {
+        this.bodyRotation = rotation;
+        this.headRotation = rotation;
+    }
+
     public JSONObject toJson() throws JSONException {
         JSONArray actions = new JSONArray();
         this.actions.forEach(action -> actions.put(action.getValue()));

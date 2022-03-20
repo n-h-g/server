@@ -8,8 +8,11 @@ import com.cubs3d.game.room.entity.UserEntity;
 import com.cubs3d.game.room.layout.RoomLayout;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserGroup;
+import com.cubs3d.game.utils.Int3;
+import com.cubs3d.game.utils.Rotation;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Type;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,6 +53,11 @@ public class Room implements Runnable, JsonSerializable {
 
     @Column(columnDefinition = "integer default 0", nullable = false)
     private Integer doorY;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "rotation default 'SOUTH'")
+    @Type(type = "pgsql_enum")
+    private Rotation doorRotation;
 
     @Transient
     private RoomLayout roomLayout;
@@ -92,7 +100,11 @@ public class Room implements Runnable, JsonSerializable {
         users.add(user);
 
         Integer entityId = this.entityIds.getAndIncrement();
+
         Entity entity = new UserEntity(entityId, this, user);
+        entity.setPosition(new Int3(doorX, doorY, 0));
+        entity.setRotation(doorRotation);
+
         this.entities.putIfAbsent(entityId, entity);
 
 
@@ -191,6 +203,7 @@ public class Room implements Runnable, JsonSerializable {
                 .put("owner_id", owner.getId())
                 .put("door_x", doorX)
                 .put("door_y", doorY)
+                .put("door_rot", doorRotation.getValue())
                 .put("users_count", usersCount());
     }
 }
