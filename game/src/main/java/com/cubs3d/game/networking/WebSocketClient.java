@@ -44,11 +44,21 @@ public class WebSocketClient implements Client {
         }
     }
 
+    /**
+     * Create an association Client-User.
+     *
+     * @param user the user to associate with the client.
+     */
     public void linkUser(@NonNull User user) {
         user.setClient(this);
         this.user = user;
     }
 
+    /**
+     * Unlink the association Client-User and, if the user is in a room, remove he's entity.
+     * 
+     * @see RoomService#userExitRoom(User) 
+     */
     private void unlinkUser() {
         if (user == null) return;
 

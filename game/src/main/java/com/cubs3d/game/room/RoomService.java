@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledFuture;
 
 @Slf4j
@@ -56,9 +55,6 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    public boolean existWithId(int id) {
-        return roomRepository.existsById(id);
-    }
 
     /**
      * The specified user enters the room with the specified id then start the room's task.
@@ -121,10 +117,10 @@ public class RoomService {
         return true;
     }
 
-    public boolean userExitRoom(@NonNull User user) {
-        if (user.getEntity() == null) return false;
+    public void userExitRoom(@NonNull User user) {
+        if (user.getEntity() == null) return;
 
-        return userExitRoom(user, user.getEntity().getRoom().getId());
+        userExitRoom(user, user.getEntity().getRoom().getId());
     }
 
     /**
@@ -185,5 +181,15 @@ public class RoomService {
      */
     public List<Room> getRoomsByOwner(User owner) {
         return roomRepository.findByOwner(owner);
+    }
+
+    /**
+     * Check if a room with the given id exists.
+     *
+     * @param id room's id
+     * @return true if the room exists.
+     */
+    public boolean existsWithId(int id) {
+        return roomRepository.existsById(id);
     }
 }

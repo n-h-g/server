@@ -23,9 +23,9 @@ public class ChatMessageService {
                 .isRoomMessage(chatMessageDto.isRoomMessage())
                 .build();
 
-        if (!existUserWithId(chatMessage.getSenderId())
-                || (chatMessage.isRoomMessage() && !existRoomWithId(chatMessage.getDestinationId()))
-                || (!chatMessage.isRoomMessage() && !existUserWithId(chatMessage.getDestinationId()))) {
+        if (!existsUserWithId(chatMessage.getSenderId())
+                || (chatMessage.isRoomMessage() && !existsRoomWithId(chatMessage.getDestinationId()))
+                || (!chatMessage.isRoomMessage() && !existsUserWithId(chatMessage.getDestinationId()))) {
             throw new IllegalArgumentException("Invalid ids");
         }
 
@@ -40,17 +40,17 @@ public class ChatMessageService {
         return text;
     }
 
-    private Boolean existRoomWithId(int id) {
+    private Boolean existsRoomWithId(int id) {
         return restTemplate.getForObject(
-                "http://GAME/api/v1/game/room/exist_with_id/{id}",
+                "http://GAME/api/v1/game/room/exists_with_id/{id}",
                 Boolean.class,
                 id
         );
     }
 
-    private Boolean existUserWithId(int id) {
+    private Boolean existsUserWithId(int id) {
         return restTemplate.getForObject(
-                "http://GAME/api/v1/game/user/exist_with_id/{id}",
+                "http://GAME/api/v1/game/user/exists_with_id/{id}",
                 Boolean.class,
                 id
         );

@@ -1,4 +1,4 @@
-package com.cubs3d.game.utils;
+package com.cubs3d.game.room.entity;
 
 public enum Action {
     MOVE("Move"),

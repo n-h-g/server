@@ -16,9 +16,9 @@ public class RoomController {
 
     private final RoomService roomService;
 
-    @GetMapping("/exist_with_id/{id}")
-    public boolean generateToken(@PathVariable Integer id) {
-        return roomService.existWithId(id);
+    @GetMapping("/exists_with_id/{id}")
+    public boolean roomExists(@PathVariable Integer id) {
+        return roomService.existsWithId(id);
     }
 
 }

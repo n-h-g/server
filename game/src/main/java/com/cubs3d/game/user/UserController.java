@@ -15,8 +15,8 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/exist_with_id/{id}")
-    public boolean generateToken(@PathVariable Integer id) {
-        return userService.existWithId(id);
+    @GetMapping("/exists_with_id/{id}")
+    public boolean userExists(@PathVariable Integer id) {
+        return userService.existsWithId(id);
     }
 }

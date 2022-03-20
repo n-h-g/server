@@ -5,7 +5,6 @@ import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.layout.RoomLayout;
-import com.cubs3d.game.utils.Action;
 import com.cubs3d.game.utils.Int2;
 import com.cubs3d.game.utils.Int3;
 import com.cubs3d.game.utils.Rotation;
@@ -75,10 +74,21 @@ public abstract class Entity implements JsonSerializable {
 
     }
 
+    /**
+     * This function is called every room cycle.
+     *
+     * @see Room#run()
+     */
     public void cycle() {
         move();
     }
 
+    /**
+     * Process the entity movement. It's executed every entity cycle.
+     *
+     * @see #cycle
+     * @see #calculatedPath
+     */
     protected void move() {
         if (calculatedPath == null || calculatedPath.isEmpty()) {
             if (actions.contains(Action.MOVE)) {
@@ -114,6 +124,13 @@ public abstract class Entity implements JsonSerializable {
         room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.UpdateEntity, this));
     }
 
+    /**
+     * Calculate the path from <code>position</code> to <code>destination</code>.
+     *
+     * @see #position
+     * @see #destination
+     * @see AStar
+     */
     public void calculatePath() {
         RoomLayout layout = room.getRoomLayout();
 

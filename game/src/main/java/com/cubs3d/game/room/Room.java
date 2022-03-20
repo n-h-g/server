@@ -137,6 +137,12 @@ public class Room implements Runnable, JsonSerializable {
         return roomLayout;
     }
 
+    /**
+     * Room cycle, the task is started on RoomService.
+     *
+     * @see RoomService
+     * @see Runnable
+     */
     @Override
     public void run() {
         synchronized(entities) {
