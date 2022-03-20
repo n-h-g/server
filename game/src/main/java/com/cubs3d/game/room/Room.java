@@ -36,12 +36,20 @@ public class Room implements Runnable, JsonSerializable {
     )
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
     private User owner;
 
+    @Column(nullable = false)
     private String layout;
+
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private Integer doorX;
+
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private Integer doorY;
 
     @Transient
     private RoomLayout roomLayout;
@@ -179,8 +187,8 @@ public class Room implements Runnable, JsonSerializable {
                 .put("name", name)
                 .put("layout", layout)
                 .put("owner_id", owner.getId())
-                .put("door_x", 0)
-                .put("door_y", 0)
+                .put("door_x", doorX)
+                .put("door_y", doorY)
                 .put("users_count", usersCount());
     }
 }
