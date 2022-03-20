@@ -102,7 +102,7 @@ public class Room implements Runnable, JsonSerializable {
         Integer entityId = this.entityIds.getAndIncrement();
 
         Entity entity = new UserEntity(entityId, this, user);
-        entity.setPosition(new Int3(doorX, doorY, 0));
+        entity.setPosition(new Int3(doorX, doorY, roomLayout.getTile(doorX, doorY).getPosition().getZ()));
         entity.setRotation(doorRotation);
 
         this.entities.putIfAbsent(entityId, entity);
