@@ -1,13 +1,11 @@
 package com.cubs3d.messenger.controller;
 
-import com.cubs3d.messenger.dto.ChatMessageDto;
+import com.cubs3d.messenger.dto.ChatMessageRequest;
+import com.cubs3d.messenger.dto.ChatMessageResponse;
 import com.cubs3d.messenger.service.ChatMessageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @AllArgsConstructor
@@ -17,8 +15,8 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-    @PostMapping("/send_message")
-    public void sendMessage(@RequestBody ChatMessageDto chatMessageDto) {
-        chatMessageService.sendMessage(chatMessageDto);
+    @GetMapping("/send_message/{senderId}/{destinationId}/{text}/{isRoomMessage}")
+    public ChatMessageResponse sendMessage(ChatMessageRequest ChatMessageRequest) {
+        return chatMessageService.sendMessage(ChatMessageRequest);
     }
 }
