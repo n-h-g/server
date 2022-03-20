@@ -120,16 +120,33 @@ public class Room implements Runnable, JsonSerializable {
     }
 
     /**
+     * Check if the room is empty.
+     * The room is empty when it has 0 users inside.
+     *
+     * @return true if it's empty, false otherwise.
+     */
+    public boolean isEmpty() {
+        return users.count() == 0;
+    }
+
+    /**
      * Set layout and create RoomLayout from the new layout.
      *
      * @param layout string representing the layout
-     * @see com.cubs3d.game.room.layout.RoomLayout#RoomLayout
+     * @see RoomLayout#RoomLayout
      */
     public void setLayout(String layout) {
         this.layout = layout;
         this.roomLayout = new RoomLayout(layout);
     }
 
+    /**
+     * Get the <code>RoomLayout</code> class, if it's null it will also create a new instance from <code>layout</code>.
+     *
+     * @return the RoomLayout
+     * @see #layout
+     * @see RoomLayout
+     */
     public RoomLayout getRoomLayout() {
         if (roomLayout == null) {
             roomLayout = new RoomLayout(layout);
@@ -141,7 +158,7 @@ public class Room implements Runnable, JsonSerializable {
      * Room cycle, the task is started on RoomService.
      *
      * @see RoomService
-     * @see Runnable
+     * @see Runnable#run
      */
     @Override
     public void run() {
@@ -164,6 +181,6 @@ public class Room implements Runnable, JsonSerializable {
                 .put("owner_id", owner.getId())
                 .put("door_x", 0)
                 .put("door_y", 0)
-                .put("users_count", users.count());
+                .put("users_count", usersCount());
     }
 }

@@ -4,6 +4,13 @@ import com.cubs3d.game.networking.Client;
 import lombok.*;
 import org.json.JSONObject;
 
+/**
+ * Packet for a WebSocket connection using json to exchange data.
+ * Integer are used as packet header and JSONObject for data.
+ *
+ * @see Packet
+ * @see Client
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class WebSocketJsonPacket implements Packet<Integer, JSONObject> {

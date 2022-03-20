@@ -7,6 +7,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Packets sent by server to client.
+ *
+ * @see WebSocketJsonPacket
+ * @see OutgoingPacketHeaders
+ */
 @Slf4j
 public class ServerPacket extends WebSocketJsonPacket {
 

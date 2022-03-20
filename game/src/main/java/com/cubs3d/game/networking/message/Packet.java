@@ -1,6 +1,11 @@
 package com.cubs3d.game.networking.message;
 
-
+/**
+ * Generic representation of a packet.
+ *
+ * @param <Header> Class for representing the packet header.
+ * @param <Body> Class for representing the packet Body.
+ */
 public interface Packet<Header, Body> {
 
     Header getHeader();

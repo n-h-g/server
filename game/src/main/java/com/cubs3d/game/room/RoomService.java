@@ -27,9 +27,10 @@ public class RoomService {
     private static final int RoomFixedRateScheduleMS = 480;
 
     /**
-     * Seconds before an empty room (0 users inside) gets unloaded.
+     * Seconds before an empty room gets unloaded.
      *
-     * @see #checkEmptyRoomAndScheduleUnload 
+     * @see #checkEmptyRoomAndScheduleUnload
+     * @see Room#isEmpty
      */
     private static final int SecondsBeforeEmptyRoomGetsUnloaded = 10;
 
@@ -88,7 +89,6 @@ public class RoomService {
     private void startRoomTask(@NonNull Room room) {
         if (activeRoomsTasks.containsKey(room.getId())) return;
 
-        @SuppressWarnings("unchecked")
         ScheduledFuture<?> task = taskScheduler.scheduleAtFixedRate(room, RoomFixedRateScheduleMS);
 
         activeRoomsTasks.put(room.getId(), task);
@@ -100,7 +100,7 @@ public class RoomService {
     /**
      * The specified user exits the room with the specified id.
      *
-     * @param user user that is exiting the room.
+     * @param user the user that is exiting the room.
      * @param roomId target room's id.
      * @see Room#userExit
      * @see #checkEmptyRoomAndScheduleUnload
@@ -117,6 +117,13 @@ public class RoomService {
         return true;
     }
 
+    /**
+     * The specified user exits the room he's in. If the user is not in any room it returns.
+     * The room is taken from the user's entity.
+     *
+     * @param user the user that is exiting the room
+     * @see #userExitRoom(User, Integer)
+     */
     public void userExitRoom(@NonNull User user) {
         if (user.getEntity() == null) return;
 
@@ -128,15 +135,15 @@ public class RoomService {
      * it will check again that it's not empty then stop the room task.
      *
      * @param room room that needs to be checked.
-     * @see Room#usersCount
+     * @see Room#isEmpty
      * @see #SecondsBeforeEmptyRoomGetsUnloaded
      */
     private void checkEmptyRoomAndScheduleUnload(@NonNull Room room) {
-        if (room.usersCount() > 0) return;
+        if (!room.isEmpty()) return;
 
         taskScheduler.schedule(() -> {
             // Check again if the room is empty
-            if (room.usersCount() > 0) return;
+            if (!room.isEmpty()) return;
 
             // Remove the room from activeRoomsTasks
             ScheduledFuture<?> task = activeRoomsTasks.remove(room.getId());

@@ -20,6 +20,11 @@ import org.json.JSONObject;
 
 import java.util.*;
 
+/**
+ * Represent an entity in a room.
+ *
+ * @see Room
+ */
 @Slf4j
 public abstract class Entity implements JsonSerializable {
 
@@ -108,8 +113,15 @@ public abstract class Entity implements JsonSerializable {
         update();
     }
 
+    /**
+     * Add the given action to the entity.
+     * If the action is <code>MOVE</code> it will remove all the actions that should be removed on move.
+     *
+     * @param action the action to add.
+     * @see Action#shouldBeRemovedOnMove
+     */
     private void addAction(Action action) {
-        this.actions.add(action);
+        actions.add(action);
 
         if (action == Action.MOVE) {
             actions.removeIf(Action::shouldBeRemovedOnMove);

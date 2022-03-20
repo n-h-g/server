@@ -6,8 +6,17 @@ import lombok.Getter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Represent an entity in a room controlled by a user.
+ *
+ * @see Entity
+ * @see Room
+ */
 public class UserEntity extends Entity {
 
+    /**
+     * The user that control this entity.
+     */
     @Getter
     private final User user;
 
