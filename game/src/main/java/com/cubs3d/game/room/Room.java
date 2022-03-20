@@ -84,6 +84,7 @@ public class Room implements Runnable, JsonSerializable {
 
     /**
      * The specified user enters the room and is added to the user group in the room.
+     * Then an entity is associated with the user, created and added to the entities' collection.
      *
      * @param user the user entering the room.
      */
@@ -99,7 +100,8 @@ public class Room implements Runnable, JsonSerializable {
     }
 
     /**
-     * he specified user exits the room and is removed from the user group in the room.
+     * The specified user exits the room and is removed from the user group in the room.
+     * If the user has an entity in the room it's removed and all the other users are notified.
      *
      * @param user the user exiting the room.
      */
