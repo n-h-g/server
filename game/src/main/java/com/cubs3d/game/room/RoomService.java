@@ -56,6 +56,9 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
+    public boolean existWithId(int id) {
+        return roomRepository.existsById(id);
+    }
 
     /**
      * The specified user enters the room with the specified id then start the room's task.
