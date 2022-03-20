@@ -44,7 +44,7 @@ public class UserChatMessage extends ClientPacket {
                     new JSONObject()
                             .put("message", response.text())
                             .put("shout", isShout)
-                            .put("name", user.getUsername())
+                            .put("id", user.getEntity().getId())
             ));
 
         } catch(Exception e) {
