@@ -106,9 +106,6 @@ public class Room implements Runnable, JsonSerializable {
         entity.setRotation(doorRotation);
 
         this.entities.putIfAbsent(entityId, entity);
-
-
-        // TODO: set user position and rotation according to door
     }
 
     /**
