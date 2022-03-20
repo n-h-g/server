@@ -12,7 +12,7 @@ public class UserEntity extends Entity {
     private final User user;
 
     public UserEntity(Integer id, Room room, User user) {
-        super(id, user.getUsername(), room);
+        super(id, EntityType.HUMAN, user.getUsername(), room);
 
         this.user = user;
         user.setEntity(this);

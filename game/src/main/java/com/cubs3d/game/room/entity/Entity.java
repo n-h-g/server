@@ -28,6 +28,9 @@ public abstract class Entity implements JsonSerializable {
     private final Integer id;
 
     @Getter
+    private final EntityType type;
+
+    @Getter
     private final String name;
 
     @Getter
@@ -56,8 +59,9 @@ public abstract class Entity implements JsonSerializable {
     @Getter
     private final Room room;
 
-    protected Entity(@NonNull Integer id, @NonNull String name, @NonNull Room room) {
+    protected Entity(@NonNull Integer id, EntityType type, @NonNull String name, @NonNull Room room) {
         this.id = id;
+        this.type = type;
         this.name = name;
         this.room = room;
 
@@ -127,6 +131,7 @@ public abstract class Entity implements JsonSerializable {
 
         return new JSONObject()
                 .put("id", id)
+                .put("type", type.getCode())
                 .put("name", name)
                 .put("x", position.getX())
                 .put("y", position.getY())
