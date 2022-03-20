@@ -16,7 +16,8 @@ public final class IncomingPackets {
             new Pair(7, GetMyRooms.class),
             new Pair(8, UserEnterRoom.class),
             new Pair(9, UserExitRoom.class),
-            new Pair(10, UserMove.class)
+            new Pair(10, UserMove.class),
+            new Pair(11, UserChatMessage.class),
    };
 
 }
