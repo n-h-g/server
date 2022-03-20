@@ -5,6 +5,7 @@ import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.layout.RoomLayout;
+import com.cubs3d.game.utils.Action;
 import com.cubs3d.game.utils.Int2;
 import com.cubs3d.game.utils.Int3;
 import com.cubs3d.game.utils.Rotation;
@@ -14,11 +15,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 @Slf4j
 public abstract class Entity implements JsonSerializable {
@@ -45,6 +46,10 @@ public abstract class Entity implements JsonSerializable {
     @Setter
     private Rotation headRotation;
 
+    @Getter
+    @Setter
+    private Set<Action> actions;
+
     private final AStar aStar;
     private Queue<Tile> calculatedPath;
 
@@ -61,6 +66,9 @@ public abstract class Entity implements JsonSerializable {
 
         this.position = new Int3(0,0, 0);
         this.destination = new Int2(0,0);
+
+        this.actions = new HashSet<>();
+
     }
 
     public void cycle() {
@@ -68,17 +76,37 @@ public abstract class Entity implements JsonSerializable {
     }
 
     protected void move() {
-        if (calculatedPath == null || calculatedPath.isEmpty()) return;
+        if (calculatedPath == null || calculatedPath.isEmpty()) {
+            if (actions.contains(Action.MOVE)) {
+                removeAction(Action.MOVE);
+                update();
+            }
 
+            return;
+        }
+
+        addAction(Action.MOVE);
         Int3 nextPosition = calculatedPath.poll().getPosition();
 
         bodyRotation = Rotation.CalculateRotation(position.ToInt2XY(), nextPosition.ToInt2XY());
 
         position = nextPosition;
-        onPositionSet();
+        update();
     }
 
-    protected void onPositionSet() {
+    private void addAction(Action action) {
+        this.actions.add(action);
+
+        if (action == Action.MOVE) {
+            actions.removeIf(Action::shouldBeRemovedOnMove);
+        }
+    }
+
+    private void removeAction(Action action) {
+        this.actions.remove(action);
+    }
+
+    protected void update() {
         room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.UpdateEntity, this));
     }
 
@@ -94,6 +122,9 @@ public abstract class Entity implements JsonSerializable {
     }
 
     public JSONObject toJson() throws JSONException {
+        JSONArray actions = new JSONArray();
+        this.actions.forEach(action -> actions.put(action.getValue()));
+
         return new JSONObject()
                 .put("id", id)
                 .put("name", name)
@@ -101,7 +132,8 @@ public abstract class Entity implements JsonSerializable {
                 .put("y", position.getY())
                 .put("z", position.getZ())
                 .put("body_rot", bodyRotation)
-                .put("head_rot", headRotation);
+                .put("head_rot", headRotation)
+                .put("actions", actions);
     }
 
 }
