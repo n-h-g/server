@@ -18,6 +18,7 @@ public final class IncomingPackets {
             new Pair(9, UserExitRoom.class),
             new Pair(10, UserMove.class),
             new Pair(11, UserChatMessage.class),
+            new Pair(12, UserTypeStatus.class)
    };
 
 }

@@ -18,4 +18,5 @@ public final class OutgoingPacketHeaders {
     public static final int AddRoomEntity = 13;
     public static final int RemoveRoomEntity = 14;
     public static final int RoomChatMessage = 15;
+    public static final int RoomUserType = 16;
 }
