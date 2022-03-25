@@ -5,13 +5,15 @@ import com.cubs3d.game.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@javax.persistence.Entity
+@Slf4j
+@Table(name = "items")
 public class Item {
 
     @Id
@@ -41,5 +43,9 @@ public class Item {
     }
     public Item(User owner) {
         this.owner = owner;
+    }
+
+    public Item() {
+
     }
 }
