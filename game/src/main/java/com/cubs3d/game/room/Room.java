@@ -1,5 +1,6 @@
 package com.cubs3d.game.room;
 
+import com.cubs3d.game.item.Item;
 import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.cubs3d.game.networking.message.outgoing.ServerPacket;
@@ -17,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -59,6 +62,9 @@ public class Room implements Runnable, JsonSerializable {
     @Type(type = "pgsql_enum")
     private Rotation doorRotation;
 
+    @OneToMany(mappedBy = "room")
+    private List<Item> items;
+
     @Transient
     private RoomLayout roomLayout;
 
@@ -77,6 +83,7 @@ public class Room implements Runnable, JsonSerializable {
 
     public Room() {
         this.users = new UserGroup();
+        this.items = new ArrayList<>();
         this.entities = new ConcurrentHashMap<>();
         this.entityIds = new AtomicInteger();
     }
