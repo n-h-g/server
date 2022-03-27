@@ -130,8 +130,12 @@ public class Room implements Runnable, JsonSerializable {
 
         entities.remove(entity.getId());
 
-        users.sendBroadcastMessageExcept(
-                new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, user.getEntity().getId()), user);
+        try {
+            users.sendBroadcastMessageExcept(
+                    new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, new JSONObject().put("id", entity.getId()).put("user_id", user.getId())), user);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         user.setEntity(null);
     }

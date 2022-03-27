@@ -42,8 +42,8 @@ public class UserEnterRoom extends ClientPacket {
             client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
             client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomEntities, room.getEntities().values()));
 
-            room.getUsers().sendBroadcastMessageExcept(
-                    new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, user.getEntity()), user);
+            room.getUsers().sendBroadcastMessage(
+                    new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, user.getEntity()));
 
         } catch(Exception e) {
             log.error("Error: "+ e);

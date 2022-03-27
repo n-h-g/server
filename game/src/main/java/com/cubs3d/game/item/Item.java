@@ -1,11 +1,16 @@
 package com.cubs3d.game.item;
 
+import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.user.User;
+import com.cubs3d.game.utils.PostgreSQLEnumType;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.persistence.*;
 
@@ -13,8 +18,12 @@ import javax.persistence.*;
 @Setter
 @javax.persistence.Entity
 @Slf4j
+@TypeDef(
+        name = "pgsql_enum",
+        typeClass = PostgreSQLEnumType.class
+)
 @Table(name = "items")
-public class Item {
+public class Item implements JsonSerializable, Runnable {
 
     @Id
     @GeneratedValue(
@@ -29,10 +38,20 @@ public class Item {
     private Integer Id;
 
     @ManyToOne
+    @JoinColumn(columnDefinition="integer", name="room_id")
     private Room room;
 
     @ManyToOne
     private User owner;
+
+    private String name;
+
+    private String baseName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "itemType default 'FLOOR_ITEM'", nullable = false)
+    @Type(type = "pgsql_enum")
+    private ItemType itemType;
 
     public Item(Room room, User owner) {
         this.room = room;
@@ -45,7 +64,20 @@ public class Item {
         this.owner = owner;
     }
 
-    public Item() {
+    public Item() {}
+
+    @Override
+    public JSONObject toJson() throws JSONException {
+        return new JSONObject()
+                .put("id", Id)
+                .put("name", name)
+                .put("baseName", baseName)
+                .put("room_id", room != null ? room.getId() : "0"  )
+                .put("item_type", itemType.getValue());
+    }
+
+    @Override
+    public void run() {
 
     }
 }

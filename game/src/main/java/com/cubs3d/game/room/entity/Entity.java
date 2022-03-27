@@ -120,7 +120,7 @@ public abstract class Entity implements JsonSerializable {
      * @param action the action to add.
      * @see Action#shouldBeRemovedOnMove
      */
-    private void addAction(Action action) {
+    public void addAction(Action action) {
         actions.add(action);
 
         if (action == Action.MOVE) {
@@ -128,7 +128,7 @@ public abstract class Entity implements JsonSerializable {
         }
     }
 
-    private void removeAction(Action action) {
+    public void removeAction(Action action) {
         this.actions.remove(action);
     }
 

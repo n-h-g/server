@@ -1,5 +1,6 @@
 package com.cubs3d.game.user;
 
+import com.cubs3d.game.item.Item;
 import com.cubs3d.game.networking.Client;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.entity.UserEntity;
@@ -46,12 +47,14 @@ public class User {
     @Column(nullable = false, columnDefinition = "varchar(255) default 'hd-180-1.ch-255-66.lg-280-110.sh-305-62.ha-1012-110.hr-828-61'")
     private String look;
 
-
     /**
      * Rooms owned by the user
      */
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Room> rooms;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private List<Item> items;
 
     @Transient
     private Client client;

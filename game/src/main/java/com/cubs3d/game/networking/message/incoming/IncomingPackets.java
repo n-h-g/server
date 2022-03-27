@@ -2,6 +2,7 @@ package com.cubs3d.game.networking.message.incoming;
 
 import com.cubs3d.game.networking.message.incoming.clientpackets.*;
 import com.cubs3d.game.networking.message.incoming.clientpackets.navigator.*;
+import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.items.RequestLoadItems;
 import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.users.*;
 
 public final class IncomingPackets {
@@ -18,7 +19,8 @@ public final class IncomingPackets {
             new Pair(9, UserExitRoom.class),
             new Pair(10, UserMove.class),
             new Pair(11, UserChatMessage.class),
-            new Pair(12, UserTypeStatus.class)
+            new Pair(12, UserTypeStatus.class),
+            new Pair(13, RequestLoadItems.class)
    };
 
 }
