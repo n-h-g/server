@@ -3,6 +3,7 @@ package com.cubs3d.game.user;
 import com.cubs3d.game.networking.message.Packet;
 import lombok.NonNull;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class UserGroup implements Iterable<User> {
     private final Map<Integer, User> users;
 
     public UserGroup() {
-        users = new ConcurrentHashMap<>();
+        users = new HashMap<>();
     }
 
     /**

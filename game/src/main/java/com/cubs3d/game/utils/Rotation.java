@@ -3,13 +3,13 @@ package com.cubs3d.game.utils;
 import lombok.Getter;
 
 public enum Rotation {
-    NORTH(0),
-    NORTH_EAST(1),
-    EAST(2),
-    SOUTH_EAST(3),
-    SOUTH(4),
-    SOUTH_WEST(5),
-    WEST(6),
+    NORTH(6),
+    NORTH_EAST(5),
+    EAST(4),
+    SOUTH_EAST(1),
+    SOUTH(2),
+    SOUTH_WEST(1),
+    WEST(0),
     NORTH_WEST(7);
 
     @Getter

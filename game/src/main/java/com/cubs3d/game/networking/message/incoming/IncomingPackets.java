@@ -20,7 +20,9 @@ public final class IncomingPackets {
             new Pair(10, UserMove.class),
             new Pair(11, UserChatMessage.class),
             new Pair(12, UserTypeStatus.class),
-            new Pair(13, RequestLoadItems.class)
+            new Pair(13, UserLookAtPoint.class),
+            new Pair(14, RequestLoadItems.class)
+
    };
 
 }
