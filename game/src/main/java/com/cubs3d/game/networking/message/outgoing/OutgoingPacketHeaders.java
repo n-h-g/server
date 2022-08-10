@@ -25,4 +25,6 @@ public final class OutgoingPacketHeaders {
 
     //# Items
     public static final int LoadItems = 18;
+
+    public static final int FriendsList = 20;
 }
