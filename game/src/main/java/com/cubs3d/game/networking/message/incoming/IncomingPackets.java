@@ -1,10 +1,12 @@
 package com.cubs3d.game.networking.message.incoming;
 
 import com.cubs3d.game.networking.message.incoming.clientpackets.*;
+import com.cubs3d.game.networking.message.incoming.clientpackets.friends.FriendRequest;
 import com.cubs3d.game.networking.message.incoming.clientpackets.friends.FriendsList;
 import com.cubs3d.game.networking.message.incoming.clientpackets.navigator.*;
 import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.items.RequestLoadItems;
 import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.users.*;
+import com.cubs3d.game.networking.message.incoming.clientpackets.users.UpdateUser;
 
 public final class IncomingPackets {
     private IncomingPackets() {}
@@ -23,6 +25,8 @@ public final class IncomingPackets {
             new Pair(12, UserTypeStatus.class),
             new Pair(13, UserLookAtPoint.class),
             new Pair(14, RequestLoadItems.class),
+            new Pair(15, UpdateUser.class),
+            new Pair(16, FriendRequest.class),
             new Pair(19, FriendsList.class)
 
    };

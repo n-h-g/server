@@ -2,6 +2,7 @@ package com.cubs3d.game.user;
 
 import com.cubs3d.game.item.Item;
 import com.cubs3d.game.networking.Client;
+import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.entity.UserEntity;
 import com.cubs3d.game.utils.Gender;
@@ -9,6 +10,9 @@ import com.cubs3d.game.utils.PostgreSQLEnumType;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -23,7 +27,7 @@ import java.util.List;
         typeClass = PostgreSQLEnumType.class
 )
 @Table(name = "users")
-public class User {
+public class User implements JsonSerializable {
 
     @Id
     @GeneratedValue(
@@ -64,4 +68,12 @@ public class User {
     @Setter
     private UserEntity entity;
 
+    @Override
+    public JSONObject toJson() throws JSONException {
+        return new JSONObject()
+                .put("id", this.id)
+                .put("username", this.username)
+                .put("gender", this.gender)
+                .put("look", this.look);
+    }
 }

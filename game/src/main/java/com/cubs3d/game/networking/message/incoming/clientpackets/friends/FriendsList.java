@@ -1,28 +1,29 @@
 package com.cubs3d.game.networking.message.incoming.clientpackets.friends;
 
-import com.cubs3d.game.dto.ChatMessageRequest;
-import com.cubs3d.game.dto.ChatMessageResponse;
-import com.cubs3d.game.dto.FriendshipRequest;
-import com.cubs3d.game.dto.FriendshipResponse;
+import com.cubs3d.game.dto.*;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
 import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.user.User;
+import com.cubs3d.game.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class FriendsList extends ClientPacket {
 
     private final RestTemplate restTemplate;
+    private final UserService userService;
 
     public FriendsList() {
         restTemplate = this.getBean("restTemplate", RestTemplate.class);
+        userService = this.getBean(UserService.class);
     }
 
     @Override
@@ -38,9 +39,18 @@ public class FriendsList extends ClientPacket {
                     -1
             ));
 
+            List<User> friends = new ArrayList<>();
+
+            System.out.println();
+
+            for (FriendResponse friendData : response.friendships()) {
+                User friend = this.userService.getUserById(friendData.senderId());
+                friends.add(friend);
+            }
+
             wsClient.sendMessage(new ServerPacket(
                     OutgoingPacketHeaders.FriendsList,
-                    new JSONObject().put("friends", response.friendships())
+                    new JSONObject().put("friends", friends)
             ));
         } catch(Exception e) {
             log.error(e.getMessage());
