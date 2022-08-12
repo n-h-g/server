@@ -4,9 +4,12 @@ import com.cubs3d.game.dto.FriendshipRequest;
 import com.cubs3d.game.dto.FriendshipResponse;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
+import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
@@ -32,9 +35,14 @@ public class FriendRequest extends ClientPacket {
             User destinatary = userService.getUserById(id);
 
             FriendshipResponse response = this.addFriend(new FriendshipRequest(
-                    -1,
+                    user.getId(),
                     user.getId(),
                     destinatary.getId()
+            ));
+
+            destinatary.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
+                    new JSONObject()
+                            .put("data", user.getUsername() + "ti ha inviato una richiesta di amicizia")
             ));
 
         }catch(Exception e) {
