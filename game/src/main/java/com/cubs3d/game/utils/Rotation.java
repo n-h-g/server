@@ -6,7 +6,7 @@ public enum Rotation {
     NORTH(6),
     NORTH_EAST(5),
     EAST(4),
-    SOUTH_EAST(1),
+    SOUTH_EAST(3),
     SOUTH(2),
     SOUTH_WEST(1),
     WEST(0),
@@ -39,7 +39,7 @@ public enum Rotation {
         } else if (point1.getX() < point2.getX() && point1.getY() > point2.getY()) {
             rotation = Rotation.NORTH_EAST;
         } else if (point1.getX() < point2.getX() && point1.getY() < point2.getY()) {
-            rotation = Rotation.SOUTH_WEST;
+            rotation = Rotation.SOUTH_EAST;
         } else if (point1.getX() > point2.getX()) {
             rotation = Rotation.WEST;
         } else if (point1.getX() < point2.getX()) {

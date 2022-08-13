@@ -68,6 +68,7 @@ public class Room implements Runnable, JsonSerializable {
     @Transient
     private RoomLayout roomLayout;
 
+
     @Transient
     @Setter(AccessLevel.NONE)
     private final UserGroup users;
