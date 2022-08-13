@@ -30,7 +30,6 @@ public class UpdateUser extends ClientPacket {
             WebSocketClient wsClient = (WebSocketClient) client;
             User user = wsClient.getUser();
 
-
             clients.SendBroadcastMessage(new ServerPacket(
                     OutgoingPacketHeaders.UpdateUserInformation,
                     user

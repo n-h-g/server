@@ -32,15 +32,15 @@ public class FriendRequest extends ClientPacket {
 
             User user = wsClient.getUser();
 
-            User destinatary = userService.getUserById(id);
+            User destination = userService.getUserById(id);
 
             FriendshipResponse response = this.addFriend(new FriendshipRequest(
                     user.getId(),
                     user.getId(),
-                    destinatary.getId()
+                    destination.getId()
             ));
 
-            destinatary.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
+            destination.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
                     new JSONObject()
                             .put("data", user.getUsername() + "ti ha inviato una richiesta di amicizia")
             ));
