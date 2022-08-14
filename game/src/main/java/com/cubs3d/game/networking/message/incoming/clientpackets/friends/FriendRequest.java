@@ -40,7 +40,11 @@ public class FriendRequest extends ClientPacket {
                     destination.getId()
             ));
 
-            destination.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
+            boolean isOnline = userService.hasUserOnline(id);
+
+            if(!isOnline) return;
+
+            userService.getActiveUser(id).getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
                     new JSONObject()
                             .put("data", user.getUsername() + "ti ha inviato una richiesta di amicizia")
             ));

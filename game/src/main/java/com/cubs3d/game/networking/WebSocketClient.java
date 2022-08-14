@@ -4,6 +4,7 @@ import com.cubs3d.game.networking.message.Packet;
 import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
 
+import com.cubs3d.game.user.UserService;
 import com.cubs3d.game.utils.ApplicationContextUtils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -51,6 +52,10 @@ public class WebSocketClient implements Client {
      */
     public void linkUser(@NonNull User user) {
         user.setClient(this);
+
+        UserService userService = ApplicationContextUtils.getApplicationContext().getBean(UserService.class);
+        userService.userJoin(user);
+
         this.user = user;
     }
 
@@ -63,8 +68,10 @@ public class WebSocketClient implements Client {
         if (user == null) return;
 
         RoomService roomService = ApplicationContextUtils.getApplicationContext().getBean(RoomService.class);
+        UserService userService = ApplicationContextUtils.getApplicationContext().getBean(UserService.class);
         roomService.userExitRoom(user);
 
+        userService.userLeave(user);
         user.setClient(null);
         user = null;
     }

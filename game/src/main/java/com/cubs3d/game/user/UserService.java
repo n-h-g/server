@@ -1,8 +1,12 @@
 package com.cubs3d.game.user;
 
+import com.cubs3d.game.room.Room;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @Slf4j
@@ -11,6 +15,51 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository userRepository;
+
+
+    /**
+     * Map of active users online.
+     */
+    private final Map<Integer, User> activeUsers = new ConcurrentHashMap<>();
+
+    /**
+     * Add user in a map when he gets online.
+     **/
+    public void userJoin(User user) {
+        if(!this.activeUsers.containsKey(user.getId())) {
+            this.activeUsers.put(user.getId(), user);
+        }
+    }
+
+    /**
+     * Remove user from the map .
+     * @param user
+     */
+    public void userLeave(User user) {
+        this.activeUsers.remove(user.getId());
+    }
+
+    /**
+     * Retrieve a online user
+     * @param id
+     * @return User
+     */
+    public User getActiveUser(Integer id) {
+        if(this.activeUsers.containsKey(id)) {
+            return this.activeUsers.get(id);
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if a user is inside the map.
+     * @param id
+     * @return boolean
+     */
+    public boolean hasUserOnline(Integer id) {
+        return this.activeUsers.containsKey(id);
+    }
 
     /**
      * Get the user with the given username.

@@ -29,6 +29,6 @@ public final class OutgoingPacketHeaders {
     public static final int FriendsList = 20;
 
     //# Generic
-    public static final int BubbleAlert = 102;
+    public static final int BubbleAlert = 101;
     public static final int DisconnectClient = 102;
 }
