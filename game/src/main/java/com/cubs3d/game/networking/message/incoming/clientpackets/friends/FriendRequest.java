@@ -37,7 +37,7 @@ public class FriendRequest extends ClientPacket {
             FriendshipResponse response = this.addFriend(new FriendshipRequest(
                     user.getId(),
                     user.getId(),
-                    destination.getId()
+                    id
             ));
 
             boolean isOnline = userService.hasUserOnline(id);
@@ -46,7 +46,7 @@ public class FriendRequest extends ClientPacket {
 
             userService.getActiveUser(id).getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
                     new JSONObject()
-                            .put("data", user.getUsername() + "ti ha inviato una richiesta di amicizia")
+                            .put("data", user.getUsername() + " ti ha inviato una richiesta di amicizia")
             ));
 
         }catch(Exception e) {
@@ -58,7 +58,7 @@ public class FriendRequest extends ClientPacket {
         return restTemplate.getForObject(
                 "http://MESSENGER/api/v1/messenger/friendship/add/{senderId}/{destinationId}",
                 FriendshipResponse.class,
-                message.friendshipId(), message.senderId(), message.destinationId()
+                message.senderId(), message.destinationId()
         );
     }
 }

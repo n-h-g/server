@@ -41,16 +41,15 @@ public class FriendsList extends ClientPacket {
 
             List<User> friends = new ArrayList<>();
 
-            System.out.println();
 
             for (FriendResponse friendData : response.friendships()) {
-                User friend = this.userService.getUserById(friendData.senderId());
+                User friend = this.userService.getUserById(friendData.destinationId());
                 friends.add(friend);
             }
 
             wsClient.sendMessage(new ServerPacket(
                     OutgoingPacketHeaders.FriendsList,
-                    new JSONObject().put("friends", friends)
+                    friends
             ));
         } catch(Exception e) {
             log.error(e.getMessage());
@@ -61,7 +60,7 @@ public class FriendsList extends ClientPacket {
         return restTemplate.getForObject(
                 "http://MESSENGER/api/v1/messenger/friendship/get_friends/{senderId}",
                 FriendshipResponse.class,
-                message.friendshipId(), message.senderId(), message.destinationId()
+                message.senderId()
         );
     }
 }
