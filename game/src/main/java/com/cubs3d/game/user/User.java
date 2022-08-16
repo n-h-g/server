@@ -68,12 +68,17 @@ public class User implements JsonSerializable {
     @Setter
     private UserEntity entity;
 
+    @Column(name = "online", nullable = false, columnDefinition = "boolean default true")
+    private boolean online;
+
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
                 .put("id", this.id)
                 .put("username", this.username)
                 .put("gender", this.gender)
-                .put("look", this.look);
+                .put("look", this.look)
+                .put("online", this.online);
+
     }
 }

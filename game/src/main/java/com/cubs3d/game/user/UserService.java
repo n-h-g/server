@@ -23,19 +23,23 @@ public class UserService {
     private final Map<Integer, User> activeUsers = new ConcurrentHashMap<>();
 
     /**
-     * Add user in a map when he gets online.
+     * Add user in game when he gets online
      **/
     public void userJoin(User user) {
+        user.setOnline(true);
         if(!this.activeUsers.containsKey(user.getId())) {
             this.activeUsers.put(user.getId(), user);
         }
+        this.userRepository.save(user);
     }
 
     /**
-     * Remove user from the map .
+     * Remove user from the game.
      * @param user
      */
     public void userLeave(User user) {
+        user.setOnline(false);
+        this.userRepository.save(user);
         this.activeUsers.remove(user.getId());
     }
 

@@ -55,7 +55,7 @@ public class WebSocketClient implements Client {
 
         UserService userService = ApplicationContextUtils.getApplicationContext().getBean(UserService.class);
         userService.userJoin(user);
-
+        
         this.user = user;
     }
 
