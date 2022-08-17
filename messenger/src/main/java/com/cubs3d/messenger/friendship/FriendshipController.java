@@ -33,4 +33,9 @@ public class FriendshipController {
     public FriendshipResponse addFriend(FriendshipRequest friendshipRequest) {
         return friendshipService.addFriend(friendshipRequest);
     }
+
+    @GetMapping("/delete/{senderId}/{destinationId}")
+    public FriendshipResponse removeFriendship(FriendshipRequest friendshipRequest) {
+        return friendshipService.removeFriendship(friendshipRequest);
+    }
 }

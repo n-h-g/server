@@ -40,6 +40,22 @@ public class FriendshipService {
     }
 
     /**
+     *  Remove friendship
+     *
+     * @param friendshipRequest the request
+     * @return FriendshipResponse
+     */
+    public FriendshipResponse removeFriendship(FriendshipRequest friendshipRequest) {
+        if (!existsUserWithId(friendshipRequest.senderId()) || !existsUserWithId(friendshipRequest.senderId())) {
+            throw new IllegalArgumentException("Invalid ids");
+        }
+
+        this.friendshipRepository.deleteBySenderIdAndDestinationId(friendshipRequest.senderId(), friendshipRequest.destinationId());
+
+        return new FriendshipResponse(null);
+    }
+
+    /**
      *  Confirm a friendship
      *
      * @param friendshipId the friendship id
