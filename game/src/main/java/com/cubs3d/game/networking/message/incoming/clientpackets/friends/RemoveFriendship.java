@@ -13,14 +13,12 @@ import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
-public class DeclineFriendRequest extends ClientPacket {
+public class RemoveFriendship extends ClientPacket {
 
-    private RestTemplate restTemplate;
-    private UserService userService;
+    private final RestTemplate restTemplate;
 
-    public DeclineFriendRequest() {
-        restTemplate = this.getBean(RestTemplate.class);
-        userService = this.getBean(UserService.class);
+    public RemoveFriendship() {
+        restTemplate = this.getBean("restTemplate", RestTemplate.class);
     }
 
     @Override
@@ -32,7 +30,7 @@ public class DeclineFriendRequest extends ClientPacket {
 
             User user = wsClient.getUser();
 
-            FriendshipResponse response = this.declineRequest(new FriendshipRequest(
+            FriendshipResponse response = this.removeFriendship(new FriendshipRequest(
                     -1,
                     user.getId(),
                     id
@@ -43,7 +41,7 @@ public class DeclineFriendRequest extends ClientPacket {
             log.error(e.getMessage());
         }
     }
-    private FriendshipResponse declineRequest(FriendshipRequest message) {
+    private FriendshipResponse removeFriendship(FriendshipRequest message) {
         return restTemplate.getForObject(
                 "http://MESSENGER/api/v1/messenger/friendship/delete/{senderId}/{destinationId}",
                 FriendshipResponse.class,

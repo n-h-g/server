@@ -46,7 +46,8 @@ public class FriendRequest extends ClientPacket {
 
             userService.getActiveUser(id).getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
                     new JSONObject()
-                            .put("data", user.getUsername() + " ti ha inviato una richiesta di amicizia")
+                            .put("message", user.getUsername() + " ti ha inviato una richiesta di amicizia")
+                            .put("goalId", destination.getId())
             ));
 
         }catch(Exception e) {
