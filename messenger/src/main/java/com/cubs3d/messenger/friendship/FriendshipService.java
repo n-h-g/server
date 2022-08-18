@@ -1,5 +1,6 @@
 package com.cubs3d.messenger.friendship;
 
+import com.cubs3d.messenger.dto.FriendResponse;
 import com.cubs3d.messenger.dto.FriendshipRequest;
 import com.cubs3d.messenger.dto.FriendshipResponse;
 import lombok.AllArgsConstructor;
@@ -21,22 +22,28 @@ public class FriendshipService {
      * @param friendshipRequest the request
      * @return the friends list
      */
-    public FriendshipResponse addFriend(FriendshipRequest friendshipRequest) {
+    public FriendResponse addFriend(FriendshipRequest friendshipRequest) {
         if (!existsUserWithId(friendshipRequest.senderId()) || !existsUserWithId(friendshipRequest.senderId())) {
             throw new IllegalArgumentException("Invalid ids");
+        }
+
+        boolean isPending = true;
+
+        List<Friendship> friendshipKey = this.friendshipRepository.findBySenderIdOrDestinationId(friendshipRequest.senderId(), friendshipRequest.destinationId());
+
+        if(!friendshipKey.isEmpty()) {
+            isPending = false;
         }
 
         Friendship friendship = Friendship.builder()
                 .senderId(friendshipRequest.senderId())
                 .destinationId(friendshipRequest.destinationId())
-                .pending(true)
+                .pending(isPending)
                 .build();
 
         friendshipRepository.save(friendship);
 
-        List<Friendship> friendships = friendshipRepository.findBySenderId(friendshipRequest.senderId());
-
-        return new FriendshipResponse(friendships);
+        return new FriendResponse(friendshipRequest.friendshipId(), friendshipRequest.senderId(), friendshipRequest.destinationId(), isPending);
     }
 
     /**
@@ -50,7 +57,7 @@ public class FriendshipService {
             throw new IllegalArgumentException("Invalid ids");
         }
 
-        this.friendshipRepository.deleteBySenderIdAndDestinationId(friendshipRequest.senderId(), friendshipRequest.destinationId());
+        this.friendshipRepository.deleteBySenderIdOrDestinationId(friendshipRequest.senderId(), friendshipRequest.destinationId());
 
         return new FriendshipResponse(null);
     }

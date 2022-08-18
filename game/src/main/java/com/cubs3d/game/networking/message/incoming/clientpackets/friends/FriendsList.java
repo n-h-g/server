@@ -3,13 +3,11 @@ package com.cubs3d.game.networking.message.incoming.clientpackets.friends;
 import com.cubs3d.game.dto.*;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
-import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.user.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;

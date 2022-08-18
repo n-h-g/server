@@ -1,9 +1,6 @@
 package com.cubs3d.messenger.friendship;
 
-import com.cubs3d.messenger.dto.ChatMessageRequest;
-import com.cubs3d.messenger.dto.ChatMessageResponse;
-import com.cubs3d.messenger.dto.FriendshipRequest;
-import com.cubs3d.messenger.dto.FriendshipResponse;
+import com.cubs3d.messenger.dto.*;
 import com.cubs3d.messenger.service.ChatMessageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +27,7 @@ public class FriendshipController {
     }
 
     @GetMapping("/add/{senderId}/{destinationId}")
-    public FriendshipResponse addFriend(FriendshipRequest friendshipRequest) {
+    public FriendResponse addFriend(FriendshipRequest friendshipRequest) {
         return friendshipService.addFriend(friendshipRequest);
     }
 

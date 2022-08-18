@@ -22,4 +22,7 @@ public interface FriendshipRepository extends CrudRepository<Friendship, Integer
 
     @Transactional
     void deleteBySenderIdAndDestinationId(Integer senderId, Integer destinationId);
+
+    @Transactional
+    void deleteBySenderIdOrDestinationId(Integer senderId, Integer destinationId);
 }

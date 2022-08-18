@@ -27,6 +27,7 @@ public final class OutgoingPacketHeaders {
     public static final int LoadItems = 18;
 
     public static final int FriendsList = 20;
+    public static final int UpdateFriendStatus = 21;
 
     //# Generic
     public static final int BubbleAlert = 101;
