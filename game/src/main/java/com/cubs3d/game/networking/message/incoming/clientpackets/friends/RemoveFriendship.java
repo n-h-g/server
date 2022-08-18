@@ -42,14 +42,20 @@ public class RemoveFriendship extends ClientPacket {
                     id
             ));
 
-            ServerPacket packet = new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
+            ServerPacket packet1 = new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
                     new JSONObject()
                             .put("friend", destination.toJson())
                             .put("action", FriendAction.DELETE_FRIEND)
             );
 
-            user.getClient().sendMessage(packet);
-            userService.getActiveUser(id).getClient().sendMessage(packet);
+            ServerPacket packet2 = new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
+                    new JSONObject()
+                            .put("friend", user.toJson()
+                            .put("action", FriendAction.DELETE_FRIEND)
+            ));
+
+            user.getClient().sendMessage(packet1);
+            userService.getActiveUser(id).getClient().sendMessage(packet2);
 
 
         } catch(Exception e) {
