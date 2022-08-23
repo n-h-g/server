@@ -23,11 +23,13 @@ public final class OutgoingPacketHeaders {
     //# User
     public static final int UpdateUserInformation = 17;
 
-    //# Items
-    public static final int LoadItems = 18;
-
+    //# Friends
     public static final int FriendsList = 20;
     public static final int UpdateFriendStatus = 21;
+
+    //# Items
+    public static final int LoadItems = 18;
+    public static final int LoadRoomItems = 23;
 
     //# Generic
     public static final int BubbleAlert = 101;

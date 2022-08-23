@@ -5,6 +5,7 @@ import com.cubs3d.game.room.Room;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.utils.PostgreSQLEnumType;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Type;
@@ -72,7 +73,7 @@ public class Item implements JsonSerializable, Runnable {
                 .put("id", Id)
                 .put("name", name)
                 .put("baseName", baseName)
-                .put("room_id", room != null ? room.getId() : "0"  )
+                .put("room_id", room != null ? room.getId() : "-1"  )
                 .put("item_type", itemType.getValue());
     }
 

@@ -1,8 +1,10 @@
 package com.cubs3d.game.room;
 
 import com.cubs3d.game.GameConfig;
+import com.cubs3d.game.item.Item;
 import com.cubs3d.game.user.User;
 
+import com.cubs3d.game.utils.Int2;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -128,6 +130,23 @@ public class RoomService {
         if (user.getEntity() == null) return;
 
         userExitRoom(user, user.getEntity().getRoom().getId());
+    }
+
+    /**
+     * Place item inside the room at position.
+     *
+     * @param item the item
+     * @param room the current room
+     * @param position the item position
+     */
+    public void placeItem(@NonNull Item item, @NonNull Room room, Int2 position) {
+        room.addItem(item);
+
+        if(position.getX() == room.getDoorX() && position.getY() == room.getDoorY()) {
+            return;
+        }
+
+        item.setRoom(room);
     }
 
     /**

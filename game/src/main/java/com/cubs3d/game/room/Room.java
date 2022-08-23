@@ -62,7 +62,7 @@ public class Room implements Runnable, JsonSerializable {
     @Type(type = "pgsql_enum")
     private Rotation doorRotation;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     private List<Item> items;
 
     @Transient
@@ -158,6 +158,15 @@ public class Room implements Runnable, JsonSerializable {
      */
     public boolean isEmpty() {
         return users.count() == 0;
+    }
+
+    /**
+     + Place the item in the room and put it into a map.
+     *
+     * @param item the item placed in the room
+     */
+    public void addItem(@NonNull Item item) {
+        this.items.add(item);
     }
 
     /**
