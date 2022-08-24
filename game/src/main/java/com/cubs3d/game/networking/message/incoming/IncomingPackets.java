@@ -4,9 +4,10 @@ import com.cubs3d.game.networking.message.incoming.clientpackets.*;
 import com.cubs3d.game.networking.message.incoming.clientpackets.friends.AddFriendship;
 import com.cubs3d.game.networking.message.incoming.clientpackets.friends.FriendsList;
 import com.cubs3d.game.networking.message.incoming.clientpackets.friends.RemoveFriendship;
-import com.cubs3d.game.networking.message.incoming.clientpackets.items.RoomPlaceItem;
+import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.items.RoomPickupItem;
+import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.items.RoomPlaceItem;
 import com.cubs3d.game.networking.message.incoming.clientpackets.navigator.*;
-import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.items.RequestLoadItems;
+import com.cubs3d.game.networking.message.incoming.clientpackets.items.RequestLoadItems;
 import com.cubs3d.game.networking.message.incoming.clientpackets.rooms.users.*;
 import com.cubs3d.game.networking.message.incoming.clientpackets.users.UpdateUser;
 
@@ -31,6 +32,7 @@ public final class IncomingPackets {
             new Pair(16, AddFriendship.class),
             new Pair(18, RemoveFriendship.class),
             new Pair(19, FriendsList.class),
+            new Pair(23, RoomPickupItem.class),
             new Pair(24, RoomPlaceItem.class)
 
    };

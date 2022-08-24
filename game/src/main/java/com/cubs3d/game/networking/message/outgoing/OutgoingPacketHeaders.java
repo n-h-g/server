@@ -30,6 +30,8 @@ public final class OutgoingPacketHeaders {
     //# Items
     public static final int LoadItems = 18;
     public static final int LoadRoomItems = 23;
+    public static final int RemoveItem = 24;
+    public static final int AddItem = 25;
 
     //# Generic
     public static final int BubbleAlert = 101;

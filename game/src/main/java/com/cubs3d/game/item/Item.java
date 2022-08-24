@@ -3,7 +3,9 @@ package com.cubs3d.game.item;
 import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.user.User;
+import com.cubs3d.game.utils.Int2;
 import com.cubs3d.game.utils.PostgreSQLEnumType;
+import com.cubs3d.game.utils.Rotation;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -53,6 +55,12 @@ public class Item implements JsonSerializable, Runnable {
     @Column(columnDefinition = "itemType default 'FLOOR_ITEM'", nullable = false)
     @Type(type = "pgsql_enum")
     private ItemType itemType;
+
+    @Transient
+    private Rotation rotation;
+
+    @Transient
+    private Int2 position;
 
     public Item(Room room, User owner) {
         this.room = room;

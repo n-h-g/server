@@ -1,9 +1,11 @@
-package com.cubs3d.game.networking.message.incoming.clientpackets.items;
+package com.cubs3d.game.networking.message.incoming.clientpackets.rooms.items;
 
 import com.cubs3d.game.item.Item;
 import com.cubs3d.game.item.ItemService;
 import com.cubs3d.game.networking.WebSocketClient;
 import com.cubs3d.game.networking.message.incoming.ClientPacket;
+import com.cubs3d.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.cubs3d.game.networking.message.outgoing.ServerPacket;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.room.RoomService;
 import com.cubs3d.game.user.User;
@@ -36,8 +38,12 @@ public class RoomPlaceItem extends ClientPacket {
 
             if(item.isEmpty()) return;
 
+            item.get().setRoom(user.getEntity().getRoom());
+
             Item itemToAdd = itemService.saveItem(item.get(), user.getEntity().getRoom());
             roomService.placeItem(itemToAdd, user.getEntity().getRoom(), position);
+
+            user.getEntity().getRoom().getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.AddItem, itemToAdd));
 
         } catch(Exception e) {
             log.error(e.getMessage());

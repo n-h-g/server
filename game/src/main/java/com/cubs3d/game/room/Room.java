@@ -170,6 +170,15 @@ public class Room implements Runnable, JsonSerializable {
     }
 
     /**
+     + Remove the item from map
+     *
+     * @param item the item placed in the room
+     */
+    public void removeItem(@NonNull Item item) {
+        this.items.remove(item);
+    }
+
+    /**
      * Set layout and create RoomLayout from the new layout.
      *
      * @param layout string representing the layout

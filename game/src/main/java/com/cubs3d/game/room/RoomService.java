@@ -150,6 +150,17 @@ public class RoomService {
     }
 
     /**
+     * Pick up item and put it into inventory
+     *
+     * @param item the item
+     * @param room the current room
+     */
+    public void pickupItem(@NonNull Item item, @NonNull Room room) {
+        room.removeItem(item);
+        item.setRoom(null);
+    }
+
+    /**
      * Check the room: if it doesn't contain users after '<code>SecondsBeforeEmptyRoomGetsUnloaded</code>' seconds
      * it will check again that it's not empty then stop the room task.
      *

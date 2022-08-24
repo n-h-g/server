@@ -1,4 +1,4 @@
-package com.cubs3d.game.networking.message.incoming.clientpackets.rooms.items;
+package com.cubs3d.game.networking.message.incoming.clientpackets.items;
 
 import com.cubs3d.game.item.Item;
 import com.cubs3d.game.item.ItemService;
