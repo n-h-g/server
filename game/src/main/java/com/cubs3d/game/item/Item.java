@@ -4,6 +4,7 @@ import com.cubs3d.game.networking.message.outgoing.JsonSerializable;
 import com.cubs3d.game.room.Room;
 import com.cubs3d.game.user.User;
 import com.cubs3d.game.utils.Int2;
+import com.cubs3d.game.utils.Int3;
 import com.cubs3d.game.utils.PostgreSQLEnumType;
 import com.cubs3d.game.utils.Rotation;
 import lombok.Getter;
@@ -59,8 +60,11 @@ public class Item implements JsonSerializable, Runnable {
     @Transient
     private Rotation rotation;
 
-    @Transient
-    private Int2 position;
+    private int x;
+
+    private int y;
+
+    private int z;
 
     public Item(Room room, User owner) {
         this.room = room;
@@ -81,6 +85,9 @@ public class Item implements JsonSerializable, Runnable {
                 .put("id", Id)
                 .put("name", name)
                 .put("baseName", baseName)
+                .put("x", x)
+                .put("y", y)
+                .put("z", z)
                 .put("room_id", room != null ? room.getId() : "-1"  )
                 .put("item_type", itemType.getValue());
     }
@@ -88,5 +95,10 @@ public class Item implements JsonSerializable, Runnable {
     @Override
     public void run() {
 
+    }
+
+
+    public Int3 getPosition() {
+        return new Int3(x, y, z);
     }
 }

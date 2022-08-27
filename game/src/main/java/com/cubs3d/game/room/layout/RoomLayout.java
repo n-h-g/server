@@ -95,5 +95,14 @@ public class RoomLayout implements Layout {
         return tiles[x][y];
     }
 
+    /**
+     * Check wheter room tile is valid
+     * @param int x
+     * @param int y
+     * @return true if exist
+     */
+    public boolean isTileValid(int x, int y) throws IndexOutOfBoundsException {
+        return tiles[x][y] != null && tiles[x][y].isWalkable();
+    }
 
 }
