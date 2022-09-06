@@ -160,6 +160,7 @@ public class RoomService {
     public void pickupItem(@NonNull Item item, @NonNull Room room) {
         room.removeItem(item);
         item.setRoom(null);
+        this.roomRepository.save(room);
     }
 
     /**

@@ -30,16 +30,16 @@ public class RoomPickupItem extends ClientPacket {
 
         int itemId = body.getInt("id");
 
-        Optional<Item> item = this.itemService.getItemById(itemId);
+        Item item = user.getEntity().getRoom().getItem(itemId);
 
-        if(item.isEmpty()) return;
+        if(item == null) return;
 
-        item.get().setRoom(null);
+        item.setRoom(null);
 
-        roomService.pickupItem(item.get(), user.getEntity().getRoom());
-        itemService.saveItem(item.get(), null);
+        roomService.pickupItem(item, user.getEntity().getRoom());
+        itemService.saveItem(item, null);
 
-        user.getEntity().getRoom().getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RemoveItem, item.get()));
+        user.getEntity().getRoom().getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RemoveItem, item));
 
     } catch(Exception e) {
         log.error(e.getMessage());

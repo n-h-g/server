@@ -21,6 +21,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -169,13 +170,23 @@ public class Room implements Runnable, JsonSerializable {
         this.items.add(item);
     }
 
+    public Item getItem(@NonNull Integer itemId) {
+        for(Item item : items) {
+            if(item.getId() == itemId) {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     /**
      + Remove the item from map
      *
      * @param item the item placed in the room
      */
     public void removeItem(@NonNull Item item) {
-        this.items.remove(item);
+       items.removeIf(i -> Objects.equals(i.getId(), item.getId()));
     }
 
     /**
