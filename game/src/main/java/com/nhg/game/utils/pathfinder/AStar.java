@@ -93,6 +93,12 @@ public class AStar {
                         continue;
                     }
 
+                    if(!adjTile.isWalkable()) {
+                        closedList.add(adjTile);
+                        openQueue.remove(adjTile);
+                        continue;
+                    }
+
                     boolean isDiagonalMovement = isDiagonalMovement(current.getPosition().ToInt2XY(), adjPosition);
 
                     tentative_gScore = current.getGCost()

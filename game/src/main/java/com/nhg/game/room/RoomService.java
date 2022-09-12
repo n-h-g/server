@@ -5,6 +5,7 @@ import com.nhg.game.item.Item;
 import com.nhg.game.user.User;
 
 import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.pathfinder.Tile;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -145,6 +146,8 @@ public class RoomService {
         if(position.getX() == room.getDoorX() && position.getY() == room.getDoorY()) {
             return false;
         }
+
+        room.getRoomLayout().getTile(position.getX(), position.getY()).setState(Tile.State.CLOSE);
 
         item.setRoom(room);
 

@@ -32,6 +32,10 @@ public class UserLookAtPoint extends ClientPacket {
             int x = body.getInt("x");
             int y = body.getInt("y");
 
+            if(x == user.getEntity().getPosition().getX() && y == user.getEntity().getPosition().getY()) {
+                return;
+            }
+
             Rotation rotation = Rotation.CalculateRotation(new Int2(user.getEntity().getPosition().getX(), user.getEntity().getPosition().getY()), new Int2(x, y));
             user.getEntity().setBodyRotation(rotation);
             user.getEntity().setHeadRotation(rotation);
