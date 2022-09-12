@@ -141,6 +141,7 @@ public class RoomService {
      * @param position the item position
      */
     public boolean placeItem(@NonNull Item item, @NonNull Room room, Int3 position) {
+
         room.addItem(item);
 
         if(position.getX() == room.getDoorX() && position.getY() == room.getDoorY()) {
@@ -162,6 +163,7 @@ public class RoomService {
      */
     public void pickupItem(@NonNull Item item, @NonNull Room room) {
         room.removeItem(item);
+        room.getRoomLayout().getTile(item.getX(), item.getY()).setState(Tile.State.OPEN);
         item.setRoom(null);
         this.roomRepository.save(room);
     }
