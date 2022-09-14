@@ -152,6 +152,8 @@ public class RoomService {
 
         item.setRoom(room);
 
+        item.setPosition(position);
+
         return true;
     }
 

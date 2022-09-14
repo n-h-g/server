@@ -1,0 +1,11 @@
+image: maven:3.3.3-jdk-7
+
+build:
+  stage: build
+  script:
+    - "mvn clean install -Dmaven.test.skip=true"
+  artifacts:
+    expire_in: 1 week
+    when: on_success
+    paths:
+      - target/*.jar

@@ -40,21 +40,20 @@ public class RoomPlaceItem extends ClientPacket {
             if(item.isEmpty()) return;
 
             item.get().setRoom(user.getEntity().getRoom());
-            item.get().setPosition(position);
 
-            Item itemToAdd = itemService.saveItem(item.get(), user.getEntity().getRoom());
-            if(!roomService.placeItem(itemToAdd, user.getEntity().getRoom(), position)) {
+
+            if(!roomService.placeItem(item.get(), user.getEntity().getRoom(), position)) {
                 user.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
                         new JSONObject()
                                 .put("message", "Impossibile posizionare il furno.")
                                 .put("action", BubbleAlertType.Default)
                                 .put("goalId", -1)
                 ));
-                return;
+            } else {
+                Item itemToAdd = itemService.saveItem(item.get(), user.getEntity().getRoom());
+                user.getEntity().getRoom().getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.AddItem, itemToAdd));
             }
 
-
-            user.getEntity().getRoom().getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.AddItem, itemToAdd));
 
         } catch(Exception e) {
             log.error(e.getMessage());
