@@ -7,7 +7,7 @@ import lombok.Setter;
 
 public class Tile implements Comparable<Tile> {
 
-    public enum State { OPEN, CLOSE };
+    public enum State { OPEN, CLOSE, BLOCKED };
 
     @Getter
     @Setter
