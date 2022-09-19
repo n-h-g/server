@@ -231,7 +231,6 @@ public class Room implements Runnable, JsonSerializable {
         }
 
     }
-
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
