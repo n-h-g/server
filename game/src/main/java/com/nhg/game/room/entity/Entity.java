@@ -96,6 +96,7 @@ public abstract class Entity implements JsonSerializable  {
      */
     protected void move() {
         if (calculatedPath == null || calculatedPath.isEmpty()) {
+            this.room.getRoomLayout().getTile(this.position.getX(), this.position.getY()).setState(Tile.State.CLOSE);
             if (actions.contains(Action.MOVE)) {
                 removeAction(Action.MOVE);
                 update();
@@ -109,6 +110,7 @@ public abstract class Entity implements JsonSerializable  {
 
         bodyRotation = Rotation.CalculateRotation(position.ToInt2XY(), nextPosition.ToInt2XY());
 
+        this.room.getRoomLayout().getTile(this.position.getX(), this.position.getY()).setState(Tile.State.OPEN);
         position = nextPosition;
         update();
     }

@@ -148,7 +148,13 @@ public class RoomService {
             return false;
         }
 
-        room.getRoomLayout().getTile(position.getX(), position.getY()).setState(Tile.State.CLOSE);
+        Tile tile = room.getRoomLayout().getTile(position.getX(), position.getY());
+
+        if(!tile.isWalkable()) {
+            return false;
+        }
+
+        tile.setState(Tile.State.CLOSE);
 
         item.setRoom(room);
 
