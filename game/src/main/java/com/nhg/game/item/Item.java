@@ -55,7 +55,7 @@ public class Item implements JsonSerializable, Runnable {
     @Type(type = "pgsql_enum")
     private ItemType itemType;
 
-    @Transient
+    @Column(columnDefinition = "integer default 0")
     private Rotation rotation;
 
     @Column(columnDefinition = "integer default 0")
@@ -98,7 +98,9 @@ public class Item implements JsonSerializable, Runnable {
 
     }
 
+    public void cycle() {
 
+    }
     public Int3 getPosition() {
         return new Int3(x, y, z);
     }

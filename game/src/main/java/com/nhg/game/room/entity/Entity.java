@@ -26,7 +26,7 @@ import java.util.*;
  * @see Room
  */
 @Slf4j
-public abstract class Entity implements JsonSerializable {
+public abstract class Entity implements JsonSerializable  {
 
     @Getter
     private final Integer id;

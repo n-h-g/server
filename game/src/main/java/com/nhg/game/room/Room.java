@@ -64,7 +64,7 @@ public class Room implements Runnable, JsonSerializable {
     private Rotation doorRotation;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
-    private List<Item> items;
+    private final List<Item> items;
 
     @Transient
     private RoomLayout roomLayout;
@@ -227,6 +227,14 @@ public class Room implements Runnable, JsonSerializable {
                 if (entity == null) continue;
 
                 entity.cycle();
+            }
+        }
+
+        synchronized (items) {
+            for(Item item : items) {
+                if(item == null) continue;
+
+                item.cycle();
             }
         }
 

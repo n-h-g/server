@@ -34,4 +34,5 @@ public class UserEntity extends Entity {
                 .put("look", user.getLook())
                 .put("gender", user.getGender());
     }
+
 }
