@@ -51,7 +51,7 @@ public class User implements JsonSerializable {
     @Column(nullable = false, columnDefinition = "varchar(255) default 'hd-180-1.ch-255-66.lg-280-110.sh-305-62.ha-1012-110.hr-828-61'")
     private String look;
 
-    @Column(nullable = false, columnDefinition = "varchar(255) default 'Welcome to NHG'")
+    @Column(columnDefinition = "varchar(255) default 'Welcome to NHG'")
     private String motto;
 
     @Column(columnDefinition = "integer default 0")
@@ -89,5 +89,11 @@ public class User implements JsonSerializable {
                 .put("credits", this.credits);
 
 
+    }
+
+    public User(String username, String motto, String look) {
+        this.username = username;
+        this.motto = motto;
+        this.look = look;
     }
 }

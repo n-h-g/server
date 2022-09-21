@@ -36,4 +36,5 @@ public final class OutgoingPacketHeaders {
     //# Generic
     public static final int BubbleAlert = 101;
     public static final int DisconnectClient = 102;
+    public static final int HotelView = 103;
 }

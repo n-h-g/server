@@ -6,6 +6,7 @@ import com.nhg.game.utils.pathfinder.Tile;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Random;
 import java.util.stream.Stream;
 
 @Slf4j

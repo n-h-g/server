@@ -42,6 +42,10 @@ public class UserService {
         this.activeUsers.remove(user.getId());
     }
 
+    public void createUser(User user) {
+        this.userRepository.save(user);
+    }
+
     /**
      * Retrieve a online user
      * @param id

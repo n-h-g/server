@@ -72,7 +72,7 @@ public abstract class Entity implements JsonSerializable  {
         this.calculatedPath = new LinkedList<>();
         this.aStar = new AStar(true);
 
-        this.position = new Int3(0,0, 0);
+        this.position = new Int3(room.getDoorX(),room.getDoorY(), 0);
         this.destination = new Int2(0,0);
 
         this.actions = new HashSet<>();
@@ -96,6 +96,7 @@ public abstract class Entity implements JsonSerializable  {
      */
     protected void move() {
         if (calculatedPath == null || calculatedPath.isEmpty()) {
+
             this.room.getRoomLayout().getTile(this.position.getX(), this.position.getY()).setState(Tile.State.CLOSE);
             if (actions.contains(Action.MOVE)) {
                 removeAction(Action.MOVE);
@@ -104,6 +105,7 @@ public abstract class Entity implements JsonSerializable  {
 
             return;
         }
+
 
         addAction(Action.MOVE);
         Int3 nextPosition = calculatedPath.poll().getPosition();

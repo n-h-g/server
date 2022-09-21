@@ -1,11 +1,11 @@
 package com.nhg.game.user;
 
+import com.nhg.game.utils.Gender;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 @Slf4j
 @AllArgsConstructor
@@ -18,5 +18,11 @@ public class UserController {
     @GetMapping("/exists_with_id/{id}")
     public boolean userExists(@PathVariable Integer id) {
         return userService.existsWithId(id);
+    }
+
+    @PostMapping("/create/{username}/{motto}/{look}")
+    public void createUser(@PathVariable String username, @PathVariable String motto, @PathVariable String look) {
+       User user = new User(username, motto, look);
+       userService.createUser(user);
     }
 }
