@@ -1,5 +1,6 @@
 package com.nhg.game.room;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class RoomController {
 
     private final RoomService roomService;
 
+    @ApiOperation(value = "Check if a room with id exists")
     @GetMapping("/exists_with_id/{id}")
     public boolean roomExists(@PathVariable Integer id) {
         return roomService.existsWithId(id);
