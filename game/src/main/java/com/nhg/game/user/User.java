@@ -1,5 +1,6 @@
 package com.nhg.game.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nhg.game.item.Item;
 import com.nhg.game.networking.Client;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
@@ -60,9 +61,11 @@ public class User implements JsonSerializable {
     /**
      * Rooms owned by the user
      */
+    @JsonIgnore
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Room> rooms;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Item> items;
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -96,4 +97,7 @@ public class UserService {
         return userRepository.existsById(id);
     }
 
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
 }
