@@ -1,6 +1,7 @@
 package com.nhg.game.gateway;
 
 import com.nhg.game.dto.TokenResponse;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ public class Gateway {
 
     private final RestTemplate restTemplate;
 
+    @ApiOperation(value = "Generate JWT token for user")
     @GetMapping("/api/v1/account/generate_token/{username}")
     public TokenResponse generateToken(@PathVariable String username) {
 
