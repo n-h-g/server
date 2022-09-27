@@ -26,6 +26,7 @@ public final class OutgoingPacketHeaders {
     //# Friends
     public static final int FriendsList = 20;
     public static final int UpdateFriendStatus = 21;
+    public static final int UserSearchFiltering = 22;
 
     //# Items
     public static final int LoadItems = 18;
