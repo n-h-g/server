@@ -1,6 +1,7 @@
 package com.nhg.game.user;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class UserService {
      **/
     public void userJoin(User user) {
         user.setOnline(true);
-        if(!this.activeUsers.containsKey(user.getId())) {
+        if (!this.activeUsers.containsKey(user.getId())) {
             this.activeUsers.put(user.getId(), user);
         }
         this.userRepository.save(user);
@@ -35,6 +36,7 @@ public class UserService {
 
     /**
      * Remove user from the game.
+     *
      * @param user
      */
     public void userLeave(User user) {
@@ -49,11 +51,12 @@ public class UserService {
 
     /**
      * Retrieve a online user
+     *
      * @param id
      * @return User
      */
     public User getActiveUser(Integer id) {
-        if(this.activeUsers.containsKey(id)) {
+        if (this.activeUsers.containsKey(id)) {
             return this.activeUsers.get(id);
         }
 
@@ -62,6 +65,7 @@ public class UserService {
 
     /**
      * Check if a user is inside the map.
+     *
      * @param id
      * @return boolean
      */
@@ -85,7 +89,9 @@ public class UserService {
      * @param id user's id.
      * @return the User if it exists, null otherwise.
      */
-    public User getUserById(int id) { return userRepository.findById(id).orElse(null); }
+    public User getUserById(int id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
     /**
      * Check if the user with the given id exists.
@@ -99,5 +105,11 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    public List<User> filterUser(@NonNull String username) {
+        List<User> users = this.userRepository.findAll();
+
+        return users.stream().filter(user -> user.getUsername().contains(username)).toList();
     }
 }
