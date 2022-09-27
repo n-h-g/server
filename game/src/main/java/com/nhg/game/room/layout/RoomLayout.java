@@ -1,19 +1,15 @@
 package com.nhg.game.room.layout;
 
-import com.nhg.game.room.models.ModelService;
 import com.nhg.game.utils.Int3;
 import com.nhg.game.utils.pathfinder.Layout;
 import com.nhg.game.utils.pathfinder.Tile;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Random;
 import java.util.stream.Stream;
 
 @Slf4j
 public class RoomLayout implements Layout {
-
-    private ModelService modelService;
 
     private Tile[][] tiles;
 
