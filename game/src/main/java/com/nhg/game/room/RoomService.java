@@ -212,8 +212,16 @@ public class RoomService {
      */
     public Room getRoomById(Integer id) {
         return activeRooms.containsKey(id)
-            ? activeRooms.get(id)
-            : roomRepository.findById(id).orElse(null);
+                ? activeRooms.get(id)
+                : roomRepository.findById(id).orElse(null);
+    }
+
+    public void createRoom(@NonNull Room room) {
+
+        //TODO check for room name, desc
+
+        this.roomRepository.save(room);
+
     }
 
     /**

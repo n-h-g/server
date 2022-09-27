@@ -6,9 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Path;
 import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
@@ -29,13 +27,5 @@ public class UserController {
     public void createUser(@PathVariable String username, @PathVariable String motto, @PathVariable String look) {
        User user = new User(username, motto, look);
        userService.createUser(user);
-    }
-
-    @ApiOperation(value = "Get users by filtering username")
-    @GetMapping("/filter/{username}")
-    public List<User> filterUser(@PathVariable String username) {
-        List<User> users = userService.getAllUsers();
-
-        return users.stream().filter(user -> user.getUsername().contains(username)).toList();
     }
 }

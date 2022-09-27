@@ -99,6 +99,18 @@ public class Room implements Runnable, JsonSerializable {
         this.setLayout(layout);
     }
 
+    public Room(String name, User owner, String layout ,int doorX, int doorY, int doorRotation) {
+        this();
+
+        this.name = name;
+        this.owner = owner;
+        this.doorX = doorX;
+        this.doorY = doorY;
+        this.doorRotation = Rotation.intToRotation(doorRotation);
+
+        this.setLayout(layout);
+    }
+
     /**
      * The specified user enters the room and is added to the user group in the room.
      * Then an entity is associated with the user, created and added to the entities' collection.
