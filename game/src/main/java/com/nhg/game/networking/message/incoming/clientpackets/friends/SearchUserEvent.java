@@ -31,7 +31,11 @@ public class SearchUserEvent extends ClientPacket {
 
             String username = body.getString("username");
 
-            List<User> userList = userService.filterUser(username);
+            User user = wsClient.getUser();
+
+            List<User> users = userService.filterUser(username);
+
+            List<User> userList = users.stream().filter(fUser -> !fUser.getUsername().equals(user.getUsername())).toList();
 
             wsClient.sendMessage(new ServerPacket(
                     OutgoingPacketHeaders.UserSearchFiltering,
