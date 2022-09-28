@@ -216,12 +216,28 @@ public class RoomService {
                 : roomRepository.findById(id).orElse(null);
     }
 
-    public void createRoom(@NonNull Room room) {
-
-        //TODO check for room name, desc
-
+    public void updateRoom(@NonNull Room room) {
+        this.activeRooms.replace(room.getId(), room);
         this.roomRepository.save(room);
+    }
 
+    /**
+     * Create a new room entity
+     * @param room
+     */
+    public void createRoom(@NonNull Room room) {
+        //TODO check for room name, desc
+        this.roomRepository.save(room);
+    }
+
+    /**
+     * Delete a room
+     * @param room
+     */
+    public void deleteRoom(@NonNull Room room) {
+        room.dispose();
+        this.activeRooms.remove(room.getId());
+        this.roomRepository.delete(room);
     }
 
     /**

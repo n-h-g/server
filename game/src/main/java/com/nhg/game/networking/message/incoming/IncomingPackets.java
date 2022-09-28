@@ -6,6 +6,7 @@ import com.nhg.game.networking.message.incoming.clientpackets.friends.FriendsLis
 import com.nhg.game.networking.message.incoming.clientpackets.friends.RemoveFriendship;
 import com.nhg.game.networking.message.incoming.clientpackets.friends.SearchUserEvent;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.CreateRoom;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.SaveRoomSettings;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.RoomPickupItem;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.RoomPlaceItem;
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.*;
@@ -37,8 +38,8 @@ public final class IncomingPackets {
             new Pair(20, SearchUserEvent.class),
             new Pair(23, RoomPickupItem.class),
             new Pair(24, RoomPlaceItem.class),
-            new Pair(36, CreateRoom.class)
-
+            new Pair(36, CreateRoom.class),
+            new Pair(44, SaveRoomSettings.class)
    };
 
 }

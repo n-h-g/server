@@ -38,23 +38,8 @@ public class CreateRoom extends ClientPacket {
             Room room = new Room(name, user, layout, door_x, door_y, door_dir);
 
             roomService.createRoom(room);
-
-            if (user.getEntity() != null) {
-                roomService.userExitRoom(user);
-            }
-
-            if(!roomService.userEnterRoom(user, room.getId())) {
-                log.debug("User "+ user.getId() + " entered room with id " + room.getId() + " but it doesn't exist.");
-                return;
-            }
-
             client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomEntities, room.getEntities().values()));
 
-            room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, user.getEntity()));
-
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomItems, user.getEntity().getRoom().getItems()));
 
         }catch (Exception e) {
             log.debug(e.getMessage());

@@ -43,6 +43,11 @@ public class UserGroup implements Iterable<User> {
     }
 
     /**
+     *  Clear the users map
+     */
+    public void clear() { users.clear(); }
+
+    /**
      * Returns the user to with the specified id, or null if this group does not contain a user with that id.
      *
      * @param id the id of the user to be returned.
