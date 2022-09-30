@@ -41,7 +41,10 @@ public class FriendsList extends ClientPacket {
 
 
             for (FriendResponse friendData : response.friendships()) {
-                User friend = this.userService.getUserById(friendData.destinationId());
+
+                int id = friendData.destinationId() == user.getId() ? friendData.senderId() : friendData.destinationId();
+
+                User friend = this.userService.getUserById(id);
                 friends.add(friend);
             }
 

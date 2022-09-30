@@ -34,7 +34,7 @@ public class UserController {
     @ApiOperation(value = "Get users by filtering username")
     @GetMapping("/filter/{username}")
     public List<User> filterUser(@PathVariable String username) {
-        List<User> users = userService.getAllUsers();
+       List<User> users = userService.getAllUsers();
 
         return users.stream().filter(user -> user.getUsername().contains(username)).toList();
     }

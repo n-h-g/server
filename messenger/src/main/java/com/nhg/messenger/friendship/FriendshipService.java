@@ -4,6 +4,7 @@ import com.nhg.messenger.dto.FriendResponse;
 import com.nhg.messenger.dto.FriendshipRequest;
 import com.nhg.messenger.dto.FriendshipResponse;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,7 +18,7 @@ public class FriendshipService {
     private final RestTemplate restTemplate;
 
     /**
-     *  Add a friendship
+     * Add a friendship
      *
      * @param friendshipRequest the request
      * @return the friends list
@@ -27,27 +28,26 @@ public class FriendshipService {
             throw new IllegalArgumentException("Invalid ids");
         }
 
-        boolean isPending = true;
+        boolean pending = true;
 
-        List<Friendship> friendshipKey = this.friendshipRepository.findBySenderIdOrDestinationId(friendshipRequest.senderId(), friendshipRequest.destinationId());
+        Friendship friendship = this.getFriendshipBySenderOrDestination(friendshipRequest.senderId(), friendshipRequest.destinationId());
 
-        if(!friendshipKey.isEmpty()) {
-            isPending = false;
+        if(friendship != null) {
+            pending = false;
+        } else {
+            friendship = Friendship.builder()
+                    .senderId(friendshipRequest.senderId())
+                    .destinationId(friendshipRequest.destinationId()).build();
         }
 
-        Friendship friendship = Friendship.builder()
-                .senderId(friendshipRequest.senderId())
-                .destinationId(friendshipRequest.destinationId())
-                .pending(isPending)
-                .build();
-
+        friendship.setPending(pending);
         friendshipRepository.save(friendship);
 
-        return new FriendResponse(friendshipRequest.friendshipId(), friendshipRequest.senderId(), friendshipRequest.destinationId(), isPending);
+        return new FriendResponse(friendship.getId().intValue(), friendship.getSenderId(), friendship.getDestinationId(), friendship.isPending());
     }
 
     /**
-     *  Remove friendship
+     * Remove friendship
      *
      * @param friendshipRequest the request
      * @return FriendshipResponse
@@ -63,17 +63,16 @@ public class FriendshipService {
     }
 
     /**
-     *  Confirm a friendship
+     * Confirm a friendship
      *
-     * @param friendshipId the friendship id
+     * @param friendshipRequest the request
      * @return the friends list
      */
-    public FriendshipResponse acceptFriendship(Integer friendshipId) {
-        Optional<Friendship> friendships = friendshipRepository.findById(friendshipId);
+    public FriendshipResponse acceptFriendship(FriendshipRequest friendshipRequest) {
 
-        if(friendships.isEmpty()) throw new IllegalArgumentException("Invalid friendship");
+        Friendship friendship = this.friendshipRepository.findBySenderIdAndDestinationId(friendshipRequest.senderId(), friendshipRequest.destinationId());
 
-        Friendship friendship = friendships.get();
+        if (friendship == null) throw new IllegalArgumentException("Invalid friendship");
 
         // accept the friend request
         friendship.setPending(false);
@@ -81,7 +80,22 @@ public class FriendshipService {
         friendshipRepository.save(friendship);
 
         return new FriendshipResponse(null);
+    }
 
+    /**
+     * Get 1:1 relationship between two friends
+     * @param senderId
+     * @param destinationId
+     * @return friendship or null if the friendship does not exist.
+     */
+    public Friendship getFriendshipBySenderOrDestination(@NonNull Integer senderId, @NonNull Integer destinationId) {
+        Friendship friendship = this.friendshipRepository.findBySenderIdAndDestinationId(senderId, destinationId);
+
+        if(friendship == null) {
+            friendship = this.friendshipRepository.findBySenderIdAndDestinationId(destinationId, senderId);
+        }
+
+        return friendship;
     }
 
     /**
