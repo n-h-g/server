@@ -44,8 +44,8 @@ public class AcceptFriendRequestEvent extends ClientPacket {
             if (destination.isOnline()) {
                 destination.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
                         new JSONObject()
-                                .put("message", destination.getUsername() + " accept your friend request")
-                                .put("goalId", destination.getId())
+                                .put("message", user.getUsername() + " accept your friend request")
+                                .put("goalId", user.getId())
                 ));
             }
 
