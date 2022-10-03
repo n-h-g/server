@@ -1,7 +1,8 @@
 package com.nhg.game.networking.message.outgoing;
 
 public final class OutgoingPacketHeaders {
-    private OutgoingPacketHeaders() {}
+    private OutgoingPacketHeaders() {
+    }
 
     //# Handshake and generic
     public static final int LoginMessageCheck = 1;
