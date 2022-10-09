@@ -1,6 +1,7 @@
 package com.nhg.messenger.dto;
 
 public record ChatMessageResponse(
-        String text
+        String text,
+        Integer id
 ) {
 }

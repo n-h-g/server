@@ -33,7 +33,7 @@ public class ChatMessageService {
 
         chatMessageRepository.save(chatMessage);
 
-        return new ChatMessageResponse(filteredText);
+        return new ChatMessageResponse(filteredText, chatMessage.getId());
     }
 
     private String filterText(String text) {

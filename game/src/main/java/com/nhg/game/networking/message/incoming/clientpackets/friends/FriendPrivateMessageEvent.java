@@ -36,8 +36,11 @@ public class FriendPrivateMessageEvent extends ClientPacket {
 
             destination.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.FriendPrivateMessage,
                     new JSONObject()
-                            .put("id", user.getId())
-                            .put("message", message)
+                            .put("id", response.id())
+                            .put("senderId", user.getId())
+                            .put("destinationId", destination.getId())
+                            .put("friendshipId", destination.getId())
+                            .put("text", response.text())
             ));
 
         } catch (Exception e) {

@@ -42,9 +42,10 @@ public class UserChatMessage extends ClientPacket {
             room.getUsers().sendBroadcastMessage(new ServerPacket(
                     OutgoingPacketHeaders.RoomChatMessage,
                     new JSONObject()
+                            .put("id", response.id())
                             .put("message", response.text())
                             .put("shout", isShout)
-                            .put("id", user.getEntity().getId())
+                            .put("authorId", user.getEntity().getId())
             ));
 
         } catch(Exception e) {
