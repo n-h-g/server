@@ -107,6 +107,6 @@ public class UserService {
     public List<User> filterUser(@NonNull String username) {
         List<User> users = this.userRepository.findAll();
 
-        return users.stream().filter(user -> user.getUsername().contains(username)).toList();
+        return users.stream().filter(user -> user.getUsername().toLowerCase().trim().contains(username.toLowerCase().trim())).toList();
     }
 }

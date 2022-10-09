@@ -6,6 +6,10 @@ import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -21,7 +25,6 @@ public class GetAllRooms extends ClientPacket {
     public void handle() {
         try {
             List<Room> rooms = roomService.getActiveRooms();
-
             client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendAllRooms, rooms));
 
         } catch (Exception e) {

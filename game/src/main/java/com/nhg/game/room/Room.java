@@ -46,6 +46,9 @@ public class Room implements Runnable, JsonSerializable {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = true)
+    private String description;
+
     @ManyToOne
     private User owner;
 
@@ -262,5 +265,23 @@ public class Room implements Runnable, JsonSerializable {
                 .put("door_y", doorY)
                 .put("door_rot", doorRotation.getValue())
                 .put("users_count", usersCount());
+    }
+
+    /**
+     *  Pick all the items to his owner
+     */
+    public void emptyItems() {
+        for(Item item: items) {
+            item.setRoom(null);
+        }
+        items.clear();
+    }
+
+    /**
+     *  Clear all objects inside room
+     */
+    public void dispose() {
+       entities.clear();
+       users.clear();
     }
 }

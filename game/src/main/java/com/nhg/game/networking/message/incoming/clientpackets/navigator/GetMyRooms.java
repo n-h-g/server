@@ -8,6 +8,10 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +32,6 @@ public class GetMyRooms extends ClientPacket {
             if (user == null) return;
 
             List<Room> rooms = roomService.getRoomsByOwner(user);
-
             client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendMyRooms, rooms));
 
         } catch (Exception e) {
