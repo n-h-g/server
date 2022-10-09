@@ -36,7 +36,7 @@ public class ChatMessage {
     @Column(nullable = false)
     private boolean isRoomMessage;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn()
     private Friendship friendship;
 }
