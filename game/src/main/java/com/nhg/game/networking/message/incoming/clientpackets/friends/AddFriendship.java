@@ -33,7 +33,6 @@ public class AddFriendship extends ClientPacket {
 
             User user = wsClient.getUser();
 
-            User destination = userService.getUserById(id);
 
             FriendResponse response = this.addFriend(new FriendshipRequest(
                     -1,
@@ -41,17 +40,19 @@ public class AddFriendship extends ClientPacket {
                     id
             ));
 
-            boolean isOnline = userService.hasUserOnline(id);
-
-            if(!isOnline) return;
+            User destination = userService.getUserById(id);
 
             // check if it's a friend request
             if(response.pending()) {
-                userService.getActiveUser(id).getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
-                    new JSONObject()
-                            .put("message", user.getUsername() + " ti ha inviato una richiesta di amicizia")
-                            .put("goalId", user.getId())
-                ));
+
+
+                if(destination.isOnline()) {
+                    destination.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
+                            new JSONObject()
+                                    .put("message", user.getUsername() + " sent you a friend request")
+                                    .put("goalId", user.getId())
+                    ));
+                }
             } else {
                 // else accept the friend request
                 ServerPacket packet1 = new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
@@ -65,8 +66,10 @@ public class AddFriendship extends ClientPacket {
                                 .put("action", FriendAction.ADD_FRIEND)
                 );
                 user.getClient().sendMessage(packet1);
-                userService.getActiveUser(id).getClient().sendMessage(packet2);
 
+                if(!destination.isOnline()) return;
+
+                destination.getClient().sendMessage(packet2);
             }
 
         }catch(Exception e) {

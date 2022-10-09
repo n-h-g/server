@@ -28,10 +28,11 @@ public class UserService {
      **/
     public void userJoin(User user) {
         user.setOnline(true);
+        this.userRepository.save(user);
+
         if (!this.activeUsers.containsKey(user.getId())) {
             this.activeUsers.put(user.getId(), user);
         }
-        this.userRepository.save(user);
     }
 
     /**
@@ -56,11 +57,7 @@ public class UserService {
      * @return User
      */
     public User getActiveUser(Integer id) {
-        if (this.activeUsers.containsKey(id)) {
-            return this.activeUsers.get(id);
-        }
-
-        return null;
+        return this.activeUsers.get(id);
     }
 
     /**
@@ -90,7 +87,7 @@ public class UserService {
      * @return the User if it exists, null otherwise.
      */
     public User getUserById(int id) {
-        return userRepository.findById(id).orElse(null);
+        return this.getActiveUser(id) != null ? this.getActiveUser(id) :userRepository.findById(id).orElse(null);
     }
 
     /**

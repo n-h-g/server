@@ -99,4 +99,12 @@ public class User implements JsonSerializable {
         this.motto = motto;
         this.look = look;
     }
+
+    /**
+     * Check if user client is null
+     * @return boolean
+     */
+    public boolean isOnline() {
+        return this.client != null;
+    }
 }

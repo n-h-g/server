@@ -1,5 +1,6 @@
 package com.nhg.messenger.model;
 
+import com.nhg.messenger.friendship.Friendship;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,4 +35,8 @@ public class ChatMessage {
 
     @Column(nullable = false)
     private boolean isRoomMessage;
+
+    @ManyToOne
+    @JoinColumn()
+    private Friendship friendship;
 }

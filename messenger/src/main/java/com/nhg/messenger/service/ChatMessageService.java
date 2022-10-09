@@ -2,6 +2,8 @@ package com.nhg.messenger.service;
 
 import com.nhg.messenger.dto.ChatMessageRequest;
 import com.nhg.messenger.dto.ChatMessageResponse;
+import com.nhg.messenger.friendship.Friendship;
+import com.nhg.messenger.friendship.FriendshipService;
 import com.nhg.messenger.model.ChatMessage;
 import com.nhg.messenger.repository.ChatMessageRepository;
 import lombok.AllArgsConstructor;
@@ -14,11 +16,20 @@ public class ChatMessageService {
 
     private final ChatMessageRepository chatMessageRepository;
     private final RestTemplate restTemplate;
+    private final FriendshipService friendshipService;
 
     public ChatMessageResponse sendMessage(ChatMessageRequest chatMessageDto) {
+
+        Friendship friendship = this.friendshipService.getFriendshipBySenderOrDestination(chatMessageDto.senderId(), chatMessageDto.destinationId());
+
+        if(!chatMessageDto.isRoomMessage() && friendship == null) {
+            return new ChatMessageResponse("", -1);
+        }
+
         ChatMessage chatMessage = ChatMessage.builder()
                 .senderId(chatMessageDto.senderId())
                 .destinationId(chatMessageDto.destinationId())
+                .friendship(friendship)
                 .text(chatMessageDto.text())
                 .isRoomMessage(chatMessageDto.isRoomMessage())
                 .build();
@@ -33,7 +44,7 @@ public class ChatMessageService {
 
         chatMessageRepository.save(chatMessage);
 
-        return new ChatMessageResponse(filteredText);
+        return new ChatMessageResponse(filteredText, chatMessage.getId());
     }
 
     private String filterText(String text) {

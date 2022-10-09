@@ -19,9 +19,9 @@ public class FriendshipController {
         return friendshipService.getFriendsById(friendshipRequest.senderId());
     }
 
-    @GetMapping("/accept/{id}")
+    @GetMapping("/accept/{senderId}/{destinationId}")
     public FriendshipResponse acceptFriendShip(FriendshipRequest friendshipRequest) {
-        return friendshipService.acceptFriendship(friendshipRequest.friendshipId());
+        return friendshipService.acceptFriendship(friendshipRequest);
     }
 
     @GetMapping("/add/{senderId}/{destinationId}")
