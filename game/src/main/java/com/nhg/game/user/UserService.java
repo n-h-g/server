@@ -51,7 +51,7 @@ public class UserService {
     }
 
     /**
-     * Retrieve a online user
+     * Retrieve an online user
      *
      * @param id
      * @return User
