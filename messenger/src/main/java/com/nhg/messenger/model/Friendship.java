@@ -21,7 +21,7 @@ public class Friendship {
             name = "sequence_friendship_id",
             sequenceName = "sequence_friendship_id"
     )
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
     private Integer senderId;
