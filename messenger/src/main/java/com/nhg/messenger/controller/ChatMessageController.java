@@ -15,7 +15,7 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-    @GetMapping("/send_message/{senderId}/{destinationId}/{text}/{isRoomMessage}")
+    @PostMapping("/send_message")
     public ChatMessageResponse sendMessage(ChatMessageRequest ChatMessageRequest) {
         return chatMessageService.sendMessage(ChatMessageRequest);
     }
