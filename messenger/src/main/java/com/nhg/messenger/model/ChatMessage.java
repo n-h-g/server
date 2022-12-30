@@ -35,6 +35,4 @@ public class ChatMessage {
     @Column(nullable = false)
     private boolean isRoomMessage;
 
-    @ManyToOne
-    private Friendship friendship;
 }
