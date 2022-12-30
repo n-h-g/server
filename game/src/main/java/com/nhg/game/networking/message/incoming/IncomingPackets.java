@@ -37,7 +37,7 @@ public final class IncomingPackets {
             new Pair(23, RoomPickupItem.class),
             new Pair(24, RoomPlaceItem.class),
             new Pair(36, CreateRoom.class),
-            new Pair(39, FriendPrivateMessageEvent.class)
+            new Pair(39, FriendPrivateMessageEvent.class),
             new Pair(44, SaveRoomSettings.class)
    };
 
