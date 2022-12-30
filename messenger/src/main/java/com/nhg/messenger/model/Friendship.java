@@ -1,4 +1,4 @@
-package com.nhg.messenger.friendship;
+package com.nhg.messenger.model;
 
 import lombok.*;
 
@@ -10,14 +10,18 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "friendships")
 public class Friendship {
 
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            generator = "sequence_friendship_id",
+            strategy = GenerationType.SEQUENCE
+    )
+    @SequenceGenerator(
+            name = "sequence_friendship_id",
+            sequenceName = "sequence_friendship_id"
+    )
     private Long id;
-
 
     @Column(nullable = false)
     private Integer senderId;
@@ -25,6 +29,5 @@ public class Friendship {
     @Column(nullable = false)
     private Integer destinationId;
 
-    @Column
     private boolean pending;
 }

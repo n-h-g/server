@@ -2,8 +2,7 @@ package com.nhg.messenger.service;
 
 import com.nhg.messenger.dto.ChatMessageRequest;
 import com.nhg.messenger.dto.ChatMessageResponse;
-import com.nhg.messenger.friendship.Friendship;
-import com.nhg.messenger.friendship.FriendshipService;
+import com.nhg.messenger.model.Friendship;
 import com.nhg.messenger.model.ChatMessage;
 import com.nhg.messenger.repository.ChatMessageRepository;
 import lombok.AllArgsConstructor;

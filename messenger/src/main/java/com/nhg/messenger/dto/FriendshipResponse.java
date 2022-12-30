@@ -1,6 +1,6 @@
 package com.nhg.messenger.dto;
 
-import com.nhg.messenger.friendship.Friendship;
+import com.nhg.messenger.model.Friendship;
 
 import java.util.List;
 

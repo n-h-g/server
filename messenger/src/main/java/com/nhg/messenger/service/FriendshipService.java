@@ -1,15 +1,16 @@
-package com.nhg.messenger.friendship;
+package com.nhg.messenger.service;
 
 import com.nhg.messenger.dto.FriendResponse;
 import com.nhg.messenger.dto.FriendshipRequest;
 import com.nhg.messenger.dto.FriendshipResponse;
+import com.nhg.messenger.model.Friendship;
+import com.nhg.messenger.repository.FriendshipRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
