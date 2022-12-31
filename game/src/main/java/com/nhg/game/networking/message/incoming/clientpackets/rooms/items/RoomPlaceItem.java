@@ -45,7 +45,7 @@ public class RoomPlaceItem extends ClientPacket {
             if(!roomService.placeItem(item.get(), user.getEntity().getRoom(), position)) {
                 user.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.BubbleAlert,
                         new JSONObject()
-                                .put("message", "Impossibile posizionare il furno.")
+                                .put("message", "cannot_place_item")
                                 .put("action", BubbleAlertType.Default)
                                 .put("goalId", -1)
                 ));
