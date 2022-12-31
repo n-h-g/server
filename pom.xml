@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>item-editor</module>
         <module>account</module>
         <module>eureka-discovery</module>
         <module>game</module>
