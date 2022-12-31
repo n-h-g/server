@@ -54,10 +54,10 @@ public class UserChatMessage extends ClientPacket {
     }
 
     private ChatMessageResponse sendMessage(ChatMessageRequest message) {
-        return restTemplate.getForObject(
-                "http://MESSENGER/api/v1/messenger/chat/send_message/{senderId}/{destinationId}/{text}/{isRoomMessage}",
-                ChatMessageResponse.class,
-                message.senderId(), message.destinationId(), message.text(), message.isRoomMessage()
+        return restTemplate.postForObject(
+                "http://MESSENGER/api/v1/messenger/chat/send_message/",
+                message,
+                ChatMessageResponse.class
         );
     }
 }
