@@ -8,7 +8,6 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserService;
-import com.nhg.game.utils.FriendAction;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
@@ -58,12 +57,12 @@ public class AddFriendship extends ClientPacket {
                 ServerPacket packet1 = new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
                         new JSONObject()
                                 .put("friend", destination.toJson())
-                                .put("action", FriendAction.ADD_FRIEND)
+                                .put("remove", false)
                 );
                 ServerPacket packet2 = new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
                         new JSONObject()
                                 .put("friend", user.toJson())
-                                .put("action", FriendAction.ADD_FRIEND)
+                                .put("remove", false)
                 );
                 user.getClient().sendMessage(packet1);
 

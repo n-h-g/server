@@ -8,7 +8,6 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserService;
-import com.nhg.game.utils.FriendAction;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
@@ -58,7 +57,7 @@ public class RemoveFriendship extends ClientPacket {
             wsClient.sendMessage(new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
                     new JSONObject()
                             .put("friend", destination.toJson())
-                            .put("action", FriendAction.DELETE_FRIEND)
+                            .put("remove", true)
             ));
 
             if(!destination.isOnline()) return;
@@ -66,7 +65,7 @@ public class RemoveFriendship extends ClientPacket {
             destination.getClient().sendMessage(new ServerPacket(OutgoingPacketHeaders.UpdateFriendStatus,
                     new JSONObject()
                             .put("friend", user.toJson())
-                            .put("action", FriendAction.DELETE_FRIEND)
+                            .put("remove", true)
             ));
 
 
