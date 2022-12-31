@@ -8,7 +8,7 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
-import com.nhg.game.utils.BubbleAlertType;
+import com.nhg.game.comunication.BubbleAlertType;
 import com.nhg.game.utils.Int3;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
