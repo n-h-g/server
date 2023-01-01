@@ -3,8 +3,8 @@ package com.nhg.game.item;
 import lombok.Getter;
 
 public enum ItemType {
-    FLOOR_ITEM("flooritem"),
-    WALL_ITEM("wallitem");
+    FLOOR_ITEM("floor_item"),
+    WALL_ITEM("wall_item");
 
     @Getter
     private final String value;
