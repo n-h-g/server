@@ -34,9 +34,9 @@ public class RoomLayout implements Layout {
     }
 
     /**
-     * Prepare the tiles matrix and create Tiles object (using Y as height)
+     * Prepare the tiles matrix and create Tiles object (using Z as height)
      *
-     * <!--       Y
+     * <!--       Z
      * <!--       |
      * <!--       |
      * <!--       |
@@ -44,8 +44,8 @@ public class RoomLayout implements Layout {
      * <!--      /
      * <!--     /
      * <!--    /
-     * <!--   Z
-     * @param layout layout is a string that represent the matrix: the numbers and letters represent the Y position
+     * <!--   Y
+     * @param layout layout is a string that represent the matrix: the numbers and letters represent the Z position
      *               of the tile. (0-9 and letters A=10 to Z=36)
      *               The / is used as end of line character.
      *               <!-- Ex:
