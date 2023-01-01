@@ -20,10 +20,6 @@ import javax.persistence.*;
 @Setter
 @javax.persistence.Entity
 @Slf4j
-@TypeDef(
-        name = "pgsql_enum",
-        typeClass = PostgreSQLEnumType.class
-)
 @Table(name = "items")
 public class Item implements JsonSerializable, Runnable {
 
@@ -36,7 +32,6 @@ public class Item implements JsonSerializable, Runnable {
             name = "sequence_item_id",
             sequenceName = "sequence_item_id"
     )
-
     private Integer Id;
 
     @ManyToOne
@@ -45,15 +40,6 @@ public class Item implements JsonSerializable, Runnable {
 
     @ManyToOne
     private User owner;
-
-    private String name;
-
-    private String baseName;
-
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "itemType default 'FLOOR_ITEM'", nullable = false)
-    @Type(type = "pgsql_enum")
-    private ItemType itemType;
 
     @Column(columnDefinition = "integer default 0")
     private Rotation rotation;
@@ -66,6 +52,10 @@ public class Item implements JsonSerializable, Runnable {
 
     @Column(columnDefinition = "integer default 0")
     private int z;
+
+    @ManyToOne
+    @JoinColumn(columnDefinition="integer", name="item_specification_id")
+    private ItemSpecification itemSpecification;
 
     public Item(Room room, User owner) {
         this.room = room;
@@ -84,13 +74,12 @@ public class Item implements JsonSerializable, Runnable {
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
                 .put("id", Id)
-                .put("name", name)
-                .put("baseName", baseName)
+                .put("name", itemSpecification.getName())
                 .put("x", x)
                 .put("y", y)
                 .put("z", z)
-                .put("room_id", room != null ? room.getId() : "-1"  )
-                .put("item_type", itemType.getValue());
+                .put("room_id", room != null ? room.getId() : "-1")
+                .put("item_type", itemSpecification.getItemType().getValue());
     }
 
     @Override
