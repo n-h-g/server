@@ -1,2 +1,8 @@
-DROP TYPE IF EXISTS itemType CASCADE;
-CREATE TYPE itemType AS ENUM ('flooritem', 'wallitem');
+DROP TYPE IF EXISTS item_type CASCADE;
+CREATE TYPE item_type AS ENUM ('floor_item', 'wall_item');
+
+DROP TYPE IF EXISTS gender CASCADE;
+CREATE TYPE gender AS ENUM ('MALE', 'FEMALE');
+
+DROP TYPE IF EXISTS rotation CASCADE;
+CREATE TYPE rotation AS ENUM ('NORTH','NORTH_EAST','EAST','SOUTH_EAST','SOUTH','SOUTH_WEST','WEST','NORTH_WEST');
