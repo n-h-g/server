@@ -30,7 +30,7 @@ public enum Rotation {
     }
 
     public static Rotation CalculateRotation(Int2 point1, Int2 point2) {
-        if (point1.getX() > point2.getX()) {
+        if (point1.getX() < point2.getX()) {
             if (point1.getY() > point2.getY()) {
                 return Rotation.SOUTH_WEST;
             }
@@ -40,14 +40,14 @@ public enum Rotation {
             return Rotation.WEST;
         }
 
-        if (point1.getX() < point2.getX()) {
+        if (point1.getX() > point2.getX()) {
             if (point1.getY() > point2.getY()) {
                 return Rotation.SOUTH_EAST;
             }
             if (point1.getY() < point2.getY()) {
                 return Rotation.NORTH_EAST;
             }
-            return Rotation.EAST;
+            return Rotation.WEST;
         }
 
         if (point1.getY() > point2.getY()) {
