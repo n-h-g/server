@@ -4,13 +4,13 @@ import lombok.Getter;
 
 public enum Rotation {
     NORTH(6),
-    NORTH_EAST(5),
-    EAST(4),
-    SOUTH_EAST(3),
+    NORTH_EAST(7),
+    EAST(0),
+    SOUTH_EAST(1),
     SOUTH(2),
-    SOUTH_WEST(1),
-    WEST(0),
-    NORTH_WEST(7);
+    SOUTH_WEST(3),
+    WEST(4),
+    NORTH_WEST(5);
 
     @Getter
     private final int value;
@@ -30,29 +30,30 @@ public enum Rotation {
     }
 
     public static Rotation CalculateRotation(Int2 point1, Int2 point2) {
-        Rotation rotation;
-
-        if (point1.getX() > point2.getX() && point1.getY() > point2.getY()) {
-            rotation = Rotation.NORTH_WEST;
-        } else if (point1.getX() > point2.getX() && point1.getY() < point2.getY()) {
-            rotation = Rotation.SOUTH_WEST;
-        } else if (point1.getX() < point2.getX() && point1.getY() > point2.getY()) {
-            rotation = Rotation.NORTH_EAST;
-        } else if (point1.getX() < point2.getX() && point1.getY() < point2.getY()) {
-            rotation = Rotation.SOUTH_EAST                                          ;
-        } else if (point1.getX() > point2.getX()) {
-            rotation = Rotation.WEST;
-        } else if (point1.getX() < point2.getX()) {
-            rotation = Rotation.EAST;
-        } else if (point1.getY() > point2.getY()) {
-            rotation = Rotation.NORTH;
-        } else {
-            rotation = Rotation.SOUTH;
+        if (point1.getX() > point2.getX()) {
+            if (point1.getY() > point2.getY()) {
+                return Rotation.SOUTH_EAST;
+            }
+            if (point1.getY() < point2.getY()) {
+                return Rotation.NORTH_EAST;
+            }
+            return Rotation.EAST;
         }
 
-        return rotation;
+        if (point1.getX() < point2.getX()) {
+            if (point1.getY() > point2.getY()) {
+                return Rotation.SOUTH_WEST;
+            }
+            if (point1.getY() < point2.getY()) {
+                return Rotation.NORTH_WEST;
+            }
+            return Rotation.WEST;
+        }
+
+        if (point1.getY() > point2.getY()) {
+            return Rotation.SOUTH;
+        }
+
+        return NORTH;
     }
-
-
-
 }
