@@ -5,6 +5,7 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
+import com.nhg.game.utils.BeanRetriever;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -18,7 +19,7 @@ public class GetAllRooms extends ClientPacket {
     private final RoomService roomService;
 
     public GetAllRooms() {
-        roomService = this.getBean(RoomService.class);
+        roomService = BeanRetriever.get(RoomService.class);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserService;
+import com.nhg.game.utils.BeanRetriever;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,8 +21,8 @@ public class FriendsList extends ClientPacket {
     private final UserService userService;
 
     public FriendsList() {
-        restTemplate = this.getBean("restTemplate", RestTemplate.class);
-        userService = this.getBean(UserService.class);
+        restTemplate = BeanRetriever.get("restTemplate", RestTemplate.class);
+        userService = BeanRetriever.get(UserService.class);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.nhg.game.networking.WebSocketClient;
 import com.nhg.game.networking.message.incoming.ClientPacket;
 import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
+import com.nhg.game.utils.BeanRetriever;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class RequestLoadItems extends ClientPacket {
     private final ItemService itemService;
 
     public RequestLoadItems() {
-        itemService = this.getBean(ItemService.class);
+        itemService = BeanRetriever.get(ItemService.class);
     }
 
     @Override

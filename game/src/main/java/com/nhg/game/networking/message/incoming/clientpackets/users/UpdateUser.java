@@ -7,6 +7,7 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserService;
+import com.nhg.game.utils.BeanRetriever;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -16,8 +17,8 @@ public class UpdateUser extends ClientPacket {
     private final Clients clients;
 
     public UpdateUser() {
-        userService = this.getBean(UserService.class);
-        clients = this.getBean(Clients.class);
+        userService = BeanRetriever.get(UserService.class);
+        clients = BeanRetriever.get(Clients.class);
     }
 
     @Override

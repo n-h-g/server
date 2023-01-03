@@ -6,6 +6,7 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
+import com.nhg.game.utils.BeanRetriever;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ public class UserTypeStatus extends ClientPacket {
     private final RoomService roomService;
 
     public UserTypeStatus() {
-        roomService = this.getBean(RoomService.class);
+        roomService = BeanRetriever.get(RoomService.class);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import com.nhg.game.comunication.BubbleAlertType;
+import com.nhg.game.utils.BeanRetriever;
 import com.nhg.game.utils.Int3;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -22,8 +23,8 @@ public class RoomPlaceItem extends ClientPacket {
     private final RoomService roomService;
 
     public RoomPlaceItem() {
-        itemService = this.getBean(ItemService.class);
-        roomService = this.getBean(RoomService.class);
+        itemService = BeanRetriever.get(ItemService.class);
+        roomService = BeanRetriever.get(RoomService.class);
     }
 
     @Override

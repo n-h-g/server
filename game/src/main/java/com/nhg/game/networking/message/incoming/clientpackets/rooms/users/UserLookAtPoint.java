@@ -7,6 +7,7 @@ import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
+import com.nhg.game.utils.BeanRetriever;
 import com.nhg.game.utils.Int2;
 import com.nhg.game.utils.Rotation;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class UserLookAtPoint extends ClientPacket {
     private final RoomService roomService;
 
     public UserLookAtPoint() {
-        roomService = this.getBean(RoomService.class);
+        roomService = BeanRetriever.get(RoomService.class);
     }
 
     @Override
