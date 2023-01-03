@@ -52,7 +52,7 @@ public class Room implements Runnable, JsonSerializable {
     @ManyToOne
     private User owner;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "varchar(1000000) default '0'", nullable = false)
     private String layout;
 
     @Column(columnDefinition = "integer default 0", nullable = false)
