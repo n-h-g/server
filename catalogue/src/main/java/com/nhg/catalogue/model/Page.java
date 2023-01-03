@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Page {
+public class Page implements Comparable<Page> {
 
     @Id
     @GeneratedValue(
@@ -36,4 +36,8 @@ public class Page {
     @OneToMany(mappedBy = "page", fetch = FetchType.EAGER)
     private List<Item> items;
 
+    @Override
+    public int compareTo(@NonNull Page o) {
+        return sequence - o.sequence;
+    }
 }
