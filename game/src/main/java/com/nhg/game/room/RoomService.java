@@ -250,6 +250,10 @@ public class RoomService {
         return activeRooms.values().stream().toList();
     }
 
+    public Room getActiveRoomById(int id) {
+        return activeRooms.get(id);
+    }
+
     /**
      * Get the rooms owned by the given user.
      *

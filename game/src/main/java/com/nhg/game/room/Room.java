@@ -27,8 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Setter
-@javax.persistence.Entity
 @Slf4j
+@EntityListeners(RoomListener.class)
+@javax.persistence.Entity
 @Table(name = "rooms")
 public class Room implements Runnable, JsonSerializable {
 
@@ -46,7 +47,6 @@ public class Room implements Runnable, JsonSerializable {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
     private String description;
 
     @ManyToOne
@@ -72,6 +72,8 @@ public class Room implements Runnable, JsonSerializable {
     @Transient
     private RoomLayout roomLayout;
 
+    @Transient
+    private int usersCount;
 
     @Transient
     @Setter(AccessLevel.NONE)
@@ -130,6 +132,7 @@ public class Room implements Runnable, JsonSerializable {
         entity.setRotation(doorRotation);
 
         this.entities.putIfAbsent(entityId, entity);
+        usersCount++;
     }
 
     /**
@@ -155,15 +158,7 @@ public class Room implements Runnable, JsonSerializable {
         }
 
         user.setEntity(null);
-    }
-
-    /**
-     * Get the number of users in the room.
-     *
-     * @return the number of users in the room.
-     */
-    public int usersCount() {
-        return this.users.count();
+        usersCount--;
     }
 
     /**
@@ -187,7 +182,7 @@ public class Room implements Runnable, JsonSerializable {
 
     public Item getItem(@NonNull Integer itemId) {
         for(Item item : items) {
-            if(item.getId() == itemId) {
+            if(item.getId().equals(itemId)) {
                 return item;
             }
         }
@@ -264,7 +259,7 @@ public class Room implements Runnable, JsonSerializable {
                 .put("door_x", doorX)
                 .put("door_y", doorY)
                 .put("door_rot", doorRotation.getValue())
-                .put("users_count", usersCount());
+                .put("users_count", usersCount);
     }
 
     /**
