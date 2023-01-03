@@ -4,40 +4,37 @@ public final class OutgoingPacketHeaders {
     private OutgoingPacketHeaders() {
     }
 
-    //# Handshake and generic
+    //region# Handshake and generic (0 to 99)
     public static final int LoginMessageCheck = 1;
     public static final int PongResponse = 2;
+    public static final int DisconnectClient = 3;
+    public static final int HotelView = 4;
+    public static final int BubbleAlert = 5;
+    //endregion
 
-    //# Navigator
-    public static final int SendAllRooms = 8;
-    public static final int SendMyRooms = 9;
+    //region# Navigator (100 to 199)
+    public static final int SendAllRooms = 101;
+    public static final int SendMyRooms = 102;
+    //endregion
 
-    //# Room
-    public static final int SendRoomData = 10;
-    public static final int LoadRoomEntities = 11;
-    public static final int UpdateEntity = 12;
-    public static final int AddRoomEntity = 13;
-    public static final int RemoveRoomEntity = 14;
-    public static final int RoomChatMessage = 15;
-    public static final int RoomUserType = 16;
+    //region# Room (200 to 399)
+    public static final int SendRoomData = 200;
+    public static final int RoomCreationResponse = 201;
+    public static final int LoadRoomEntities = 202;
+    public static final int UpdateEntity = 203;
+    public static final int AddRoomEntity = 204;
+    public static final int RemoveRoomEntity = 205;
+    public static final int RoomChatMessage = 206;
+    public static final int RoomUserType = 207;
+    //endregion
 
-    //# User
-    public static final int UpdateUserInformation = 17;
+    //region# User (400 to 599)
+    public static final int UpdateUserInformation = 400;
+    //endregion
 
-    //# Friends
-    public static final int FriendsList = 20;
-    public static final int UpdateFriendStatus = 21;
-    public static final int UserSearchFiltering = 22;
-    public static final int FriendPrivateMessage = 26;
+    //region# Items (600 to 799)
+    //endregion
 
-    //# Items
-    public static final int LoadItems = 18;
-    public static final int LoadRoomItems = 23;
-    public static final int RemoveItem = 24;
-    public static final int AddItem = 25;
-
-    //# Generic
-    public static final int BubbleAlert = 101;
-    public static final int DisconnectClient = 102;
-    public static final int HotelView = 103;
+    //region# Friends (800 to 899)
+    //endregion
 }
