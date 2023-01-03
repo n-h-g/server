@@ -34,6 +34,8 @@ public class SaveRoomSettings extends ClientPacket {
 
             Room room = roomService.getRoomById(id);
 
+            if (user == null || room == null) return;
+
             // check if is owner
             if(!Objects.equals(room.getOwner().getId(), user.getId())) {
                 log.debug("User is not allowed to edit this room");
@@ -45,12 +47,12 @@ public class SaveRoomSettings extends ClientPacket {
                         new JSONObject()
                                 .put("id", -1))
                 );
-                roomService.deleteRoom(room);
+                roomService.delete(room);
                 return;
             }
 
             room.setName(name);
-            roomService.updateRoom(room);
+            roomService.save(room);
             room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
 
         } catch(Exception e) {

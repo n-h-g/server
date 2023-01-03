@@ -1,18 +1,13 @@
 package com.nhg.game.room;
 
 import com.nhg.game.GameConfig;
-import com.nhg.game.item.Item;
 import com.nhg.game.user.User;
-
-import com.nhg.game.utils.Int3;
-import com.nhg.game.utils.pathfinder.Tile;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
@@ -43,11 +38,14 @@ public class RoomService {
      *
      * @see #startRoomTask
      * @see #checkEmptyRoomAndScheduleUnload
+     * @see #activeRooms
      */
     private final Map<Integer, ScheduledFuture<?>> activeRoomsTasks = new ConcurrentHashMap<>();
 
     /**
      * Map of active rooms.
+     *
+     * @see #activeRoomsTasks
      */
     private final Map<Integer, Room> activeRooms = new ConcurrentHashMap<>();
 
@@ -59,6 +57,28 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
+
+    /**
+     * (Create) If a room with a null id is passed then it will create a new room and generate an id for it.
+     * (Update) If the room already have an id it will update the existing room with the params of the given room.
+     *
+     * @param room room to save
+     * @return the saved room
+     */
+    public Room save(Room room) {
+        return roomRepository.save(room);
+    }
+
+    /**
+     * Unload the room then delete it from database.
+     * 
+     * @param room room to delete
+     * @see #unloadRoom 
+     */
+    public void delete(Room room) {
+        unloadRoom(room);
+        roomRepository.delete(room);
+    }
 
     /**
      * The specified user enters the room with the specified id then start the room's task.
@@ -108,7 +128,7 @@ public class RoomService {
      * @see Room#userExit
      * @see #checkEmptyRoomAndScheduleUnload
      */
-    public boolean userExitRoom(@NonNull User user, @NonNull Integer roomId) {
+    public boolean userExitRoom(@NonNull User user, int roomId) {
         Room room = this.getRoomById(roomId);
 
         if (room == null) return false;
@@ -125,7 +145,7 @@ public class RoomService {
      * The room is taken from the user's entity.
      *
      * @param user the user that is exiting the room
-     * @see #userExitRoom(User, Integer)
+     * @see #userExitRoom
      */
     public void userExitRoom(@NonNull User user) {
         if (user.getEntity() == null) return;
@@ -134,54 +154,12 @@ public class RoomService {
     }
 
     /**
-     * Place item inside the room at position.
-     *
-     * @param item the item
-     * @param room the current room
-     * @param position the item position
-     */
-    public boolean placeItem(@NonNull Item item, @NonNull Room room, Int3 position) {
-
-        room.addItem(item);
-
-        if(position.getX() == room.getDoorX() && position.getY() == room.getDoorY()) {
-            return false;
-        }
-
-        Tile tile = room.getRoomLayout().getTile(position.getX(), position.getY());
-
-        if(!tile.isWalkable()) {
-            return false;
-        }
-
-        tile.setState(Tile.State.CLOSE);
-
-        item.setRoom(room);
-
-        item.setPosition(position);
-
-        return true;
-    }
-
-    /**
-     * Pick up item and put it into inventory
-     *
-     * @param item the item
-     * @param room the current room
-     */
-    public void pickupItem(@NonNull Item item, @NonNull Room room) {
-        room.removeItem(item);
-        room.getRoomLayout().getTile(item.getX(), item.getY()).setState(Tile.State.OPEN);
-        item.setRoom(null);
-        this.roomRepository.save(room);
-    }
-
-    /**
      * Check the room: if it doesn't contain users after '<code>SecondsBeforeEmptyRoomGetsUnloaded</code>' seconds
      * it will check again that it's not empty then stop the room task.
      *
      * @param room room that needs to be checked.
      * @see Room#isEmpty
+     * @see #unloadRoom
      * @see #SecondsBeforeEmptyRoomGetsUnloaded
      */
     private void checkEmptyRoomAndScheduleUnload(@NonNull Room room) {
@@ -191,53 +169,50 @@ public class RoomService {
             // Check again if the room is empty
             if (!room.isEmpty()) return;
 
-            // Remove the room from activeRoomsTasks
-            ScheduledFuture<?> task = activeRoomsTasks.remove(room.getId());
-
-            activeRooms.remove(room.getId());
-
-            // Stop the room's task
-            if (task.cancel(true)) {
-                log.debug("Task stopped for room "+ room.getId());
-            }
+            unloadRoom(room);
 
         }, new Date(System.currentTimeMillis() + SecondsBeforeEmptyRoomGetsUnloaded * 1000));
     }
 
     /**
-     * Returns the room the specified id, or null if it doesn't exist.
+     * Stop the room's task and remove it from active rooms.
+     *
+     * @param room room to unload
+     */
+    private void unloadRoom(@NonNull Room room) {
+        // Remove the room from activeRoomsTasks
+        ScheduledFuture<?> task = activeRoomsTasks.remove(room.getId());
+
+        activeRooms.remove(room.getId());
+
+        // Stop the room's task
+        if (task != null && task.cancel(true)) {
+            log.debug("Task stopped for room "+ room.getId());
+        }
+    }
+
+    /**
+     * Returns the room with the specified id, or null if it doesn't exist.
+     * If the room is active, it retrieves the room from active rooms otherwise from the repository.
      *
      * @param id room id
-     * @return the room the specified id, or null if it doesn't exist.
+     * @return the room with the specified id, or null if it doesn't exist.
+     * @see #getActiveRoomById
      */
-    public Room getRoomById(Integer id) {
+    public Room getRoomById(int id) {
         return activeRooms.containsKey(id)
-                ? activeRooms.get(id)
+                ? getActiveRoomById(id)
                 : roomRepository.findById(id).orElse(null);
     }
 
-    public void updateRoom(@NonNull Room room) {
-        this.activeRooms.replace(room.getId(), room);
-        this.roomRepository.save(room);
-    }
-
     /**
-     * Create a new room entity
-     * @param room
+     * Returns the active room with the specified id, or null if it doesn't exist.
+     *
+     * @param id active room id
+     * @return the active room with the specified id, or null if it doesn't exist.
      */
-    public void createRoom(@NonNull Room room) {
-        //TODO check for room name, desc
-        this.roomRepository.save(room);
-    }
-
-    /**
-     * Delete a room
-     * @param room
-     */
-    public void deleteRoom(@NonNull Room room) {
-        room.dispose();
-        this.activeRooms.remove(room.getId());
-        this.roomRepository.delete(room);
+    public Room getActiveRoomById(int id) {
+        return activeRooms.get(id);
     }
 
     /**
@@ -248,10 +223,6 @@ public class RoomService {
      */
     public List<Room> getActiveRooms() {
         return activeRooms.values().stream().toList();
-    }
-
-    public Room getActiveRoomById(int id) {
-        return activeRooms.get(id);
     }
 
     /**

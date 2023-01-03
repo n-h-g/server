@@ -172,34 +172,6 @@ public class Room implements Runnable, JsonSerializable {
     }
 
     /**
-     + Place the item in the room and put it into a map.
-     *
-     * @param item the item placed in the room
-     */
-    public void addItem(@NonNull Item item) {
-        this.items.add(item);
-    }
-
-    public Item getItem(@NonNull Integer itemId) {
-        for(Item item : items) {
-            if(item.getId().equals(itemId)) {
-                return item;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     + Remove the item from map
-     *
-     * @param item the item placed in the room
-     */
-    public void removeItem(@NonNull Item item) {
-       items.removeIf(i -> Objects.equals(i.getId(), item.getId()));
-    }
-
-    /**
      * Set layout and create RoomLayout from the new layout.
      *
      * @param layout string representing the layout
@@ -262,21 +234,4 @@ public class Room implements Runnable, JsonSerializable {
                 .put("users_count", usersCount);
     }
 
-    /**
-     *  Pick all the items to his owner
-     */
-    public void emptyItems() {
-        for(Item item: items) {
-            item.setRoom(null);
-        }
-        items.clear();
-    }
-
-    /**
-     *  Clear all objects inside room
-     */
-    public void dispose() {
-       entities.clear();
-       users.clear();
-    }
 }

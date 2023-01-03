@@ -2,8 +2,6 @@ package com.nhg.game.networking.message.incoming.clientpackets.rooms;
 
 import com.nhg.game.networking.WebSocketClient;
 import com.nhg.game.networking.message.incoming.ClientPacket;
-import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
-import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
@@ -36,11 +34,10 @@ public class CreateRoom extends ClientPacket {
             int door_dir = body.getInt("door_dir");
             int maxUsers = body.getInt("maxUsers");
 
-            Room room = new Room(name, user, layout, door_x, door_y, door_dir);
 
-            roomService.createRoom(room);
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
-
+            Room room = roomService.save(
+                    new Room(name, user, layout, door_x, door_y, door_dir)
+            );
 
         }catch (Exception e) {
             log.debug(e.getMessage());
