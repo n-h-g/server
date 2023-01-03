@@ -29,8 +29,6 @@ public class AccountController {
 
     @GetMapping("/generate_token/{username}")
     public TokenResponse generateToken(@PathVariable String username) {
-
-        log.error("token");
         return new TokenResponse(jwtService.generateToken(username));
     }
 
