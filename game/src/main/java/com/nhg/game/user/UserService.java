@@ -93,8 +93,4 @@ public class UserService {
     public boolean existsWithId(int id) {
         return userRepository.existsById(id);
     }
-
-    public List<User> getAllUsers() {
-        return this.userRepository.findAll();
-    }
 }
