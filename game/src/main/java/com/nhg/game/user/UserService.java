@@ -62,8 +62,6 @@ public class UserService {
         return this.activeUsers.get(id);
     }
 
-
-
     /**
      * Get the user with the given username.
      *
@@ -98,11 +96,5 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return this.userRepository.findAll();
-    }
-
-    public List<User> filterUser(@NonNull String username) {
-        List<User> users = this.userRepository.findAll();
-
-        return users.stream().filter(user -> user.getUsername().toLowerCase().trim().contains(username.toLowerCase().trim())).toList();
     }
 }
