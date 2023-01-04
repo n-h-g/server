@@ -27,7 +27,7 @@ public class RequestLoadItems extends ClientPacket {
 
             List<Item> items = itemService.getItemsByOwner(wsClient.getUser());
 
-            wsClient.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadItems, items));
+            //wsClient.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadItems, items));
 
         } catch(Exception e) {
             log.error("Error: " + e);
