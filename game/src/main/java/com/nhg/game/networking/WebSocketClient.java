@@ -5,7 +5,7 @@ import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 
 import com.nhg.game.user.UserService;
-import com.nhg.game.utils.ApplicationContextUtils;
+import com.nhg.game.utils.BeanRetriever;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -53,8 +53,8 @@ public class WebSocketClient implements Client {
     public void linkUser(@NonNull User user) {
         user.setClient(this);
 
-        UserService userService = ApplicationContextUtils.getApplicationContext().getBean(UserService.class);
-        userService.userJoin(user);
+        BeanRetriever.get(UserService.class)
+                .connect(user);
         
         this.user = user;
     }
@@ -67,11 +67,9 @@ public class WebSocketClient implements Client {
     private void unlinkUser() {
         if (user == null) return;
 
-        RoomService roomService = ApplicationContextUtils.getApplicationContext().getBean(RoomService.class);
-        UserService userService = ApplicationContextUtils.getApplicationContext().getBean(UserService.class);
-        roomService.userExitRoom(user);
+        BeanRetriever.get(UserService.class)
+                .disconnect(user);
 
-        userService.userLeave(user);
         user.setClient(null);
         user = null;
     }

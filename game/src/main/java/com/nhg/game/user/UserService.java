@@ -1,5 +1,6 @@
 package com.nhg.game.user;
 
+import com.nhg.game.room.RoomService;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoomService roomService;
 
 
     /**
@@ -26,23 +28,23 @@ public class UserService {
     /**
      * Add user in game when he gets online
      **/
-    public void userJoin(User user) {
+    public void connect(@NonNull User user) {
         user.setOnline(true);
-        this.userRepository.save(user);
 
-        if (!this.activeUsers.containsKey(user.getId())) {
-            this.activeUsers.put(user.getId(), user);
-        }
+        this.activeUsers.putIfAbsent(user.getId(), user);
     }
 
     /**
-     * Remove user from the game.
+     * Disconnect the user from the game.
+     * If the user is in a room its remove it
      *
-     * @param user
+     * @param user user to disconnect
+     * @see RoomService#userExitRoom 
      */
-    public void userLeave(User user) {
+    public void disconnect(@NonNull User user) {
         user.setOnline(false);
-        this.userRepository.save(user);
+        roomService.userExitRoom(user);
+
         this.activeUsers.remove(user.getId());
     }
 
@@ -53,22 +55,14 @@ public class UserService {
     /**
      * Retrieve an online user
      *
-     * @param id
+     * @param id active room id
      * @return User
      */
-    public User getActiveUser(Integer id) {
+    public User getActiveUserById(Integer id) {
         return this.activeUsers.get(id);
     }
 
-    /**
-     * Check if a user is inside the map.
-     *
-     * @param id
-     * @return boolean
-     */
-    public boolean hasUserOnline(Integer id) {
-        return this.activeUsers.containsKey(id);
-    }
+
 
     /**
      * Get the user with the given username.
@@ -87,7 +81,9 @@ public class UserService {
      * @return the User if it exists, null otherwise.
      */
     public User getUserById(int id) {
-        return this.getActiveUser(id) != null ? this.getActiveUser(id) :userRepository.findById(id).orElse(null);
+        return activeUsers.containsKey(id)
+            ? this.getActiveUserById(id)
+            : userRepository.findById(id).orElse(null);
     }
 
     /**

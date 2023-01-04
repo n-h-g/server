@@ -23,6 +23,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(UserListener.class)
 @TypeDef(
         name = "pgsql_enum",
         typeClass = PostgreSQLEnumType.class
@@ -73,12 +74,10 @@ public class User implements JsonSerializable {
     private Client client;
 
     @Transient
-    @Getter
-    @Setter
     private UserEntity entity;
 
-    @Column(name = "online", nullable = false, columnDefinition = "boolean default true")
-    private boolean online;
+    @Transient
+    private boolean isOnline;
 
     @Override
     public JSONObject toJson() throws JSONException {
@@ -87,7 +86,7 @@ public class User implements JsonSerializable {
                 .put("username", this.username)
                 .put("gender", this.gender)
                 .put("look", this.look)
-                .put("online", this.online)
+                .put("online", this.isOnline)
                 .put("motto", this.motto)
                 .put("credits", this.credits);
 
@@ -98,13 +97,5 @@ public class User implements JsonSerializable {
         this.username = username;
         this.motto = motto;
         this.look = look;
-    }
-
-    /**
-     * Check if user client is null
-     * @return boolean
-     */
-    public boolean isOnline() {
-        return this.client != null;
     }
 }
