@@ -10,10 +10,12 @@ import com.nhg.game.room.layout.RoomLayout;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
 import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.PostgreSQLEnumType;
 import com.nhg.game.utils.Rotation;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +31,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @EntityListeners(RoomListener.class)
 @javax.persistence.Entity
+@TypeDef(
+        name = "pgsql_enum",
+        typeClass = PostgreSQLEnumType.class
+)
 @Table(name = "rooms")
 public class Room implements Runnable, JsonSerializable {
 
