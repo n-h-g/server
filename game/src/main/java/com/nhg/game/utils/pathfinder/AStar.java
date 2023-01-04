@@ -81,7 +81,7 @@ public class AStar {
                 if (current.equals(target))
                     return retrievePath(start, target);
 
-                adjPositions = getAdjacentPositions(current.getPosition().ToInt2XY(), layout);
+                adjPositions = getAdjacentPositions(current.getPosition().ToInt2XY());
 
                 for (Int2 adjPosition : adjPositions) {
 
@@ -90,12 +90,6 @@ public class AStar {
                     try {
                         adjTile = layout.getTile(adjPosition.getX(), adjPosition.getY());
                     } catch (IndexOutOfBoundsException e) {
-                        continue;
-                    }
-
-                    if(!adjTile.isWalkable()) {
-                        closedList.add(adjTile);
-                        openQueue.remove(adjTile);
                         continue;
                     }
 
@@ -134,7 +128,7 @@ public class AStar {
 
 
 
-    private List<Int2> getAdjacentPositions(Int2 current, Layout layout) {
+    private List<Int2> getAdjacentPositions(Int2 current) {
         List<Int2> adj = new ArrayList<>();
 
         adj.add(new Int2(current.getX() - 1, current.getY()));

@@ -21,7 +21,7 @@ public class RoomLayout implements Layout {
 
     /**
      *
-     * @param layout
+     * @param layout room layout string
      * @see #prepareTilesFromLayout
      */
     public RoomLayout(String layout) {
@@ -35,7 +35,6 @@ public class RoomLayout implements Layout {
 
     /**
      * Prepare the tiles matrix and create Tiles object (using Z as height)
-     *
      * <!--       Z
      * <!--       |
      * <!--       |
@@ -93,16 +92,6 @@ public class RoomLayout implements Layout {
      */
     public Tile getTile(int x, int y) throws IndexOutOfBoundsException {
         return tiles[x][y];
-    }
-
-    /**
-     * Check wheter room tile is valid
-     * @param int x
-     * @param int y
-     * @return true if exist
-     */
-    public boolean isTileValid(int x, int y) throws IndexOutOfBoundsException {
-        return tiles[x][y] != null && tiles[x][y].isWalkable();
     }
 
 }
