@@ -34,8 +34,8 @@ public class Entity implements JsonSerializable  {
     @Getter
     private final Room room;
 
-    public Entity(UUID id, EntityType type, @NonNull Room room) {
-        this.id = id;
+    public Entity(EntityType type, @NonNull Room room) {
+        this.id = UUID.randomUUID();
         this.type = type;
         this.room = room;
         this.components = new EnumMap<>(ComponentType.class);

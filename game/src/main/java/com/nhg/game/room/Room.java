@@ -5,11 +5,12 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.entity.Entity;
-import com.nhg.game.room.entity.EntityFactory;
 import com.nhg.game.room.entity.EntityType;
 import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
+import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Rotation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -110,9 +111,12 @@ public class Room implements Runnable, JsonSerializable {
     public void userEnter(@NonNull User user) {
         users.add(user);
 
-        Entity entity = EntityFactory.create(EntityType.HUMAN, this);
-        entity.addComponent(ComponentType.User, Pair.of(user, User.class));
-        entity.addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class));
+        Entity entity = new Entity(EntityType.HUMAN, this)
+                .addComponent(ComponentType.User, Pair.of(user, User.class))
+                .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class))
+                .addComponent(ComponentType.Position, Pair.of(roomLayout.getInt3AtDoor(), Int3.class))
+                .addComponent(ComponentType.BodyHeadRotation, Pair.of(roomLayout.getDoorRotation(), Rotation.class))
+                .addComponent(ComponentType.Movement);
 
         addEntity(entity);
     }
