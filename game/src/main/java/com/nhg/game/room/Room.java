@@ -5,24 +5,36 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.entity.Entity;
-import com.nhg.game.room.entity.UserEntity;
-import com.nhg.game.room.layout.RoomLayout;
+import com.nhg.game.room.entity.EntityFactory;
+import com.nhg.game.room.entity.EntityType;
+import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
-import com.nhg.game.utils.Int3;
-import com.nhg.game.utils.PostgreSQLEnumType;
-import com.nhg.game.utils.Rotation;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.data.util.Pair;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -31,10 +43,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 @EntityListeners(RoomListener.class)
 @javax.persistence.Entity
-@TypeDef(
-        name = "pgsql_enum",
-        typeClass = PostgreSQLEnumType.class
-)
 @Table(name = "rooms")
 public class Room implements Runnable, JsonSerializable {
 
@@ -57,24 +65,10 @@ public class Room implements Runnable, JsonSerializable {
     @ManyToOne
     private User owner;
 
-    @Column(columnDefinition = "varchar(1000000) default '0'", nullable = false)
-    private String layout;
-
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private Integer doorX;
-
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private Integer doorY;
-
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "rotation default 'SOUTH'")
-    @Type(type = "pgsql_enum")
-    private Rotation doorRotation;
-
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     private final List<Item> items;
 
-    @Transient
+    @Embedded
     private RoomLayout roomLayout;
 
     @Transient
@@ -91,22 +85,12 @@ public class Room implements Runnable, JsonSerializable {
 
     @Transient
     @Setter(AccessLevel.NONE)
-    private final Map<Integer, Entity> entities;
+    private final Map<UUID, Entity> entities;
 
     public Room() {
         this.users = new UserGroup();
         this.items = new ArrayList<>();
         this.entities = new ConcurrentHashMap<>();
-        this.entityIds = new AtomicInteger();
-    }
-
-    public Room(String name, User owner, String layout) {
-        this();
-
-        this.name = name;
-        this.owner = owner;
-
-        this.setLayout(layout);
     }
 
     public Room(String name, User owner, String layout ,int doorX, int doorY, int doorRotation) {
@@ -114,11 +98,7 @@ public class Room implements Runnable, JsonSerializable {
 
         this.name = name;
         this.owner = owner;
-        this.doorX = doorX;
-        this.doorY = doorY;
-        this.doorRotation = Rotation.intToRotation(doorRotation);
-
-        this.setLayout(layout);
+        this.roomLayout = new RoomLayout(layout,doorX,doorY,doorRotation);
     }
 
     /**
@@ -130,14 +110,11 @@ public class Room implements Runnable, JsonSerializable {
     public void userEnter(@NonNull User user) {
         users.add(user);
 
-        Integer entityId = this.entityIds.getAndIncrement();
+        Entity entity = EntityFactory.create(EntityType.HUMAN, this);
+        entity.addComponent(ComponentType.User, Pair.of(user, User.class));
+        entity.addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class));
 
-        Entity entity = new UserEntity(entityId, this, user);
-        entity.setPosition(new Int3(doorX, doorY, getRoomLayout().getTile(doorX, doorY).getPosition().getZ()));
-        entity.setRotation(doorRotation);
-
-        this.entities.putIfAbsent(entityId, entity);
-        usersCount++;
+        addEntity(entity);
     }
 
     /**
@@ -153,17 +130,19 @@ public class Room implements Runnable, JsonSerializable {
 
         if (entity == null) return;
 
+        removeEntity(entity);
+        user.setEntity(null);
+    }
+
+    public void addEntity(@NonNull Entity entity) {
+        this.entities.putIfAbsent(entity.getId(), entity);
+    }
+
+    public void removeEntity(@NonNull Entity entity) {
         entities.remove(entity.getId());
 
-        try {
-            users.sendBroadcastMessageExcept(
-                    new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, new JSONObject().put("id", entity.getId()).put("user_id", user.getId())), user);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        user.setEntity(null);
-        usersCount--;
+        users.sendBroadcastMessage(
+                new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, entity.getId().toString()));
     }
 
     /**
@@ -174,31 +153,6 @@ public class Room implements Runnable, JsonSerializable {
      */
     public boolean isEmpty() {
         return users.count() == 0;
-    }
-
-    /**
-     * Set layout and create RoomLayout from the new layout.
-     *
-     * @param layout string representing the layout
-     * @see RoomLayout#RoomLayout
-     */
-    public void setLayout(String layout) {
-        this.layout = layout;
-        this.roomLayout = new RoomLayout(layout);
-    }
-
-    /**
-     * Get the <code>RoomLayout</code> class, if it's null it will also create a new instance from <code>layout</code>.
-     *
-     * @return the RoomLayout
-     * @see #layout
-     * @see RoomLayout
-     */
-    public RoomLayout getRoomLayout() {
-        if (roomLayout == null) {
-            roomLayout = new RoomLayout(layout);
-        }
-        return roomLayout;
     }
 
     /**
@@ -231,11 +185,11 @@ public class Room implements Runnable, JsonSerializable {
         return new JSONObject()
                 .put("id", id)
                 .put("name", name)
-                .put("layout", layout)
+                .put("layout", roomLayout.getLayout())
                 .put("owner_id", owner.getId())
-                .put("door_x", doorX)
-                .put("door_y", doorY)
-                .put("door_rot", doorRotation.getValue())
+                .put("door_x", roomLayout.getDoorX())
+                .put("door_y", roomLayout.getDoorY())
+                .put("door_rot", roomLayout.getDoorRotation().getValue())
                 .put("users_count", usersCount);
     }
 
