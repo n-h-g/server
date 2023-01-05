@@ -3,6 +3,7 @@ package com.nhg.game.room.entity.component;
 import lombok.Getter;
 
 public enum ComponentType {
+    Name("name", NameComponent.class),
     User("user", UserComponent.class),
     Position("position", PositionComponent.class),
     Movement("movement", MovementComponent.class),
