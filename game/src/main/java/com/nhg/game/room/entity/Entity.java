@@ -21,7 +21,7 @@ import java.util.UUID;
  * @see Room
  */
 @Slf4j
-public abstract class Entity implements JsonSerializable  {
+public class Entity implements JsonSerializable  {
 
     @Getter
     private final UUID id;
