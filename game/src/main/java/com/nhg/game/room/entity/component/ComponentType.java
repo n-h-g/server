@@ -7,7 +7,8 @@ public enum ComponentType {
     User("user", UserComponent.class),
     Position("position", PositionComponent.class),
     Movement("movement", MovementComponent.class),
-    BodyHeadRotation("bh_rot", BodyHeadRotationComponent.class);
+    BodyHeadRotation("bh_rot", BodyHeadRotationComponent.class),
+    HumanAspect("aspect", HumanLookComponent.class);
 
     @Getter
     private final String name;
