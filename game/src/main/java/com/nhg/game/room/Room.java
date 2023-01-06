@@ -174,16 +174,8 @@ public class Room implements Runnable, JsonSerializable {
                 entity.cycle();
             }
         }
-
-        synchronized (items) {
-            for(Item item : items) {
-                if(item == null) continue;
-
-                item.cycle();
-            }
-        }
-
     }
+
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()

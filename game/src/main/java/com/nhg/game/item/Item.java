@@ -2,26 +2,31 @@ package com.nhg.game.item;
 
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
+import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
-import com.nhg.game.utils.Int3;
-import com.nhg.game.utils.PostgreSQLEnumType;
 import com.nhg.game.utils.Rotation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Getter
 @Setter
 @javax.persistence.Entity
 @Slf4j
 @Table(name = "items")
-public class Item implements JsonSerializable, Runnable {
+public class Item implements JsonSerializable {
 
     @Id
     @GeneratedValue(
@@ -57,6 +62,9 @@ public class Item implements JsonSerializable, Runnable {
     @JoinColumn(columnDefinition="integer", name="item_specification_id")
     private ItemSpecification itemSpecification;
 
+    @Transient
+    private Entity entity;
+
     public Item(Room room, User owner) {
         this.room = room;
         this.owner = owner;
@@ -80,23 +88,5 @@ public class Item implements JsonSerializable, Runnable {
                 .put("z", z)
                 .put("room_id", room != null ? room.getId() : "-1")
                 .put("item_type", itemSpecification.getItemType().getValue());
-    }
-
-    @Override
-    public void run() {
-
-    }
-
-    public void cycle() {
-
-    }
-    public Int3 getPosition() {
-        return new Int3(x, y, z);
-    }
-
-    public void setPosition(Int3 position) {
-        this.x = position.getX();
-        this.y = position.getY();
-        this.z = position.getZ();
     }
 }
