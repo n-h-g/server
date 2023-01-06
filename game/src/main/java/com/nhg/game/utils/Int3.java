@@ -10,6 +10,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class Int3 {
 
+    public static final Int3 Zero = new Int3(0,0,0);
+
     private int x;
     private int y;
     private int z;

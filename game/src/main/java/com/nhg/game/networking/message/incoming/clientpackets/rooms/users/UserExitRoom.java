@@ -6,6 +6,7 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
+import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +37,12 @@ public class UserExitRoom extends ClientPacket {
 
             Room room = roomService.getRoomById(roomId);
 
+            Entity entity = user.getEntity();
+
+            if (entity == null) return;
+
             room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, user.getEntity().getId()));
+                    new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, entity.getId().toString()));
 
         } catch(Exception e) {
             log.error("Error: "+ e);
