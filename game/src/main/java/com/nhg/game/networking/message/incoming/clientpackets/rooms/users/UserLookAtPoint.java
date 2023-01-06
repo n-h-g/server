@@ -6,6 +6,10 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
+import com.nhg.game.room.entity.Entity;
+import com.nhg.game.room.entity.component.BodyHeadRotationComponent;
+import com.nhg.game.room.entity.component.ComponentType;
+import com.nhg.game.room.entity.component.PositionComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
 import com.nhg.game.utils.Int2;
@@ -33,13 +37,21 @@ public class UserLookAtPoint extends ClientPacket {
             int x = body.getInt("x");
             int y = body.getInt("y");
 
-            if(x == user.getEntity().getPosition().getX() && y == user.getEntity().getPosition().getY()) {
+            Entity entity = user.getEntity();
+
+            if (entity == null) return;
+
+            PositionComponent pc = (PositionComponent) entity.getComponent(ComponentType.Position);
+            BodyHeadRotationComponent bhr = (BodyHeadRotationComponent) entity.getComponent(ComponentType.BodyHeadRotation);
+
+            if(x == pc.getPosition().getX() && y == pc.getPosition().getY()) {
                 return;
             }
 
-            Rotation rotation = Rotation.CalculateRotation(new Int2(user.getEntity().getPosition().getX(), user.getEntity().getPosition().getY()), new Int2(x, y));
-            user.getEntity().setBodyRotation(rotation);
-            user.getEntity().setHeadRotation(rotation);
+            Rotation rotation = Rotation.CalculateRotation(
+                    new Int2(pc.getPosition().getX(), pc.getPosition().getY()), new Int2(x, y));
+
+            bhr.setRotation(rotation);
 
             Room room = roomService.getRoomById(roomId);
 
