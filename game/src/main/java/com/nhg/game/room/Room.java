@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Getter
 @Setter
@@ -78,11 +77,6 @@ public class Room implements Runnable, JsonSerializable {
     @Transient
     @Setter(AccessLevel.NONE)
     private final UserGroup users;
-
-    @Transient
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
-    private AtomicInteger entityIds;
 
     @Transient
     @Setter(AccessLevel.NONE)
