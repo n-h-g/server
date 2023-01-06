@@ -9,6 +9,7 @@ import com.nhg.game.room.entity.EntityType;
 import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
+import com.nhg.game.utils.Gender;
 import com.nhg.game.utils.Int3;
 import com.nhg.game.utils.Rotation;
 import lombok.AccessLevel;
@@ -110,7 +111,9 @@ public class Room implements Runnable, JsonSerializable {
                 .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class))
                 .addComponent(ComponentType.Position, Pair.of(roomLayout.getInt3AtDoor(), Int3.class))
                 .addComponent(ComponentType.BodyHeadRotation, Pair.of(roomLayout.getDoorRotation(), Rotation.class))
-                .addComponent(ComponentType.Movement);
+                .addComponent(ComponentType.Movement)
+                .addComponent(ComponentType.HumanAspect, Pair.of(user.getLook(), String.class),
+                        Pair.of(user.getGender(), Gender.class));
 
         addEntity(entity);
     }

@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HumanLookComponent extends Component {
+public class HumanAspectComponent extends Component {
 
     @Getter
     @Setter
