@@ -114,6 +114,7 @@ public class MovementComponent extends Component {
 
         try {
             Int3 nextPosition = calculatedPath.poll().getPosition();
+            addAction(Action.MOVE);
 
             BodyHeadRotationComponent bhrComponent =
                     (BodyHeadRotationComponent) entity.getComponent(ComponentType.BodyHeadRotation);
@@ -123,7 +124,7 @@ public class MovementComponent extends Component {
                         Rotation.CalculateRotation(getPositionComponent().getPosition().ToInt2XY(), nextPosition.ToInt2XY()));
             }
 
-            addAction(Action.MOVE);
+
 
             getPositionComponent().setPosition(nextPosition);
 
@@ -134,7 +135,7 @@ public class MovementComponent extends Component {
     }
 
     private void sendUpdate(Room room) {
-        room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.UpdateEntity, this));
+        room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.UpdateEntity, entity));
     }
 
     @Override
