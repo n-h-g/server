@@ -15,10 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 
 @Slf4j
 public class MovementComponent extends Component {
@@ -27,20 +25,15 @@ public class MovementComponent extends Component {
     @Setter
     private Int2 destination;
 
-    @Getter
-    @Setter
-    private Set<Action> actions;
-
     private final AStar aStar;
     private Queue<Tile> calculatedPath;
+
 
     public MovementComponent() {
         this.calculatedPath = new LinkedList<>();
         this.aStar = new AStar(true);
 
         this.destination = new Int2(0, 0);
-
-        this.actions = new HashSet<>();
     }
 
     public PositionComponent getPositionComponent() throws ComponentNotFoundException {
@@ -52,6 +45,29 @@ public class MovementComponent extends Component {
         }
 
         return positionComponent;
+    }
+
+    public ActionComponent getActionComponent() throws ComponentNotFoundException {
+        ActionComponent actionComponent = (ActionComponent) entity.getComponent(ComponentType.Action);
+
+        if (actionComponent == null) {
+            log.error("ActionComponent not found on entity "+ entity.getId() +" with MovementComponent");
+            throw new ComponentNotFoundException();
+        }
+
+        return actionComponent;
+    }
+
+    public BodyHeadRotationComponent getBhrComponent() throws ComponentNotFoundException {
+        BodyHeadRotationComponent bhrComponent =
+                (BodyHeadRotationComponent) entity.getComponent(ComponentType.BodyHeadRotation);
+
+        if (bhrComponent == null) {
+            log.error("BodyHeadRotationComponent not found on entity "+ entity.getId() +" with MovementComponent");
+            throw new ComponentNotFoundException();
+        }
+
+        return bhrComponent;
     }
 
     /**
@@ -77,25 +93,6 @@ public class MovementComponent extends Component {
     }
 
     /**
-     * Add the given action to the entity.
-     * If the action is <code>MOVE</code> it will remove all the actions that should be removed on move.
-     *
-     * @param action the action to add.
-     * @see Action#shouldBeRemovedOnMove
-     */
-    private void addAction(Action action) {
-        actions.add(action);
-
-        if (action == Action.MOVE) {
-            actions.removeIf(Action::shouldBeRemovedOnMove);
-        }
-    }
-
-    private void removeAction(Action action) {
-        this.actions.remove(action);
-    }
-
-    /**
      * Process the entity movement. It's executed every entity cycle.
      *
      * @see #cycle
@@ -103,34 +100,33 @@ public class MovementComponent extends Component {
      */
     @Override
     public void cycle() {
-        if (calculatedPath == null || calculatedPath.isEmpty()) {
-            if (actions.contains(Action.MOVE)) {
-                removeAction(Action.MOVE);
-                sendUpdate(entity.getRoom());
+        try {
+            ActionComponent actionComponent = getActionComponent();
+            BodyHeadRotationComponent bhrComponent = getBhrComponent();
+            PositionComponent positionComponent = getPositionComponent();
+
+            if (calculatedPath == null || calculatedPath.isEmpty()) {
+                if (actionComponent.hasAction(Action.MOVE)) {
+                    actionComponent.removeAction(Action.MOVE);
+                    sendUpdate(entity.getRoom());
+                }
+
+                return;
             }
 
-            return;
-        }
-
-        try {
             Int3 nextPosition = calculatedPath.poll().getPosition();
-            addAction(Action.MOVE);
-
-            BodyHeadRotationComponent bhrComponent =
-                    (BodyHeadRotationComponent) entity.getComponent(ComponentType.BodyHeadRotation);
+            actionComponent.addAction(Action.MOVE);
 
             if (bhrComponent != null) {
                 bhrComponent.setRotation(
-                        Rotation.CalculateRotation(getPositionComponent().getPosition().ToInt2XY(), nextPosition.ToInt2XY()));
+                        Rotation.CalculateRotation(positionComponent.getPosition().ToInt2XY(), nextPosition.ToInt2XY()));
             }
 
-
-
-            getPositionComponent().setPosition(nextPosition);
+            positionComponent.setPosition(nextPosition);
 
             sendUpdate(entity.getRoom());
         } catch (ComponentNotFoundException e) {
-            log.error("PositionComponent in required when using MovementComponent: " + e);
+            log.error("There are require components for MovementComponent that are missing: " + e);
         }
     }
 

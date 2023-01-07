@@ -6,6 +6,7 @@ public enum ComponentType {
     Name("name", NameComponent.class),
     User("user", UserComponent.class),
     Position("position", PositionComponent.class),
+    Action("action", ActionComponent.class),
     Movement("movement", MovementComponent.class),
     BodyHeadRotation("bh_rot", BodyHeadRotationComponent.class),
     HumanAspect("aspect", HumanAspectComponent.class);
