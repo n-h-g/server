@@ -77,19 +77,19 @@ public class Entity implements JsonSerializable  {
 
     public JSONObject toJson() throws JSONException {
 
-        JSONObject components = new JSONObject();
+        JSONObject json = new JSONObject()
+                .put("id", id)
+                .put("type", type.getCode());
+
         this.components.forEach((type, component) -> {
             try {
                 if (component.toJson() != null) {
-                    components.put(type.getName(), component.toJson());
+                    json.put(type.getName(), component.toJson());
                 }
             } catch (JSONException ignored) {}
         });
 
-        return new JSONObject()
-                .put("id", id)
-                .put("type", type.getCode())
-                .put("components", components);
+        return json;
     }
 
 }
