@@ -16,6 +16,11 @@ public class HumanAspectComponent extends Component {
     @Setter
     private Gender gender;
 
+    public HumanAspectComponent(String look, Gender gender) {
+        this.look = look;
+        this.gender = gender;
+    }
+
 
     @Override
     public JSONObject toJson() throws JSONException {

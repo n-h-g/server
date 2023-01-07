@@ -1,14 +1,24 @@
 package com.nhg.game.room;
 
 import com.nhg.game.GameConfig;
+import com.nhg.game.item.Item;
+import com.nhg.game.item.ItemService;
+import com.nhg.game.room.entity.Entity;
+import com.nhg.game.room.entity.EntityType;
+import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.user.User;
+import com.nhg.game.utils.Int3;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.util.Pair;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
-import java.util.*;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
@@ -57,6 +67,8 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
+    private final ItemService itemService;
+
 
     /**
      * (Create) If a room with a null id is passed then it will create a new room and generate an id for it.
@@ -94,11 +106,30 @@ public class RoomService {
 
         if (room == null) return false;
 
+        this.prepareRoom(room);
+
         room.userEnter(user);
-        this.startRoomTask(room);
 
         log.debug("User "+ user.getId() +" entered room "+ roomId);
         return true;
+    }
+
+    private void prepareRoom(@NonNull Room room) {
+        if (activeRoomsTasks.containsKey(room.getId())) return;
+
+        this.startRoomTask(room);
+        this.loadRoomEntities(room);
+    }
+
+    private void loadRoomEntities(@NonNull Room room) {
+        List<Item> items = itemService.getItemsForRoom(room);
+
+        for (Item item : items) {
+            room.addEntity(new Entity(EntityType.ITEM, room)
+                    .addComponent(ComponentType.Name, Pair.of(item.getItemSpecification().getName(), String.class))
+                    .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class))
+            );
+        }
     }
 
     /**

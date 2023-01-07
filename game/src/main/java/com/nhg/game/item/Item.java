@@ -4,6 +4,7 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
+import com.nhg.game.utils.Int3;
 import com.nhg.game.utils.Rotation;
 import lombok.Getter;
 import lombok.Setter;
@@ -77,6 +78,10 @@ public class Item implements JsonSerializable {
     }
 
     public Item() {}
+
+    public Int3 getPosition() {
+        return new Int3(x,y,z);
+    }
 
     @Override
     public JSONObject toJson() throws JSONException {
