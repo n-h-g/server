@@ -5,21 +5,36 @@ import com.nhg.game.item.Item;
 import com.nhg.game.networking.Client;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
-import com.nhg.game.room.entity.UserEntity;
+import com.nhg.game.room.entity.Entity;
 import com.nhg.game.utils.Gender;
 import com.nhg.game.utils.PostgreSQLEnumType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 @Getter
 @Setter
-@Entity
+@javax.persistence.Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -74,7 +89,7 @@ public class User implements JsonSerializable {
     private Client client;
 
     @Transient
-    private UserEntity entity;
+    private Entity entity;
 
     @Transient
     private boolean isOnline;

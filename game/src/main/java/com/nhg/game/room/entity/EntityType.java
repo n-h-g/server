@@ -3,7 +3,8 @@ package com.nhg.game.room.entity;
 import lombok.Getter;
 
 public enum EntityType {
-    HUMAN("h");
+    HUMAN("h"),
+    ITEM("i");
 
     @Getter
     private final String code;

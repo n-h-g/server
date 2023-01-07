@@ -3,10 +3,12 @@ package com.nhg.game.item;
 import com.nhg.game.room.Room;
 import com.nhg.game.user.User;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -36,6 +38,10 @@ public class ItemService {
     public Item saveItem(Item item, Room room) {
         item.setRoom(room);
         return this.itemRepository.save(item);
+    }
+
+    public List<Item> getItemsForRoom(@NonNull Room room) {
+        return itemRepository.findByRoom(room);
     }
 
 }
