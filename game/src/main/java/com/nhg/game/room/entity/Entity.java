@@ -5,6 +5,7 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.component.Component;
 import com.nhg.game.room.entity.component.ComponentType;
+import com.nhg.game.user.HumanData;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.Gender;
 import com.nhg.game.utils.Int3;
@@ -97,16 +98,21 @@ public class Entity implements JsonSerializable  {
         return json;
     }
 
-    public static Entity fromUser(@NonNull User user, @NonNull Room room) {
+    public static Entity fromHumanData(@NonNull HumanData humanData, @NonNull Room room) {
         return new Entity(EntityType.HUMAN, room)
-                .addComponent(ComponentType.User, Pair.of(user, User.class))
-                .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class))
                 .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getInt3AtDoor(), Int3.class))
                 .addComponent(ComponentType.BodyHeadRotation, Pair.of(room.getRoomLayout().getDoorRotation(), Rotation.class))
                 .addComponent(ComponentType.Action)
                 .addComponent(ComponentType.Movement)
-                .addComponent(ComponentType.HumanAspect, Pair.of(user.getLook(), String.class),
-                        Pair.of(user.getGender(), Gender.class));
+                .addComponent(ComponentType.HumanAspect, Pair.of(humanData.getLook(), String.class),
+                        Pair.of(humanData.getGender(), Gender.class));
+    }
+
+    public static Entity fromUser(@NonNull User user, @NonNull Room room) {
+        return fromHumanData(user.getHumanData(), room)
+                .addComponent(ComponentType.User, Pair.of(user, User.class))
+                .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class));
+
     }
 
     public static Entity fromItem(@NonNull Item item, @NonNull Room room) {
