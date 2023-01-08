@@ -111,6 +111,7 @@ public class Room implements Runnable, JsonSerializable {
                 .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class))
                 .addComponent(ComponentType.Position, Pair.of(roomLayout.getInt3AtDoor(), Int3.class))
                 .addComponent(ComponentType.BodyHeadRotation, Pair.of(roomLayout.getDoorRotation(), Rotation.class))
+                .addComponent(ComponentType.Action)
                 .addComponent(ComponentType.Movement)
                 .addComponent(ComponentType.HumanAspect, Pair.of(user.getLook(), String.class),
                         Pair.of(user.getGender(), Gender.class));
