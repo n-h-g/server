@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,6 +81,20 @@ public class User implements JsonSerializable {
     @Transient
     private boolean isOnline;
 
+    public User(String username, String motto, String look) {
+        this.username = username;
+        this.motto = motto;
+        this.humanData = new HumanData(look);
+    }
+
+    public void addItemToInventory(@NonNull Item item) {
+        items.add(item);
+    }
+
+    public void removeItemFromInventory(@NonNull Item item) {
+        items.remove(item);
+    }
+
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
@@ -92,11 +107,5 @@ public class User implements JsonSerializable {
                 .put("credits", this.credits);
 
 
-    }
-
-    public User(String username, String motto, String look) {
-        this.username = username;
-        this.motto = motto;
-        this.humanData = new HumanData(look);
     }
 }

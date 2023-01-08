@@ -23,11 +23,28 @@ public class ItemService {
      * @param owner items' owner
      * @return items owned by the given user.
      */
-    public List<Item> getItemsByOwner(User owner) { return this.itemRepository.findByOwner(owner); }
-
+    public List<Item> getItemsByOwner(@NonNull User owner) { return this.itemRepository.findByOwner(owner); }
 
     public List<Item> getItemsForRoom(@NonNull Room room) {
         return itemRepository.findByRoom(room);
+    }
+
+    public void userPickUpItem(@NonNull User user, @NonNull Item item) {
+        item.setOwner(user);
+        user.addItemToInventory(item);
+
+        save(item);
+    }
+
+    public void userPlaceItem(@NonNull User user, @NonNull Item item) {
+        item.setOwner(null);
+        user.removeItemFromInventory(item);
+
+        save(item);
+    }
+
+    public void save(@NonNull Item item) {
+        itemRepository.save(item);
     }
 
 }

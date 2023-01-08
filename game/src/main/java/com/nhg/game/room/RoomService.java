@@ -177,6 +177,18 @@ public class RoomService {
         userExitRoom(user, user.getEntity().getRoom().getId());
     }
 
+    public void placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
+        room.addEntity(Entity.fromItem(item, room));
+
+        itemService.userPlaceItem(user, item);
+    }
+
+    public void pickUpItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
+        room.removeEntity(item.getEntity());
+
+        itemService.userPickUpItem(user, item);
+    }
+
     /**
      * Check the room: if it doesn't contain users after '<code>SecondsBeforeEmptyRoomGetsUnloaded</code>' seconds
      * it will check again that it's not empty then stop the room task.
