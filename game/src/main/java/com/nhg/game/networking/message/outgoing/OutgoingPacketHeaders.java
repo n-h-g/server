@@ -30,6 +30,7 @@ public final class OutgoingPacketHeaders {
 
     //region# User (400 to 599)
     public static final int UpdateUserInformation = 400;
+    public static final int InventoryItems = 401;
     //endregion
 
     //region# Items (600 to 799)
