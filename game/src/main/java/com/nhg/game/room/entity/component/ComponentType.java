@@ -5,6 +5,7 @@ import lombok.Getter;
 public enum ComponentType {
     Name("name", NameComponent.class),
     User("user", UserComponent.class),
+    Item("item", ItemComponent.class),
     Position("position", PositionComponent.class),
     Action("action", ActionComponent.class),
     Movement("movement", MovementComponent.class),

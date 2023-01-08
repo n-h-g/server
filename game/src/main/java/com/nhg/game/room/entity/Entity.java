@@ -118,7 +118,8 @@ public class Entity implements JsonSerializable  {
     public static Entity fromItem(@NonNull Item item, @NonNull Room room) {
         return new Entity(EntityType.ITEM, room)
                 .addComponent(ComponentType.Name, Pair.of(item.getItemSpecification().getName(), String.class))
-                .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class));
+                .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class))
+                .addComponent(ComponentType.Item, Pair.of(item, Item.class));
     }
 
 }
