@@ -45,6 +45,7 @@ public class Item implements JsonSerializable {
     private Room room;
 
     @ManyToOne
+    @JoinColumn(columnDefinition="integer", name="owner_id")
     private User owner;
 
     @Column(columnDefinition = "integer default 0")
