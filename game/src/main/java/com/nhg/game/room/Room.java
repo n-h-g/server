@@ -158,6 +158,10 @@ public class Room implements Runnable, JsonSerializable {
         }
     }
 
+    public Entity getEntityById(UUID id) {
+        return entities.get(id);
+    }
+
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
