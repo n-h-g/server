@@ -5,13 +5,8 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.entity.Entity;
-import com.nhg.game.room.entity.EntityType;
-import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
-import com.nhg.game.utils.Gender;
-import com.nhg.game.utils.Int3;
-import com.nhg.game.utils.Rotation;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -19,7 +14,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.data.util.Pair;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -106,17 +100,7 @@ public class Room implements Runnable, JsonSerializable {
     public void userEnter(@NonNull User user) {
         users.add(user);
 
-        Entity entity = new Entity(EntityType.HUMAN, this)
-                .addComponent(ComponentType.User, Pair.of(user, User.class))
-                .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class))
-                .addComponent(ComponentType.Position, Pair.of(roomLayout.getInt3AtDoor(), Int3.class))
-                .addComponent(ComponentType.BodyHeadRotation, Pair.of(roomLayout.getDoorRotation(), Rotation.class))
-                .addComponent(ComponentType.Action)
-                .addComponent(ComponentType.Movement)
-                .addComponent(ComponentType.HumanAspect, Pair.of(user.getLook(), String.class),
-                        Pair.of(user.getGender(), Gender.class));
-
-        addEntity(entity);
+        addEntity(Entity.fromUser(user, this));
     }
 
     /**

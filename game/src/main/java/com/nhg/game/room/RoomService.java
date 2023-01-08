@@ -4,15 +4,11 @@ import com.nhg.game.GameConfig;
 import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemService;
 import com.nhg.game.room.entity.Entity;
-import com.nhg.game.room.entity.EntityType;
-import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.user.User;
-import com.nhg.game.utils.Int3;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.util.Pair;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
@@ -125,10 +121,7 @@ public class RoomService {
         List<Item> items = itemService.getItemsForRoom(room);
 
         for (Item item : items) {
-            room.addEntity(new Entity(EntityType.ITEM, room)
-                    .addComponent(ComponentType.Name, Pair.of(item.getItemSpecification().getName(), String.class))
-                    .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class))
-            );
+            room.addEntity(Entity.fromItem(item, room));
         }
     }
 

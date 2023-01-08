@@ -1,9 +1,14 @@
 package com.nhg.game.room.entity;
 
+import com.nhg.game.item.Item;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.component.Component;
 import com.nhg.game.room.entity.component.ComponentType;
+import com.nhg.game.user.User;
+import com.nhg.game.utils.Gender;
+import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Rotation;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -90,6 +95,24 @@ public class Entity implements JsonSerializable  {
         });
 
         return json;
+    }
+
+    public static Entity fromUser(@NonNull User user, @NonNull Room room) {
+        return new Entity(EntityType.HUMAN, room)
+                .addComponent(ComponentType.User, Pair.of(user, User.class))
+                .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class))
+                .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getInt3AtDoor(), Int3.class))
+                .addComponent(ComponentType.BodyHeadRotation, Pair.of(room.getRoomLayout().getDoorRotation(), Rotation.class))
+                .addComponent(ComponentType.Action)
+                .addComponent(ComponentType.Movement)
+                .addComponent(ComponentType.HumanAspect, Pair.of(user.getLook(), String.class),
+                        Pair.of(user.getGender(), Gender.class));
+    }
+
+    public static Entity fromItem(@NonNull Item item, @NonNull Room room) {
+        return new Entity(EntityType.ITEM, room)
+                .addComponent(ComponentType.Name, Pair.of(item.getItemSpecification().getName(), String.class))
+                .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class));
     }
 
 }
