@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @AllArgsConstructor
@@ -26,19 +25,6 @@ public class ItemService {
      */
     public List<Item> getItemsByOwner(User owner) { return this.itemRepository.findByOwner(owner); }
 
-    /**
-     * Get the item by the id
-     *
-     * @param item id
-     * @return item
-     */
-    public Optional<Item> getItemById(Integer itemId) { return this.itemRepository.findById(itemId); }
-
-
-    public Item saveItem(Item item, Room room) {
-        item.setRoom(room);
-        return this.itemRepository.save(item);
-    }
 
     public List<Item> getItemsForRoom(@NonNull Room room) {
         return itemRepository.findByRoom(room);
