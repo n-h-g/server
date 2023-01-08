@@ -177,10 +177,13 @@ public class RoomService {
         userExitRoom(user, user.getEntity().getRoom().getId());
     }
 
-    public void placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
+    public boolean placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         room.addEntity(Entity.fromItem(item, room));
 
         itemService.userPlaceItem(user, item);
+
+        //TODO check if can be placed
+        return true;
     }
 
     public void pickUpItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
