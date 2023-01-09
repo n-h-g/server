@@ -7,6 +7,7 @@ import com.nhg.game.networking.message.incoming.clientpackets.navigator.AllRooms
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.MyRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.CreateRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.SaveRoomSettings;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.PickupItem;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserChatMessage;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserEnterRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserExitRoom;
@@ -33,6 +34,7 @@ public final class IncomingPackets {
             new Pair(13, UserLookAtPoint.class),
             new Pair(14, InventoryItems.class),
             new Pair(15, UpdateUser.class),
+            new Pair(23, PickupItem.class),
             new Pair(36, CreateRoom.class),
             new Pair(44, SaveRoomSettings.class)
    };
