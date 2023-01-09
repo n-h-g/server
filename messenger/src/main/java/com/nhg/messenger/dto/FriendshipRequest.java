@@ -1,4 +1,4 @@
 package com.nhg.messenger.dto;
 
-public record FriendshipRequest(Integer friendshipId, Integer senderId, Integer destinationId) {
+public record FriendshipRequest(Integer senderId, Integer destinationId) {
 }
