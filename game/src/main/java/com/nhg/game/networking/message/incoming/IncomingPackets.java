@@ -1,11 +1,18 @@
 package com.nhg.game.networking.message.incoming;
 
-import com.nhg.game.networking.message.incoming.clientpackets.*;
+import com.nhg.game.networking.message.incoming.clientpackets.Handshake;
+import com.nhg.game.networking.message.incoming.clientpackets.PingRequest;
+import com.nhg.game.networking.message.incoming.clientpackets.items.InventoryItems;
+import com.nhg.game.networking.message.incoming.clientpackets.navigator.AllRooms;
+import com.nhg.game.networking.message.incoming.clientpackets.navigator.MyRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.CreateRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.SaveRoomSettings;
-import com.nhg.game.networking.message.incoming.clientpackets.navigator.*;
-import com.nhg.game.networking.message.incoming.clientpackets.items.RequestLoadItems;
-import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.*;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserChatMessage;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserEnterRoom;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserExitRoom;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserLookAtPoint;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserMove;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserTypeStatus;
 import com.nhg.game.networking.message.incoming.clientpackets.users.UpdateUser;
 
 public final class IncomingPackets {
@@ -24,7 +31,7 @@ public final class IncomingPackets {
             new Pair(11, UserChatMessage.class),
             new Pair(12, UserTypeStatus.class),
             new Pair(13, UserLookAtPoint.class),
-            new Pair(14, RequestLoadItems.class),
+            new Pair(14, InventoryItems.class),
             new Pair(15, UpdateUser.class),
             new Pair(36, CreateRoom.class),
             new Pair(44, SaveRoomSettings.class)

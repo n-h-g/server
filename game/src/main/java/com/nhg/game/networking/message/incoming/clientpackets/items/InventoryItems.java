@@ -1,4 +1,4 @@
-package com.nhg.game.networking.message.incoming.clientpackets.users;
+package com.nhg.game.networking.message.incoming.clientpackets.items;
 
 import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemService;
