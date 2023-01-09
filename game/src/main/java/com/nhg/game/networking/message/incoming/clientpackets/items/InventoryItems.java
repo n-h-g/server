@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class InventoryItems extends ClientPacket {
 
-    private ItemService itemService;
+    private final ItemService itemService;
 
     public InventoryItems() {
         itemService = BeanRetriever.get(ItemService.class);
