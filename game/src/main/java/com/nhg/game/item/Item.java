@@ -12,7 +12,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
-import shared.PersistentPosition;
+import com.nhg.game.shared.PersistentPosition;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;

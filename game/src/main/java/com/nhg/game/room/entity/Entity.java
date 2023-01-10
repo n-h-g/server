@@ -6,7 +6,7 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.component.Component;
 import com.nhg.game.room.entity.component.ComponentType;
-import shared.HumanData;
+import com.nhg.game.shared.HumanData;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.Gender;
 import com.nhg.game.utils.Int3;

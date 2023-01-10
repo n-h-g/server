@@ -14,7 +14,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.json.JSONException;
 import org.json.JSONObject;
-import shared.HumanData;
+import com.nhg.game.shared.HumanData;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;

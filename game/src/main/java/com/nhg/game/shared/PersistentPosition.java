@@ -1,4 +1,4 @@
-package shared;
+package com.nhg.game.shared;
 
 import com.nhg.game.utils.Int3;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package shared;
+package com.nhg.game.shared;
 
 import com.nhg.game.utils.Gender;
 import com.nhg.game.utils.PostgreSQLEnumType;
