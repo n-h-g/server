@@ -1,8 +1,20 @@
 package com.nhg.catalogue.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import java.util.List;
 
 @Getter
@@ -33,6 +45,7 @@ public class Page implements Comparable<Page> {
      */
     private int sequence;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "page", fetch = FetchType.EAGER)
     private List<Item> items;
 
