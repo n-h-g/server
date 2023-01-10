@@ -95,6 +95,10 @@ public class User implements JsonSerializable {
         items.remove(item);
     }
 
+    public void updateCredits(int amount) {
+        credits += amount;
+    }
+
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
