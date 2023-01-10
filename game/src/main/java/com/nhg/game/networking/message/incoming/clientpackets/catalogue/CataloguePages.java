@@ -1,6 +1,6 @@
 package com.nhg.game.networking.message.incoming.clientpackets.catalogue;
 
-import com.nhg.game.dto.CataloguePageRequest;
+import com.nhg.game.dto.CataloguePage;
 import com.nhg.game.networking.WebSocketClient;
 import com.nhg.game.networking.message.incoming.ClientPacket;
 import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
@@ -27,9 +27,9 @@ public class CataloguePages extends ClientPacket {
 
             if (user == null) return;
 
-            CataloguePageRequest[] pages = restTemplate.getForEntity(
+            CataloguePage[] pages = restTemplate.getForEntity(
                     "http://CATALOGUE/api/v1/catalogue/page",
-                    CataloguePageRequest[].class
+                    CataloguePage[].class
             ).getBody();
 
             if (pages == null) return;

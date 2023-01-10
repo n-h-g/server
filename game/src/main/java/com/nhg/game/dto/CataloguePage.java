@@ -5,7 +5,7 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public record CataloguePageRequest(
+public record CataloguePage(
         Integer id,
         String title,
         String description,
