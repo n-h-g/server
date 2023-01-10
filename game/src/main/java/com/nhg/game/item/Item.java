@@ -7,6 +7,8 @@ import com.nhg.game.user.User;
 import com.nhg.game.utils.Int3;
 import com.nhg.game.utils.Rotation;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
@@ -26,6 +28,7 @@ import javax.persistence.Transient;
 @Setter
 @javax.persistence.Entity
 @Slf4j
+@NoArgsConstructor
 @Table(name = "items")
 public class Item implements JsonSerializable {
 
@@ -67,18 +70,10 @@ public class Item implements JsonSerializable {
     @Transient
     private Entity entity;
 
-    public Item(Room room, User owner) {
-        this.room = room;
+    public Item(@NonNull ItemSpecification itemSpecification, @NonNull User owner) {
+        this.itemSpecification = itemSpecification;
         this.owner = owner;
     }
-    public Item(Room room) {
-        this.room = room;
-    }
-    public Item(User owner) {
-        this.owner = owner;
-    }
-
-    public Item() {}
 
     public Int3 getPosition() {
         return new Int3(x,y,z);
