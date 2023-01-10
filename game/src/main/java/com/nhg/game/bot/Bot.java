@@ -1,5 +1,6 @@
 package com.nhg.game.bot;
 
+import com.nhg.game.shared.HumanData;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import com.nhg.game.shared.PersistentPosition;
@@ -32,4 +33,7 @@ public class Bot {
 
     @Embedded
     private PersistentPosition position;
+
+    @Embedded
+    private HumanData humanData;
 }
