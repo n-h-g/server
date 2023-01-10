@@ -19,11 +19,4 @@ public class UserController {
     public boolean userExists(@PathVariable Integer id) {
         return userService.existsWithId(id);
     }
-
-    @ApiOperation(value = "Create a user with given username, motto and look")
-    @PostMapping("/create/{username}/{motto}/{look}")
-    public void createUser(@PathVariable String username, @PathVariable String motto, @PathVariable String look) {
-        User user = new User(username, motto, look);
-        userService.createUser(user);
-    }
 }
