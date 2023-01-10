@@ -81,6 +81,22 @@ public class ServerPacket extends WebSocketJsonPacket {
         } catch (JSONException e) {
             log.error("Error creating packet with id: "+ header);
         }
+    }
+
+    public ServerPacket(int header, JsonSerializable[] col) {
+        this(header);
+
+        JSONArray data = new JSONArray();
+        try {
+            for (JsonSerializable jsonSerializable : col) {
+                data.put(jsonSerializable.toJson());
+            }
+
+            this.body.put("data", data);
+
+        } catch (JSONException e) {
+            log.error("Error creating packet with id: "+ header);
+        }
 
     }
 }
