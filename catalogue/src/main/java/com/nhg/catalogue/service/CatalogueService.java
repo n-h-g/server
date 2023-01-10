@@ -32,4 +32,8 @@ public class CatalogueService {
     public List<Item> getItemsForPage(int pageId) {
         return itemRepository.findByPageId(pageId);
     }
+
+    public Item getItem(int id) {
+        return itemRepository.findById(id).orElse(null);
+    }
 }

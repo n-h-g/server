@@ -26,8 +26,13 @@ public class CatalogueController {
         return catalogueService.getAllPages();
     }
 
-    @GetMapping("/page/{id}")
+    @GetMapping("/page/{id}/item")
     private List<Item> getItemsByPage(@PathVariable Integer id) {
         return catalogueService.getItemsForPage(id);
+    }
+
+    @GetMapping("/item/{id}")
+    private Item getItem(@PathVariable Integer id) {
+        return catalogueService.getItem(id);
     }
 }
