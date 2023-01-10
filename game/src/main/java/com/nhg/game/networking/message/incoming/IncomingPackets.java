@@ -2,6 +2,8 @@ package com.nhg.game.networking.message.incoming;
 
 import com.nhg.game.networking.message.incoming.clientpackets.Handshake;
 import com.nhg.game.networking.message.incoming.clientpackets.PingRequest;
+import com.nhg.game.networking.message.incoming.clientpackets.catalogue.CatalogueItems;
+import com.nhg.game.networking.message.incoming.clientpackets.catalogue.CataloguePages;
 import com.nhg.game.networking.message.incoming.clientpackets.items.InventoryItems;
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.AllRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.MyRooms;
@@ -36,7 +38,9 @@ public final class IncomingPackets {
             new Pair(15, UpdateUser.class),
             new Pair(23, PickupItem.class),
             new Pair(36, CreateRoom.class),
-            new Pair(44, SaveRoomSettings.class)
+            new Pair(44, SaveRoomSettings.class),
+            new Pair(800, CataloguePages.class),
+            new Pair(801, CatalogueItems.class)
    };
 
 }
