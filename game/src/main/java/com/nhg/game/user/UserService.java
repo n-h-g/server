@@ -47,7 +47,7 @@ public class UserService {
         this.activeUsers.remove(user.getId());
     }
 
-    public void createUser(User user) {
+    public void save(User user) {
         this.userRepository.save(user);
     }
 
