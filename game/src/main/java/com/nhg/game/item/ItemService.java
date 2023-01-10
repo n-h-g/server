@@ -1,5 +1,6 @@
 package com.nhg.game.item;
 
+import com.nhg.game.dto.CatalogueItem;
 import com.nhg.game.room.Room;
 import com.nhg.game.user.User;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final ItemSpecificationRepository itemSpecificationRepository;
 
 
     /**
@@ -38,6 +40,19 @@ public class ItemService {
         }
 
         return null;
+    }
+
+    public ItemSpecification getItemSpecificationByName(String name) {
+        return itemSpecificationRepository.findByName(name);
+    }
+
+    public Item itemFromCataloguePurchase(@NonNull CatalogueItem catalogueItem, @NonNull User user) {
+        ItemSpecification itemSpec = getItemSpecificationByName(catalogueItem.name());
+
+        if (itemSpec == null) return null;
+
+        return new Item(itemSpec, user);
+
     }
 
     public void userPickUpItem(@NonNull User user, @NonNull Item item) {
