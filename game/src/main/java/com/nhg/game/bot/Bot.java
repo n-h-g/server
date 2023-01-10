@@ -1,21 +1,29 @@
 package com.nhg.game.bot;
 
+import com.nhg.game.networking.message.outgoing.JsonSerializable;
+import com.nhg.game.room.Room;
+import com.nhg.game.room.entity.Entity;
 import com.nhg.game.shared.HumanData;
+import com.nhg.game.shared.PersistentPosition;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import com.nhg.game.shared.PersistentPosition;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 @Getter
 @NoArgsConstructor
 @javax.persistence.Entity
-public class Bot {
+public class Bot implements JsonSerializable {
 
     @Id
     @GeneratedValue(
@@ -31,9 +39,27 @@ public class Bot {
     @Column(nullable = false)
     private String name;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(columnDefinition="integer", name="room_id")
+    private Room room;
+
     @Embedded
     private PersistentPosition position;
 
     @Embedded
     private HumanData humanData;
+
+    @Transient
+    private Entity entity;
+
+    @Override
+    public JSONObject toJson() throws JSONException {
+        return new JSONObject()
+                .put("id", id)
+                .put("name", name)
+                .put("x", position.getX())
+                .put("y", position.getY())
+                .put("z", position.getZ())
+                .put("room_id", room.getId());
+    }
 }

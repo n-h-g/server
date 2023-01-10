@@ -1,5 +1,6 @@
 package com.nhg.game.room;
 
+import com.nhg.game.bot.Bot;
 import com.nhg.game.item.Item;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
@@ -63,6 +64,9 @@ public class Room implements Runnable, JsonSerializable {
     @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
     private final List<Item> items;
 
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    private final List<Bot> bots;
+
     @Embedded
     private RoomLayout roomLayout;
 
@@ -80,6 +84,7 @@ public class Room implements Runnable, JsonSerializable {
     public Room() {
         this.users = new UserGroup();
         this.items = new ArrayList<>();
+        this.bots = new ArrayList<>();
         this.entities = new ConcurrentHashMap<>();
     }
 
