@@ -19,8 +19,9 @@ public class RotationComponent extends Component {
         this.useDiagonalRotations = false;
     }
 
-    public void rotate() {
+    public Rotation rotate() {
         rotation = Rotation.intToRotation(rotation.getValue() + (useDiagonalRotations ? 1 : 2));
+        return rotation;
     }
 
     @Override
