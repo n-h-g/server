@@ -39,6 +39,9 @@ public final class OutgoingPacketHeaders {
     //region# Catalogue (800 to 899)
     public static final int CataloguePages = 800;
     public static final int CatalogueItems = 801;
+    public static final int BuyItem = 802;
+
+    public static final int NotEnoughCredits = 803;
     //endregion
 
     //region# Friends (900 to 999)
