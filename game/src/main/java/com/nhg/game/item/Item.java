@@ -4,7 +4,6 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
-import com.nhg.game.utils.Int3;
 import com.nhg.game.utils.Rotation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +12,10 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
+import shared.PersistentPosition;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,14 +55,8 @@ public class Item implements JsonSerializable {
     @Column(columnDefinition = "integer default 0")
     private Rotation rotation;
 
-    @Column(columnDefinition = "integer default 0")
-    private int x;
-
-    @Column(columnDefinition = "integer default 0")
-    private int y;
-
-    @Column(columnDefinition = "integer default 0")
-    private int z;
+    @Embedded
+    private PersistentPosition position;
 
     @ManyToOne
     @JoinColumn(columnDefinition="integer", name="item_specification_id")
@@ -75,18 +70,14 @@ public class Item implements JsonSerializable {
         this.owner = owner;
     }
 
-    public Int3 getPosition() {
-        return new Int3(x,y,z);
-    }
-
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
                 .put("id", Id)
                 .put("name", itemSpecification.getName())
-                .put("x", x)
-                .put("y", y)
-                .put("z", z)
+                .put("x", position.getX())
+                .put("y", position.getY())
+                .put("z", position.getZ())
                 .put("room_id", room != null ? room.getId() : "-1")
                 .put("item_type", itemSpecification.getItemType().getValue());
     }

@@ -6,7 +6,7 @@ import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.component.Component;
 import com.nhg.game.room.entity.component.ComponentType;
-import com.nhg.game.user.HumanData;
+import shared.HumanData;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.Gender;
 import com.nhg.game.utils.Int3;
@@ -123,7 +123,7 @@ public class Entity implements JsonSerializable  {
 
         if (item.getItemSpecification().getItemType() == ItemType.FLOOR_ITEM) {
             entity
-                .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class))
+                .addComponent(ComponentType.Position, Pair.of(item.getPosition().getInt3Position(), Int3.class))
                 .addComponent(ComponentType.Rotation, Pair.of(item.getRotation(), Rotation.class));
 
         }
