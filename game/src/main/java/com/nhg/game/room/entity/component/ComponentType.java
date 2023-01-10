@@ -9,6 +9,7 @@ public enum ComponentType {
     Position("position", PositionComponent.class),
     Action("action", ActionComponent.class),
     Movement("movement", MovementComponent.class),
+    Rotation("rotation", RotationComponent.class),
     BodyHeadRotation("bh_rot", BodyHeadRotationComponent.class),
     HumanAspect("aspect", HumanAspectComponent.class);
 

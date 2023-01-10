@@ -1,6 +1,7 @@
 package com.nhg.game.room.entity;
 
 import com.nhg.game.item.Item;
+import com.nhg.game.item.ItemType;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.component.Component;
@@ -116,10 +117,18 @@ public class Entity implements JsonSerializable  {
     }
 
     public static Entity fromItem(@NonNull Item item, @NonNull Room room) {
-        return new Entity(EntityType.ITEM, room)
+        Entity entity = new Entity(EntityType.ITEM, room)
                 .addComponent(ComponentType.Name, Pair.of(item.getItemSpecification().getName(), String.class))
-                .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class))
                 .addComponent(ComponentType.Item, Pair.of(item, Item.class));
+
+        if (item.getItemSpecification().getItemType() == ItemType.FLOOR_ITEM) {
+            entity
+                .addComponent(ComponentType.Position, Pair.of(item.getPosition(), Int3.class))
+                .addComponent(ComponentType.Rotation, Pair.of(item.getRotation(), Rotation.class));
+
+        }
+
+        return entity;
     }
 
 }
