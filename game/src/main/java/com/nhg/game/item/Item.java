@@ -42,7 +42,7 @@ public class Item implements JsonSerializable {
             name = "sequence_item_id",
             sequenceName = "sequence_item_id"
     )
-    private Integer Id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(columnDefinition="integer", name="room_id")
@@ -73,7 +73,7 @@ public class Item implements JsonSerializable {
     @Override
     public JSONObject toJson() throws JSONException {
         return new JSONObject()
-                .put("id", Id)
+                .put("id", id)
                 .put("name", itemSpecification.getName())
                 .put("x", position.getX())
                 .put("y", position.getY())
