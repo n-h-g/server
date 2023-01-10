@@ -30,7 +30,7 @@ public class CatalogueItems extends ClientPacket {
             int pageId = body.getInt("id");
 
             CatalogueItem[] items = restTemplate.getForEntity(
-                    "http://CATALOGUE/api/v1/catalogue/page/{pageId}",
+                    "http://CATALOGUE/api/v1/catalogue/page/{pageId}/item",
                     CatalogueItem[].class,
                     pageId
             ).getBody();
