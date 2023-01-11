@@ -118,7 +118,7 @@ public class RoomService {
     }
 
     private void loadRoomEntities(@NonNull Room room) {
-        List<Item> items = itemService.getItemsForRoom(room);
+        List<Item> items = itemService.getItemsByRoom(room);
 
         for (Item item : items) {
             room.addEntity(Entity.fromItem(item, room));

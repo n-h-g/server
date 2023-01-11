@@ -28,7 +28,7 @@ public class ItemService {
      */
     public List<Item> getItemsByOwner(@NonNull User owner) { return this.itemRepository.findByOwner(owner); }
 
-    public List<Item> getItemsForRoom(@NonNull Room room) {
+    public List<Item> getItemsByRoom(@NonNull Room room) {
         return itemRepository.findByRoom(room);
     }
 
