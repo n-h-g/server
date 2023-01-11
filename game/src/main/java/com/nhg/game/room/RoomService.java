@@ -188,7 +188,7 @@ public class RoomService {
     public boolean placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         room.addEntity(Entity.fromItem(item, room));
 
-        itemService.userPlaceItem(user, item);
+        itemService.userPlaceItem(user, item, room);
 
         //TODO check if can be placed
         return true;
