@@ -80,7 +80,7 @@ public class ItemService {
      *
      * @param catalogueItem catalogue item dto.
      * @param user the user to be set as the item's owner.
-     * @return
+     * @return the item created.
      * @see #getItemSpecificationByName 
      */
     public Item itemFromCataloguePurchase(@NonNull CatalogueItem catalogueItem, @NonNull User user) {
@@ -123,6 +123,7 @@ public class ItemService {
     public void userPlaceItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         item.setOwner(null);
         item.setRoom(room);
+
         user.removeItemFromInventory(item);
 
         save(item);
