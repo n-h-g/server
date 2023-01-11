@@ -10,8 +10,10 @@ import java.util.Random;
 
 public class RandomMovementBehaviour implements Behaviour {
 
-    private static int range = 15;
+    private static final int range = 15;
+    private static final long executeEveryMs = 10000;
     private final Random random;
+    private long lastExecutionTime = 0;
 
     public RandomMovementBehaviour() {
          this.random = new Random();
@@ -19,6 +21,12 @@ public class RandomMovementBehaviour implements Behaviour {
 
     @Override
     public void cycle(Entity entity) {
+        long currentTime = System.currentTimeMillis();
+
+        if (currentTime < lastExecutionTime + executeEveryMs) return;
+
+        lastExecutionTime = currentTime;
+
         PositionComponent positionComponent = (PositionComponent) entity.getComponent(ComponentType.Position);
         MovementComponent movementComponent = (MovementComponent) entity.getComponent(ComponentType.Movement);
 
