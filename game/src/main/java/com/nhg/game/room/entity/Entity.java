@@ -1,6 +1,6 @@
 package com.nhg.game.room.entity;
 
-import com.nhg.game.bot.Bot;
+import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemType;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;

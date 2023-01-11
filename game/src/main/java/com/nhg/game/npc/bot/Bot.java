@@ -1,4 +1,4 @@
-package com.nhg.game.bot;
+package com.nhg.game.npc.bot;
 
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;

@@ -1,4 +1,4 @@
-package com.nhg.game.bot;
+package com.nhg.game.npc.bot;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
