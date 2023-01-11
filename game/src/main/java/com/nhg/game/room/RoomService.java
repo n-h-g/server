@@ -1,6 +1,8 @@
 package com.nhg.game.room;
 
 import com.nhg.game.GameConfig;
+import com.nhg.game.bot.Bot;
+import com.nhg.game.bot.BotService;
 import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemService;
 import com.nhg.game.room.entity.Entity;
@@ -64,6 +66,7 @@ public class RoomService {
     private final RoomRepository roomRepository;
 
     private final ItemService itemService;
+    private final BotService botService;
 
 
     /**
@@ -119,9 +122,14 @@ public class RoomService {
 
     private void loadRoomEntities(@NonNull Room room) {
         List<Item> items = itemService.getItemsByRoom(room);
+        List<Bot> bots = botService.getBotsByRoom(room);
 
         for (Item item : items) {
             room.addEntity(Entity.fromItem(item, room));
+        }
+
+        for (Bot bot : bots) {
+            room.addEntity(Entity.fromBot(bot, room));
         }
     }
 
