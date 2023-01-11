@@ -1,5 +1,6 @@
 package com.nhg.game.room.entity;
 
+import com.nhg.game.bot.Bot;
 import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemType;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
@@ -129,6 +130,10 @@ public class Entity implements JsonSerializable  {
         }
 
         return entity;
+    }
+
+    public static Entity fromBot(@NonNull Bot bot, @NonNull Room room) {
+        return fromHumanData(bot.getHumanData(), room);
     }
 
 }
