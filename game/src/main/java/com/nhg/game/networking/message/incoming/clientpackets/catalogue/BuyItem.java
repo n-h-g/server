@@ -37,7 +37,7 @@ public class BuyItem extends ClientPacket {
             int itemId = body.getInt("id");
 
             CatalogueItem catalogueItem = restTemplate.getForEntity(
-                    "http://CATALOGUE/api/v1/catalogue/item/{itemId}",
+                    "http://CATALOGUE/api/v1/catalogue/items/{itemId}",
                     CatalogueItem.class,
                     itemId
             ).getBody();

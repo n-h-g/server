@@ -21,17 +21,17 @@ public class CatalogueController {
 
     private final CatalogueService catalogueService;
 
-    @GetMapping("/page")
+    @GetMapping("/pages")
     private Set<Page> getPages() {
         return catalogueService.getAllPages();
     }
 
-    @GetMapping("/page/{id}/item")
+    @GetMapping("/pages/{id}/items")
     private List<Item> getItemsByPage(@PathVariable Integer id) {
         return catalogueService.getItemsForPage(id);
     }
 
-    @GetMapping("/item/{id}")
+    @GetMapping("/items/{id}")
     private Item getItem(@PathVariable Integer id) {
         return catalogueService.getItem(id);
     }

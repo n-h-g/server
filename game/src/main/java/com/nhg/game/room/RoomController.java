@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/game/room")
+@RequestMapping("api/v1/game/rooms")
 public class RoomController {
 
     private final RoomService roomService;

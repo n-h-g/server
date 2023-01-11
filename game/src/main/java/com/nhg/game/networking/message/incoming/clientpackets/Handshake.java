@@ -55,7 +55,7 @@ public class Handshake extends ClientPacket {
 
     private TokenDataResponse getTokenData(String token) {
         return restTemplate.getForObject(
-                "http://ACCOUNT/api/v1/account/token_data/{token}",
+                "http://ACCOUNT/api/v1/accounts/token_data/{token}",
                 TokenDataResponse.class,
                 token
         );

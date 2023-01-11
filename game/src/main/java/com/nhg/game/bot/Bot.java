@@ -17,8 +17,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -42,6 +44,9 @@ public class Bot implements JsonSerializable {
     @ManyToOne(optional = false)
     @JoinColumn(columnDefinition="integer", name="room_id")
     private Room room;
+
+    @OneToMany(mappedBy = "bot")
+    private List<BotSpeech> speeches;
 
     @Embedded
     private PersistentPosition position;

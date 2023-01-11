@@ -28,7 +28,7 @@ public class CataloguePages extends ClientPacket {
             if (user == null) return;
 
             CataloguePage[] pages = restTemplate.getForEntity(
-                    "http://CATALOGUE/api/v1/catalogue/page",
+                    "http://CATALOGUE/api/v1/catalogue/pages",
                     CataloguePage[].class
             ).getBody();
 

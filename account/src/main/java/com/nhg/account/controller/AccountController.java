@@ -16,7 +16,7 @@ import java.util.Date;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/account")
+@RequestMapping("api/v1/accounts")
 public class AccountController {
 
     private final AccountService accountService;

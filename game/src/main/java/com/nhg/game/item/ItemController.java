@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/game/item")
+@RequestMapping("api/v1/game/items")
 
 public class ItemController {
 }
