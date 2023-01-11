@@ -62,6 +62,8 @@ public class Bot implements JsonSerializable {
         return new JSONObject()
                 .put("id", id)
                 .put("name", name)
+                .put("gender", this.humanData.getGender())
+                .put("look", this.humanData.getLook())
                 .put("x", position.getX())
                 .put("y", position.getY())
                 .put("z", position.getZ())
