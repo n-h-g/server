@@ -11,7 +11,7 @@ import java.util.Random;
 public class RandomMovementBehaviour implements Behaviour {
 
     private static final int range = 15;
-    private static final long executeEveryMs = 10000;
+    private static final long executeEveryMs = 1000;
     private final Random random;
     private long lastExecutionTime = 0;
 
@@ -33,6 +33,7 @@ public class RandomMovementBehaviour implements Behaviour {
         if (positionComponent == null || movementComponent == null) return;
 
         movementComponent.setDestination(randomDestination(positionComponent.getPosition().ToInt2XY()));
+        movementComponent.calculatePath();
     }
 
     private Int2 randomDestination(Int2 currentPosition) {
