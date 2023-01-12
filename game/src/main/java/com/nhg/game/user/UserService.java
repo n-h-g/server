@@ -25,6 +25,17 @@ public class UserService {
     private final Map<Integer, User> activeUsers = new ConcurrentHashMap<>();
 
     /**
+     * (Create) If a user with a null id is passed then it will create a new user and generate an id for it.
+     * (Update) If the user already have an id it will update the existing user with the params of the given user.
+     *
+     * @param user user to save.
+     * @return the saved user.
+     */
+    public User save(User user) {
+        return this.userRepository.save(user);
+    }
+
+    /**
      * Add user in game when he gets online
      **/
     public void connect(@NonNull User user) {
@@ -45,10 +56,6 @@ public class UserService {
         roomService.userExitRoom(user);
 
         this.activeUsers.remove(user.getId());
-    }
-
-    public void save(User user) {
-        this.userRepository.save(user);
     }
 
     /**
