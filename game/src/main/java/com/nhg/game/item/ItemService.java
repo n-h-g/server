@@ -104,6 +104,8 @@ public class ItemService {
      */
     public void userPickUpItem(@NonNull User user, @NonNull Item item) {
         item.setOwner(user);
+        item.setRoom(null);
+
         user.addItemToInventory(item);
 
         save(item);
