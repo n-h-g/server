@@ -40,7 +40,7 @@ public class ItemSpecification {
     private Integer Id;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "item_type default 'floor_item'", nullable = false)
+    @Column(columnDefinition = "item_type default 'FLOOR_ITEM'", nullable = false)
     @Type(type = "pgsql_enum")
     private ItemType itemType;
 
