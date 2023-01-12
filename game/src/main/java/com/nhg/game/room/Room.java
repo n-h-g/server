@@ -61,10 +61,10 @@ public class Room implements Runnable, JsonSerializable {
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private final List<Item> items;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private final List<Bot> bots;
 
     @Embedded
