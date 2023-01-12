@@ -136,6 +136,7 @@ public class Entity implements JsonSerializable  {
 
     public static Entity fromBot(@NonNull Bot bot, @NonNull Room room) {
         return fromHumanData(bot.getHumanData(), room)
+                .addComponent(ComponentType.Name, Pair.of(bot.getName(), String.class))
                 .addComponent(ComponentType.Behaviour, Pair.of(new RandomMovementBehaviour(), Behaviour.class));
     }
 
