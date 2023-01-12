@@ -89,7 +89,7 @@ public class MovementComponent extends Component {
             log.debug("Calculate Path from current " + position + " to destination " + destination);
         } catch (ComponentNotFoundException e) {
             log.error("PositionComponent in required when using MovementComponent: " + e);
-        }
+        } catch (IndexOutOfBoundsException ignored) {}
     }
 
     /**
