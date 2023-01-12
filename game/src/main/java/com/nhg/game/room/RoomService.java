@@ -113,6 +113,13 @@ public class RoomService {
         return true;
     }
 
+    /**
+     * Prepare the room to activate it
+     *
+     * @param room the room to be activated.
+     * @see #startRoomTask
+     * @see #loadRoomEntities 
+     */
     private void prepareRoom(@NonNull Room room) {
         if (activeRoomsTasks.containsKey(room.getId())) return;
 
@@ -120,6 +127,13 @@ public class RoomService {
         this.loadRoomEntities(room);
     }
 
+    /**
+     * Load room entities for the given room.
+     *
+     * @param room the room that loads the entities.
+     * @see ItemService#getItemsByRoom
+     * @see BotService#getBotsByRoom
+     */
     private void loadRoomEntities(@NonNull Room room) {
         List<Item> items = itemService.getItemsByRoom(room);
         List<Bot> bots = botService.getBotsByRoom(room);
@@ -185,6 +199,15 @@ public class RoomService {
         userExitRoom(user, user.getEntity().getRoom().getId());
     }
 
+    /**
+     * Creates an entity for the given item, then adds it to the room.
+     *
+     * @param user the user that is placing the item.
+     * @param item the item placed.
+     * @param room the room where the item is placed.
+     * @return true if the item is placed correctly, false otherwise.
+     * @see ItemService#userPlaceItem 
+     */
     public boolean placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         room.addEntity(Entity.fromItem(item, room));
 
@@ -194,6 +217,14 @@ public class RoomService {
         return true;
     }
 
+    /**
+     * Removes the picked up item from the room
+     *
+     * @param user the user that is picking up the item.
+     * @param item the item picked up.
+     * @param room the room where the item is picked up.
+     * @see ItemService#userPickUpItem 
+     */
     public void pickUpItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         room.removeEntity(item.getEntity());
 
