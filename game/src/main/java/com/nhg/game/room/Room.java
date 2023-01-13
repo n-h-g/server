@@ -8,6 +8,7 @@ import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
+import com.nhg.game.utils.pathfinder.Tile;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -166,6 +167,18 @@ public class Room implements Runnable, JsonSerializable {
 
     public Entity getEntityById(UUID id) {
         return entities.get(id);
+    }
+
+    public void blockTile(int x, int y) {
+        try {
+            roomLayout.getTile(x, y).setState(Tile.State.CLOSE);
+        } catch(IndexOutOfBoundsException ignored) {}
+    }
+
+    public void openTile(int x, int y) {
+        try {
+            roomLayout.getTile(x, y).setState(Tile.State.OPEN);
+        } catch(IndexOutOfBoundsException ignored) {}
     }
 
     @Override
