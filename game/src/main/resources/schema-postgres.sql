@@ -1,5 +1,5 @@
 DROP TYPE IF EXISTS item_type CASCADE;
-CREATE TYPE item_type AS ENUM ('floor_item', 'wall_item');
+CREATE TYPE item_type AS ENUM ('FLOOR_ITEM', 'WALL_ITEM');
 
 DROP TYPE IF EXISTS gender CASCADE;
 CREATE TYPE gender AS ENUM ('MALE', 'FEMALE');

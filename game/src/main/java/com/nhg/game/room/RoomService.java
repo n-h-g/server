@@ -1,10 +1,10 @@
 package com.nhg.game.room;
 
 import com.nhg.game.GameConfig;
-import com.nhg.game.npc.bot.Bot;
-import com.nhg.game.npc.bot.BotService;
 import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemService;
+import com.nhg.game.npc.bot.Bot;
+import com.nhg.game.npc.bot.BotService;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
 import lombok.AllArgsConstructor;
@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -208,6 +209,7 @@ public class RoomService {
      * @return true if the item is placed correctly, false otherwise.
      * @see ItemService#userPlaceItem 
      */
+    @Transactional
     public boolean placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         room.addEntity(Entity.fromItem(item, room));
 
@@ -225,6 +227,7 @@ public class RoomService {
      * @param room the room where the item is picked up.
      * @see ItemService#userPickUpItem 
      */
+    @Transactional
     public void pickUpItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         room.removeEntity(item.getEntity());
 

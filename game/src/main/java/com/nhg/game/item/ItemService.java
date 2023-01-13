@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -102,6 +103,7 @@ public class ItemService {
      * @see User#addItemToInventory
      * @see #save
      */
+    @Transactional
     public void userPickUpItem(@NonNull User user, @NonNull Item item) {
         item.setOwner(user);
         item.setRoom(null);
@@ -122,6 +124,7 @@ public class ItemService {
      * @see User#removeItemFromInventory
      * @see #save
      */
+    @Transactional
     public void userPlaceItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
         item.setOwner(null);
         item.setRoom(room);
