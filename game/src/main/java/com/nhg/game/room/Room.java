@@ -1,10 +1,10 @@
 package com.nhg.game.room;
 
-import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.item.Item;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
+import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EntityListeners;
@@ -61,10 +62,10 @@ public class Room implements Runnable, JsonSerializable {
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private final List<Item> items;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private final List<Bot> bots;
 
     @Embedded

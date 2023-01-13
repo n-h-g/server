@@ -6,6 +6,7 @@ import com.nhg.game.networking.Client;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.Entity;
+import com.nhg.game.shared.HumanData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,8 +15,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.nhg.game.shared.HumanData;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.EntityListeners;
@@ -66,11 +67,11 @@ public class User implements JsonSerializable {
      * Rooms owned by the user
      */
     @JsonIgnore
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Room> rooms;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Item> items;
 
     @Transient
