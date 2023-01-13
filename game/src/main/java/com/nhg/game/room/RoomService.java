@@ -211,6 +211,10 @@ public class RoomService {
      */
     @Transactional
     public boolean placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
+        if (!item.getItemSpecification().isAllowWalk()) {
+            room.blockTile(item.getPosition().getX(), item.getPosition().getY());
+        }
+
         room.addEntity(Entity.fromItem(item, room));
 
         itemService.userPlaceItem(user, item, room);
@@ -229,6 +233,10 @@ public class RoomService {
      */
     @Transactional
     public void pickUpItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
+        if (!item.getItemSpecification().isAllowWalk()) {
+            room.openTile(item.getPosition().getX(), item.getPosition().getY());
+        }
+
         room.removeEntity(item.getEntity());
 
         itemService.userPickUpItem(user, item);
