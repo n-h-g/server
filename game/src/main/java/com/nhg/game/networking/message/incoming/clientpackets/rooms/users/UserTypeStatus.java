@@ -6,6 +6,8 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
+import com.nhg.game.room.entity.Entity;
+import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
@@ -22,14 +24,18 @@ public class UserTypeStatus extends ClientPacket {
     public void handle() {
         try {
             WebSocketClient wsClient = (WebSocketClient) client;
+            User user = wsClient.getUser();
 
-            int roomId = body.getInt("roomId");
+            Entity entity = user.getEntity();
+
+            if (entity == null) return;
+
             boolean typing = body.getBoolean("typing");
 
-            Room room = roomService.getRoomById(roomId);
+            Room room = entity.getRoom();
 
             room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RoomUserType, new JSONObject()
-                    .put("id", wsClient.getUser().getId())
+                    .put("id", entity.getId())
                     .put("typing", typing)));
         } catch(Exception e) {
             log.error("Error: "+ e);
