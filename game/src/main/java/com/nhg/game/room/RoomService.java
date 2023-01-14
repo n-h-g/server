@@ -141,6 +141,10 @@ public class RoomService {
 
         for (Item item : items) {
             room.addEntity(Entity.fromItem(item, room));
+
+            if (!item.getItemSpecification().isAllowWalk()) {
+                getActiveRoomById(room.getId()).blockTile(item.getPosition().getX(), item.getPosition().getY());
+            }
         }
 
         for (Bot bot : bots) {
