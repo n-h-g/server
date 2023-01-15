@@ -85,10 +85,12 @@ public class RoomService {
      * Unload the room then delete it from database.
      * 
      * @param room room to delete
-     * @see #unloadRoom 
+     * @see ItemService#retrieveRoomItemsToRoomOwner 
+     * @see #unloadRoom
      */
     public void delete(Room room) {
         unloadRoom(room);
+        itemService.retrieveRoomItemsToRoomOwner(room);
         roomRepository.delete(room);
     }
 
