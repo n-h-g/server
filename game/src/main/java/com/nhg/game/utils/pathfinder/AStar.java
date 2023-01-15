@@ -102,7 +102,7 @@ public class AStar {
                         continue;
 
 
-                    if (adjTile.getPosition().getZ() == 0) {
+                    if (adjTile.getPosition().getZ() == 0 || adjTile.getState() == Tile.State.CLOSE) {
                         openQueue.remove(adjTile);
                         closedList.add(adjTile);
                         continue;
