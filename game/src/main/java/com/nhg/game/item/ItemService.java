@@ -134,4 +134,14 @@ public class ItemService {
         save(item);
     }
 
+    /**
+     * All the items contained in the room retrieves to the room owner.
+     * It sets as the items owner the room's owner and removes the items from the room.
+     *
+     * @param room the target room where the items are retrieved to the owner.
+     */
+    public void retrieveRoomItemsToRoomOwner(@NonNull Room room) {
+        itemRepository.updateRoomItemsToUserItems(room.getId(), room.getOwner().getId());
+    }
+
 }
