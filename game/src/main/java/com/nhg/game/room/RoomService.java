@@ -140,11 +140,7 @@ public class RoomService {
         List<Bot> bots = botService.getBotsByRoom(room);
 
         for (Item item : items) {
-            room.addEntity(Entity.fromItem(item, room));
-
-            if (!item.getItemSpecification().isAllowWalk()) {
-                getActiveRoomById(room.getId()).blockTile(item.getPosition().getX(), item.getPosition().getY());
-            }
+            placeItem(item, room);
         }
 
         for (Bot bot : bots) {
@@ -207,24 +203,16 @@ public class RoomService {
     /**
      * Creates an entity for the given item, then adds it to the room.
      *
-     * @param user the user that is placing the item.
      * @param item the item placed.
      * @param room the room where the item is placed.
-     * @return true if the item is placed correctly, false otherwise.
-     * @see ItemService#userPlaceItem 
      */
     @Transactional
-    public boolean placeItem(@NonNull User user, @NonNull Item item, @NonNull Room room) {
+    public void placeItem(@NonNull Item item, @NonNull Room room) {
         if (!item.getItemSpecification().isAllowWalk()) {
             getActiveRoomById(room.getId()).blockTile(item.getPosition().getX(), item.getPosition().getY());
         }
 
         room.addEntity(Entity.fromItem(item, room));
-
-        itemService.userPlaceItem(user, item, room);
-
-        //TODO check if can be placed
-        return true;
     }
 
     /**

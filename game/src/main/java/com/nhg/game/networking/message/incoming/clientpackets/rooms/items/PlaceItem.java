@@ -41,7 +41,8 @@ public class PlaceItem extends ClientPacket {
 
             if (item == null) return;
 
-            if (!roomService.placeItem(user, item, room)) return;
+            roomService.placeItem(item, room);
+            itemService.userPlaceItem(user, item, room);
 
             room.getUsers().sendBroadcastMessage(
                     new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, item.getEntity()));
