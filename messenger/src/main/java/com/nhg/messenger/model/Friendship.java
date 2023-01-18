@@ -9,13 +9,12 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class Friendship {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     @Embeddable
     public static class Id implements Serializable {
         /**
@@ -56,4 +55,9 @@ public class Friendship {
      * otherwise it represents an already accepted friendship.
      */
     private boolean pending;
+
+    public Friendship(int user1, int user2, boolean pending) {
+        this.id = new Id(user1, user2);
+        this.pending = pending;
+    }
 }
