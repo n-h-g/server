@@ -15,7 +15,7 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
 
-    @PostMapping("/send_message")
+    @PostMapping
     public ChatMessageResponse sendMessage(ChatMessageRequest ChatMessageRequest) {
         return chatMessageService.sendMessage(ChatMessageRequest);
     }
