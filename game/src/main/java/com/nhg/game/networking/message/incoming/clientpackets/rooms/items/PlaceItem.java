@@ -10,9 +10,7 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class PlaceItem extends ClientPacket {
 
     private RoomService roomService;
@@ -24,32 +22,26 @@ public class PlaceItem extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null) return;
+        if (user == null) return;
 
-            Room room = user.getEntity().getRoom();
+        Room room = user.getEntity().getRoom();
 
-            if (room == null) return;
+        if (room == null) return;
 
-            int itemId = body.getInt("id");
+        int itemId = body.getInt("id");
 
-            Item item = itemService.getItemByIdAndOwner(user, itemId);
+        Item item = itemService.getItemByIdAndOwner(user, itemId);
 
-            if (item == null) return;
+        if (item == null) return;
 
-            roomService.placeItem(item, room);
-            itemService.userPlaceItem(user, item, room);
+        roomService.placeItem(item, room);
+        itemService.userPlaceItem(user, item, room);
 
-            room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, item.getEntity()));
-
-        } catch (Exception e) {
-            log.error("Error: "+ e);
-            e.printStackTrace();
-        }
+        room.getUsers().sendBroadcastMessage(
+                new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, item.getEntity()));
     }
 }

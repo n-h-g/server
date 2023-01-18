@@ -23,40 +23,35 @@ public class SaveRoomSettings extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try{
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            int id = body.getInt("id");
-            boolean deleteRoom = body.getBoolean("deleteRoom");
-            String name = body.getString("name");
+        int id = body.getInt("id");
+        boolean deleteRoom = body.getBoolean("deleteRoom");
+        String name = body.getString("name");
 
-            Room room = roomService.getRoomById(id);
+        Room room = roomService.getRoomById(id);
 
-            if (user == null || room == null) return;
+        if (user == null || room == null) return;
 
-            // check if is owner
-            if(!Objects.equals(room.getOwner().getId(), user.getId())) {
-                log.debug("User is not allowed to edit this room");
-                return;
-            }
-
-            if(deleteRoom) {
-                room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData,
-                        new JSONObject()
-                                .put("id", -1))
-                );
-                roomService.delete(room);
-                return;
-            }
-
-            room.setName(name);
-            roomService.save(room);
-            room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
-
-        } catch(Exception e) {
-            log.debug(e.getMessage());
+        // check if is owner
+        if(!Objects.equals(room.getOwner().getId(), user.getId())) {
+            log.debug("User is not allowed to edit this room");
+            return;
         }
+
+        if(deleteRoom) {
+            room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData,
+                    new JSONObject()
+                            .put("id", -1))
+            );
+            roomService.delete(room);
+            return;
+        }
+
+        room.setName(name);
+        roomService.save(room);
+        room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
     }
 }

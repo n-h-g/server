@@ -7,10 +7,8 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
-@Slf4j
 public class CataloguePages extends ClientPacket {
 
     private final RestTemplate restTemplate;
@@ -21,24 +19,18 @@ public class CataloguePages extends ClientPacket {
 
     @Override
     public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null) return;
+        if (user == null) return;
 
-            CataloguePage[] pages = restTemplate.getForEntity(
-                    "http://CATALOGUE/api/v1/catalogue/pages",
-                    CataloguePage[].class
-            ).getBody();
+        CataloguePage[] pages = restTemplate.getForEntity(
+                "http://CATALOGUE/api/v1/catalogue/pages",
+                CataloguePage[].class
+        ).getBody();
 
-            if (pages == null) return;
+        if (pages == null) return;
 
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.CataloguePages, pages));
-
-        } catch(Exception e) {
-            log.error("Error: "+ e);
-            e.printStackTrace();
-        }
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.CataloguePages, pages));
     }
 }

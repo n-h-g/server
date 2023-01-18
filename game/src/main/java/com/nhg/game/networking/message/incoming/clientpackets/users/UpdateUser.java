@@ -7,9 +7,7 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class UpdateUser extends ClientPacket {
 
     private final Clients clients;
@@ -19,19 +17,13 @@ public class UpdateUser extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            clients.SendBroadcastMessage(new ServerPacket(
-                    OutgoingPacketHeaders.UpdateUserInformation,
-                    user
-            ));
-
-        } catch(Exception e) {
-            log.error("Error: "+ e);
-            e.printStackTrace();
-        }
+        clients.SendBroadcastMessage(new ServerPacket(
+                OutgoingPacketHeaders.UpdateUserInformation,
+                user
+        ));
     }
 }

@@ -6,9 +6,7 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class CreateRoom extends ClientPacket {
 
     private final RoomService roomService;
@@ -18,29 +16,24 @@ public class CreateRoom extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null) return;
+        if (user == null) return;
 
-            String name = body.getString("name");
-            String desc = body.getString("desc");
-            String layout = body.getString("layout");
+        String name = body.getString("name");
+        String desc = body.getString("desc");
+        String layout = body.getString("layout");
 
-            int door_x = body.getInt("door_x");
-            int door_y = body.getInt("door_y");
-            int door_dir = body.getInt("door_dir");
-            int maxUsers = body.getInt("maxUsers");
+        int door_x = body.getInt("door_x");
+        int door_y = body.getInt("door_y");
+        int door_dir = body.getInt("door_dir");
+        int maxUsers = body.getInt("maxUsers");
 
 
-            Room room = roomService.save(
-                    new Room(name, user, layout, door_x, door_y, door_dir)
-            );
-
-        }catch (Exception e) {
-            log.debug(e.getMessage());
-        }
+        Room room = roomService.save(
+                new Room(name, user, layout, door_x, door_y, door_dir)
+        );
     }
 }

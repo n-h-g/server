@@ -9,9 +9,7 @@ import com.nhg.game.room.entity.component.MovementComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
 import com.nhg.game.utils.Int2;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class UserMove extends ClientPacket {
 
     private final RoomService roomService;
@@ -21,29 +19,22 @@ public class UserMove extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null || user.getEntity() == null) return;
+        if (user == null || user.getEntity() == null) return;
 
-            int x = body.getInt("x");
-            int y = body.getInt("y");
+        int x = body.getInt("x");
+        int y = body.getInt("y");
 
-            Entity entity = user.getEntity();
-            
-            if (entity == null) return;
+        Entity entity = user.getEntity();
 
-            MovementComponent mc = (MovementComponent) entity.getComponent(ComponentType.Movement);
+        if (entity == null) return;
 
-            mc.setDestination(new Int2(x,y));
-            mc.calculatePath();
+        MovementComponent mc = (MovementComponent) entity.getComponent(ComponentType.Movement);
 
-
-        } catch(Exception e) {
-            log.error("Error: "+ e);
-            e.printStackTrace();
-        }
+        mc.setDestination(new Int2(x,y));
+        mc.calculatePath();
     }
 }

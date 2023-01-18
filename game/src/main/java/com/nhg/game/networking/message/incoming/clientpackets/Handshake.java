@@ -25,32 +25,26 @@ public class Handshake extends ClientPacket {
 
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
 
-            String id = body.getString("sso");
+        String id = body.getString("sso");
 
-            /*TokenDataResponse tokenData = this.getTokenData(jwtToken);
+        /*TokenDataResponse tokenData = this.getTokenData(jwtToken);
 
-            if (tokenData == null) return;
+        if (tokenData == null) return;
 
-            log.error(tokenData.username());*/
+        log.error(tokenData.username());*/
 
-            User user = userService.getUserById(Integer.parseInt(id));
+        User user = userService.getUserById(Integer.parseInt(id));
 
-            if (!this.tryLinkUserAndClient(user, wsClient)) {
-                log.error("Error: Can't link user and client, user is null.");
-                client.disconnect();
-                return;
-            }
-
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoginMessageCheck, true));
-
-
-        } catch (Exception e) {
-            log.error("Error: "+ e);
+        if (!this.tryLinkUserAndClient(user, wsClient)) {
+            log.error("Error: Can't link user and client, user is null.");
+            client.disconnect();
+            return;
         }
+
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoginMessageCheck, true));
     }
 
     private TokenDataResponse getTokenData(String token) {

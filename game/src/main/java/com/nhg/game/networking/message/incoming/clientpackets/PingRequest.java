@@ -8,10 +8,8 @@ import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserService;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
-@Slf4j
 public class PingRequest extends ClientPacket {
 
     private final RestTemplate restTemplate;
@@ -26,16 +24,11 @@ public class PingRequest extends ClientPacket {
 
     @Override
     public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
+        WebSocketClient wsClient = (WebSocketClient) client;
 
-            boolean doLogin = wsClient.getUser() == null;
+        boolean doLogin = wsClient.getUser() == null;
 
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.PongResponse, doLogin));
-
-        } catch (Exception e) {
-            log.error("Error: "+ e);
-        }
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.PongResponse, doLogin));
     }
 
     private TokenDataResponse getTokenData(String token) {

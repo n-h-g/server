@@ -14,9 +14,7 @@ import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
 import com.nhg.game.utils.Int2;
 import com.nhg.game.utils.Rotation;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class UserLookAtPoint extends ClientPacket {
 
     private final RoomService roomService;
@@ -26,41 +24,35 @@ public class UserLookAtPoint extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null || user.getEntity() == null) return;
+        if (user == null || user.getEntity() == null) return;
 
-            int roomId = body.getInt("roomId");
-            int x = body.getInt("x");
-            int y = body.getInt("y");
+        int roomId = body.getInt("roomId");
+        int x = body.getInt("x");
+        int y = body.getInt("y");
 
-            Entity entity = user.getEntity();
+        Entity entity = user.getEntity();
 
-            if (entity == null) return;
+        if (entity == null) return;
 
-            PositionComponent pc = (PositionComponent) entity.getComponent(ComponentType.Position);
-            BodyHeadRotationComponent bhr = (BodyHeadRotationComponent) entity.getComponent(ComponentType.BodyHeadRotation);
+        PositionComponent pc = (PositionComponent) entity.getComponent(ComponentType.Position);
+        BodyHeadRotationComponent bhr = (BodyHeadRotationComponent) entity.getComponent(ComponentType.BodyHeadRotation);
 
-            if(x == pc.getPosition().getX() && y == pc.getPosition().getY()) {
-                return;
-            }
-
-            Rotation rotation = Rotation.CalculateRotation(
-                    new Int2(pc.getPosition().getX(), pc.getPosition().getY()), new Int2(x, y));
-
-            bhr.setRotation(rotation);
-
-            Room room = roomService.getRoomById(roomId);
-
-            room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.UpdateEntity, user.getEntity().toJson()));
-
-        } catch(Exception e) {
-            log.error("Error: "+ e);
-            e.printStackTrace();
+        if(x == pc.getPosition().getX() && y == pc.getPosition().getY()) {
+            return;
         }
+
+        Rotation rotation = Rotation.CalculateRotation(
+                new Int2(pc.getPosition().getX(), pc.getPosition().getY()), new Int2(x, y));
+
+        bhr.setRotation(rotation);
+
+        Room room = roomService.getRoomById(roomId);
+
+        room.getUsers().sendBroadcastMessage(
+                new ServerPacket(OutgoingPacketHeaders.UpdateEntity, user.getEntity().toJson()));
     }
 }

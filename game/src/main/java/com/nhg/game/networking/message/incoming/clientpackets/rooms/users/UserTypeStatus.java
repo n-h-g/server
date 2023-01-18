@@ -9,10 +9,8 @@ import com.nhg.game.room.RoomService;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 
-@Slf4j
 public class UserTypeStatus extends ClientPacket {
     private final RoomService roomService;
 
@@ -21,24 +19,20 @@ public class UserTypeStatus extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            Entity entity = user.getEntity();
+        Entity entity = user.getEntity();
 
-            if (entity == null) return;
+        if (entity == null) return;
 
-            boolean typing = body.getBoolean("typing");
+        boolean typing = body.getBoolean("typing");
 
-            Room room = entity.getRoom();
+        Room room = entity.getRoom();
 
-            room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RoomUserType, new JSONObject()
-                    .put("id", entity.getId())
-                    .put("typing", typing)));
-        } catch(Exception e) {
-            log.error("Error: "+ e);
-        }
+        room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RoomUserType, new JSONObject()
+                .put("id", entity.getId())
+                .put("typing", typing)));
     }
 }

@@ -20,34 +20,29 @@ public class UserEnterRoom extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null) return;
+        if (user == null) return;
 
-            int roomId = body.getInt("id");
+        int roomId = body.getInt("id");
 
-            if (user.getEntity() != null) {
-                roomService.userExitRoom(user);
-            }
-
-            if(!roomService.userEnterRoom(user, roomId)) {
-                log.debug("User "+ user.getId() + " entered room with id " + roomId + " but it doesn't exist.");
-                return;
-            }
-
-            Room room = roomService.getRoomById(roomId);
-
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomEntities, room.getEntities().values()));
-
-            room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, user.getEntity()));
-
-        } catch(Exception e) {
-            log.error("Error: "+ e);
+        if (user.getEntity() != null) {
+            roomService.userExitRoom(user);
         }
+
+        if(!roomService.userEnterRoom(user, roomId)) {
+            log.debug("User "+ user.getId() + " entered room with id " + roomId + " but it doesn't exist.");
+            return;
+        }
+
+        Room room = roomService.getRoomById(roomId);
+
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomEntities, room.getEntities().values()));
+
+        room.getUsers().sendBroadcastMessage(
+                new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, user.getEntity()));
     }
 }

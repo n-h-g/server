@@ -7,10 +7,8 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
-@Slf4j
 public class CatalogueItems extends ClientPacket {
 
     private final RestTemplate restTemplate;
@@ -20,28 +18,22 @@ public class CatalogueItems extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null) return;
+        if (user == null) return;
 
-            int pageId = body.getInt("id");
+        int pageId = body.getInt("id");
 
-            CatalogueItem[] items = restTemplate.getForEntity(
-                    "http://CATALOGUE/api/v1/catalogue/pages/{pageId}/items",
-                    CatalogueItem[].class,
-                    pageId
-            ).getBody();
+        CatalogueItem[] items = restTemplate.getForEntity(
+                "http://CATALOGUE/api/v1/catalogue/pages/{pageId}/items",
+                CatalogueItem[].class,
+                pageId
+        ).getBody();
 
-            if (items == null) return;
+        if (items == null) return;
 
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.CatalogueItems, items));
-
-        } catch(Exception e) {
-            log.error("Error: "+ e);
-            e.printStackTrace();
-        }
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.CatalogueItems, items));
     }
 }

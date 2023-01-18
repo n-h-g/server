@@ -8,11 +8,9 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-@Slf4j
 public class MyRooms extends ClientPacket {
 
     private final RoomService roomService;
@@ -22,18 +20,13 @@ public class MyRooms extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null) return;
+        if (user == null) return;
 
-            List<Room> rooms = roomService.getRoomsByOwner(user);
-            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendMyRooms, rooms));
-
-        } catch (Exception e) {
-            log.error("Error: "+ e);
-        }
+        List<Room> rooms = roomService.getRoomsByOwner(user);
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendMyRooms, rooms));
     }
 }

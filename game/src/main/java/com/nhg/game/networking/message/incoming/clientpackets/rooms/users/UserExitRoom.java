@@ -21,31 +21,26 @@ public class UserExitRoom extends ClientPacket {
     }
 
     @Override
-    public void handle() {
-        try {
-            WebSocketClient wsClient = (WebSocketClient) client;
-            User user = wsClient.getUser();
+    public void handle() throws Exception {
+        WebSocketClient wsClient = (WebSocketClient) client;
+        User user = wsClient.getUser();
 
-            if (user == null) return;
+        if (user == null) return;
 
-            int roomId = body.getInt("id");
+        int roomId = body.getInt("id");
 
-            if(!roomService.userExitRoom(user, roomId)) {
-                log.debug("User "+ user.getId() + " exited room with id " + roomId + " but it doesn't exist.");
-                return;
-            }
-
-            Room room = roomService.getRoomById(roomId);
-
-            Entity entity = user.getEntity();
-
-            if (entity == null) return;
-
-            room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, entity.getId().toString()));
-
-        } catch(Exception e) {
-            log.error("Error: "+ e);
+        if(!roomService.userExitRoom(user, roomId)) {
+            log.debug("User "+ user.getId() + " exited room with id " + roomId + " but it doesn't exist.");
+            return;
         }
+
+        Room room = roomService.getRoomById(roomId);
+
+        Entity entity = user.getEntity();
+
+        if (entity == null) return;
+
+        room.getUsers().sendBroadcastMessage(
+                new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, entity.getId().toString()));
     }
 }
