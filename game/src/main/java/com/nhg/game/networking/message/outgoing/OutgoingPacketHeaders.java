@@ -26,6 +26,7 @@ public final class OutgoingPacketHeaders {
     public static final int RemoveRoomEntity = 205;
     public static final int RoomChatMessage = 206;
     public static final int RoomUserType = 207;
+
     //endregion
 
     //region# User (400 to 599)

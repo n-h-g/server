@@ -6,12 +6,12 @@ import com.nhg.game.networking.message.incoming.clientpackets.catalogue.BuyItem;
 import com.nhg.game.networking.message.incoming.clientpackets.catalogue.CatalogueItems;
 import com.nhg.game.networking.message.incoming.clientpackets.catalogue.CataloguePages;
 import com.nhg.game.networking.message.incoming.clientpackets.items.InventoryItems;
+import com.nhg.game.networking.message.incoming.clientpackets.messenger.SendRoomMessage;
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.AllRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.MyRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.CreateRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.SaveRoomSettings;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.PickupItem;
-import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserChatMessage;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserEnterRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserExitRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserLookAtPoint;
@@ -32,7 +32,7 @@ public final class IncomingPackets {
             new Pair(8, UserEnterRoom.class),
             new Pair(9, UserExitRoom.class),
             new Pair(10, UserMove.class),
-            new Pair(11, UserChatMessage.class),
+            new Pair(11, SendRoomMessage.class),
             new Pair(12, UserTypeStatus.class),
             new Pair(13, UserLookAtPoint.class),
             new Pair(14, InventoryItems.class),
