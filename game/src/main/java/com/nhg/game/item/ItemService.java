@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -60,7 +61,7 @@ public class ItemService {
     public Item getItemByIdAndOwner(@NonNull User owner, int itemId) {
         Optional<Item> optItem = itemRepository.findById(itemId);
 
-        if (optItem.isPresent() && optItem.get().getOwner() == owner) {
+        if (optItem.isPresent() && Objects.equals(optItem.get().getOwner().getId(), owner.getId())) {
             return optItem.get();
         }
 
