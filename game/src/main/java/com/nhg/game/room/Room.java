@@ -107,6 +107,8 @@ public class Room implements Runnable, JsonSerializable {
     public void userEnter(@NonNull User user) {
         users.add(user);
 
+        if(user.getEntity() != null) return;
+
         addEntity(Entity.fromUser(user, this));
     }
 

@@ -29,6 +29,9 @@ public class UserEnterRoom extends ClientPacket {
         int roomId = body.getInt("id");
 
         if (user.getEntity() != null) {
+            user.getEntity().getRoom().getUsers().sendBroadcastMessage(
+                    new ServerPacket(OutgoingPacketHeaders.RemoveRoomEntity, user.getEntity().getId().toString()));
+
             roomService.userExitRoom(user);
         }
 

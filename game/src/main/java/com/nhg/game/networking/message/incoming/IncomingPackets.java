@@ -10,8 +10,10 @@ import com.nhg.game.networking.message.incoming.clientpackets.navigator.AllRooms
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.MyRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.CreateRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.SaveRoomSettings;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.MoveItem;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.PickupItem;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.PlaceItem;
+import com.nhg.game.networking.message.incoming.clientpackets.rooms.items.RotateItem;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserEnterRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserExitRoom;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.users.UserLookAtPoint;
@@ -37,7 +39,9 @@ public final class IncomingPackets {
             new Pair(14, InventoryItems.class),
             new Pair(15, UpdateUser.class),
             new Pair(23, PickupItem.class),
+            new Pair(24, RotateItem.class),
             new Pair(25, PlaceItem.class),
+            new Pair(26, MoveItem.class),
             new Pair(36, CreateRoom.class),
             new Pair(44, SaveRoomSettings.class),
             new Pair(800, CataloguePages.class),

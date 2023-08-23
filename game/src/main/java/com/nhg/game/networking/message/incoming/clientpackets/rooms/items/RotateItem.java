@@ -58,7 +58,7 @@ public class RotateItem extends ClientPacket {
             itemService.save(item);
 
             room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.UpdateEntity, entity.getId().toString()));
+                    new ServerPacket(OutgoingPacketHeaders.UpdateEntity, entity));
 
 
         } catch (Exception e) {
