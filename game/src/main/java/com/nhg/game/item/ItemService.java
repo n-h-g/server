@@ -141,6 +141,7 @@ public class ItemService {
      *
      * @param room the target room where the items are retrieved to the owner.
      */
+    @Transactional
     public void retrieveRoomItemsToRoomOwner(@NonNull Room room) {
         itemRepository.updateRoomItemsToUserItems(room.getId(), room.getOwner().getId());
     }
