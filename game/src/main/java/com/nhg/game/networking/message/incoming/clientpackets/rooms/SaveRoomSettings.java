@@ -46,6 +46,7 @@ public class SaveRoomSettings extends ClientPacket {
                     new JSONObject()
                             .put("id", -1))
             );
+            user.setEntity(null);
             roomService.delete(room);
             return;
         }

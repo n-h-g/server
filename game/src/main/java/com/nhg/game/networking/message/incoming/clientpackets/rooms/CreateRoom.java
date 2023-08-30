@@ -35,5 +35,7 @@ public class CreateRoom extends ClientPacket {
         Room room = roomService.save(
                 new Room(name, user, layout, door_x, door_y, door_dir)
         );
+
+
     }
 }
