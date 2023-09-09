@@ -9,6 +9,9 @@ security:
 spring:
   application:
     name: account
+  output:
+    ansi:
+      enabled: ALWAYS
   datasource:
     username: postgres
     password: postgres

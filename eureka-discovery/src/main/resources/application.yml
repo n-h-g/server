@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: eureka-discovery
+  output:
+    ansi:
+      enabled: ALWAYS
 
 eureka:
   client:
