@@ -1,6 +1,5 @@
 package com.nhg.game.networking.message.incoming.clientpackets.rooms.items;
 
-import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemService;
 import com.nhg.game.networking.WebSocketClient;
 import com.nhg.game.networking.message.incoming.ClientPacket;
@@ -12,7 +11,7 @@ import com.nhg.game.room.entity.Entity;
 import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.room.entity.component.ItemComponent;
 import com.nhg.game.room.entity.component.PositionComponent;
-import com.nhg.game.room.entity.component.RotationComponent;
+import com.nhg.game.shared.PersistentPosition;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
 import com.nhg.game.utils.Int3;
@@ -56,6 +55,12 @@ public class MoveItem extends ClientPacket {
         if (itemComponent == null) return;
 
         positionComponent.setPosition(new Int3(x, y, z));
+
+        PersistentPosition persistentPosition = new PersistentPosition();
+        persistentPosition.setX(x);
+        persistentPosition.setY(y);
+        persistentPosition.setZ(z);
+        itemComponent.getItem().setPosition(persistentPosition);
 
         roomService.updateItem(itemComponent.getItem(), room);
         itemService.userPlaceItem(user, itemComponent.getItem(), room);

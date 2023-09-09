@@ -45,7 +45,7 @@ public class ChatMessageService {
 
     private Boolean existsRoomWithId(int id) {
         return restTemplate.getForObject(
-                "http://GAME/api/v1/game/room/exists_with_id/{id}",
+                "http://GAME/api/v1/game/rooms/exists_with_id/{id}",
                 Boolean.class,
                 id
         );
@@ -53,7 +53,7 @@ public class ChatMessageService {
 
     private Boolean existsUserWithId(int id) {
         return restTemplate.getForObject(
-                "http://GAME/api/v1/game/user/exists_with_id/{id}",
+                "http://GAME/api/v1/game/users/exists_with_id/{id}",
                 Boolean.class,
                 id
         );

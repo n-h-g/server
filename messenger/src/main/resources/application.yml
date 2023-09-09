@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: messenger
+  output:
+    ansi:
+      enabled: ALWAYS
   datasource:
     username: postgres
     password: postgres

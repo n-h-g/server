@@ -110,6 +110,7 @@ public class Room implements Runnable, JsonSerializable {
         if(user.getEntity() != null) return;
 
         addEntity(Entity.fromUser(user, this));
+        usersCount++;
     }
 
     /**
@@ -127,6 +128,7 @@ public class Room implements Runnable, JsonSerializable {
 
         removeEntity(entity);
         user.setEntity(null);
+        usersCount--;
     }
 
     public void addEntity(@NonNull Entity entity) {
@@ -190,6 +192,7 @@ public class Room implements Runnable, JsonSerializable {
                 .put("name", name)
                 .put("layout", roomLayout.getLayout())
                 .put("owner_id", owner.getId())
+                .put("owner_name", owner.getUsername())
                 .put("door_x", roomLayout.getDoorX())
                 .put("door_y", roomLayout.getDoorY())
                 .put("door_rot", roomLayout.getDoorRotation().getValue())
