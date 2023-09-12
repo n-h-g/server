@@ -11,7 +11,7 @@ import java.util.Random;
 public class RandomMovementBehaviour implements Behaviour {
 
     private static final int range = 15;
-    private static final long executeEveryMs = 1000;
+    private static final long executeEveryMs = 600;
     private final Random random;
     private long lastExecutionTime = 0;
 

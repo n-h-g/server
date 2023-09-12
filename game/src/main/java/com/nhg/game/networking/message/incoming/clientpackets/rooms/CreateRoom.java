@@ -2,11 +2,15 @@ package com.nhg.game.networking.message.incoming.clientpackets.rooms;
 
 import com.nhg.game.networking.WebSocketClient;
 import com.nhg.game.networking.message.incoming.ClientPacket;
+import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
+import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class CreateRoom extends ClientPacket {
 
     private final RoomService roomService;
@@ -35,7 +39,5 @@ public class CreateRoom extends ClientPacket {
         Room room = roomService.save(
                 new Room(name, user, layout, door_x, door_y, door_dir)
         );
-
-
     }
 }
