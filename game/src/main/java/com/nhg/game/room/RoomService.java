@@ -7,7 +7,6 @@ import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.npc.bot.BotService;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
-import com.nhg.game.utils.Int3;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -212,12 +211,15 @@ public class RoomService {
      * @param room the room where the item is placed.
      */
     @Transactional
-    public void placeItem(@NonNull Item item, @NonNull Room room) {
+    public Entity placeItem(@NonNull Item item, @NonNull Room room) {
         if (!item.getItemSpecification().isAllowWalk()) {
             getActiveRoomById(room.getId()).blockTile(item.getPosition().getX(), item.getPosition().getY());
         }
 
-        room.addEntity(Entity.fromItem(item, room));
+        Entity entity = Entity.fromItem(item, room);
+        room.addEntity(entity);
+
+        return entity;
     }
 
     /**

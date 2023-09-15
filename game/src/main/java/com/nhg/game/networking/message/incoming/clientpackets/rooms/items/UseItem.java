@@ -1,30 +1,24 @@
 package com.nhg.game.networking.message.incoming.clientpackets.rooms.items;
 
-import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemService;
 import com.nhg.game.networking.WebSocketClient;
 import com.nhg.game.networking.message.incoming.ClientPacket;
-import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
-import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.room.entity.component.InteractionComponent;
-import com.nhg.game.room.entity.component.ItemComponent;
-import com.nhg.game.room.entity.component.RotationComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import com.nhg.game.utils.Rotation;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 
 @Slf4j
-public class RotateItem extends ClientPacket {
+public class UseItem extends ClientPacket {
 
     private ItemService itemService;
 
-    public RotateItem() {
+    public UseItem() {
         itemService = BeanRetriever.get(ItemService.class);
     }
 
@@ -46,28 +40,12 @@ public class RotateItem extends ClientPacket {
 
             if (entity == null) return;
 
-            ItemComponent itemComponent = (ItemComponent) entity.getComponent(ComponentType.Item);
-            RotationComponent rotationComponent = (RotationComponent) entity.getComponent(ComponentType.Rotation);
-
-            if (itemComponent == null || rotationComponent == null) return;
-
             InteractionComponent interactionComponent =
                     (InteractionComponent) entity.getComponent(ComponentType.Interaction);
 
             if (interactionComponent != null) {
-                interactionComponent.onRotate(user.getEntity());
+                interactionComponent.onClick(user.getEntity());
             }
-
-            Rotation rotation = rotationComponent.rotate();
-
-            Item item = itemComponent.getItem();
-            item.setRotation(rotation);
-
-            itemService.save(item);
-
-            room.getUsers().sendBroadcastMessage(
-                    new ServerPacket(OutgoingPacketHeaders.UpdateEntity, entity));
-
 
         } catch (Exception e) {
             log.error("Error: "+ e);

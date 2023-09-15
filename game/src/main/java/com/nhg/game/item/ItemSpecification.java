@@ -46,6 +46,8 @@ public class ItemSpecification {
 
     private String name;
 
+    private String interaction;
+
     private short stateCount;
 
     private short width;

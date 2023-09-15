@@ -9,6 +9,7 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.room.entity.component.ComponentType;
+import com.nhg.game.room.entity.component.InteractionComponent;
 import com.nhg.game.room.entity.component.ItemComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
@@ -43,6 +44,13 @@ public class PickupItem extends ClientPacket {
         ItemComponent itemComponent = (ItemComponent) entity.getComponent(ComponentType.Item);
 
         if (itemComponent == null) return;
+
+        InteractionComponent interactionComponent =
+                (InteractionComponent) entity.getComponent(ComponentType.Interaction);
+
+        if (interactionComponent != null) {
+            interactionComponent.onPickUp(user.getEntity());
+        }
 
         Item item = itemComponent.getItem();
 

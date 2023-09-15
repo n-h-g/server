@@ -9,6 +9,7 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.room.entity.component.ComponentType;
+import com.nhg.game.room.entity.component.InteractionComponent;
 import com.nhg.game.room.entity.component.ItemComponent;
 import com.nhg.game.room.entity.component.PositionComponent;
 import com.nhg.game.shared.PersistentPosition;
@@ -66,6 +67,13 @@ public class MoveItem extends ClientPacket {
         itemService.userPlaceItem(user, itemComponent.getItem(), room);
 
         itemService.save(itemComponent.getItem());
+
+        InteractionComponent interactionComponent =
+                (InteractionComponent) entity.getComponent(ComponentType.Interaction);
+
+        if (interactionComponent != null) {
+            interactionComponent.onMove(user.getEntity());
+        }
 
         room.getUsers().sendBroadcastMessage(
                 new ServerPacket(OutgoingPacketHeaders.UpdateEntity, entity));

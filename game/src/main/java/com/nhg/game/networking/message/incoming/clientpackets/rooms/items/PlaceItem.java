@@ -8,6 +8,9 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
+import com.nhg.game.room.entity.Entity;
+import com.nhg.game.room.entity.component.ComponentType;
+import com.nhg.game.room.entity.component.InteractionComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
 
@@ -38,10 +41,17 @@ public class PlaceItem extends ClientPacket {
 
         if (item == null) return;
 
-        roomService.placeItem(item, room);
+        Entity entity = roomService.placeItem(item, room);
         itemService.userPlaceItem(user, item, room);
 
         room.getUsers().sendBroadcastMessage(
                 new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, item.getEntity()));
+
+        InteractionComponent interactionComponent =
+                (InteractionComponent) entity.getComponent(ComponentType.Interaction);
+
+        if (interactionComponent != null) {
+            interactionComponent.onPlace(user.getEntity());
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.nhg.game.room.entity;
 
 import com.nhg.game.item.Item;
 import com.nhg.game.item.ItemType;
+import com.nhg.game.item.interaction.Interaction;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.npc.behaviour.Behaviour;
 import com.nhg.game.npc.behaviour.RandomMovementBehaviour;
@@ -122,7 +123,8 @@ public class Entity implements JsonSerializable  {
     public static Entity fromItem(@NonNull Item item, @NonNull Room room) {
         Entity entity = new Entity(EntityType.ITEM, room)
                 .addComponent(ComponentType.Name, Pair.of(item.getItemSpecification().getName(), String.class))
-                .addComponent(ComponentType.Item, Pair.of(item, Item.class));
+                .addComponent(ComponentType.Item, Pair.of(item, Item.class))
+                .addComponent(ComponentType.Interaction, Pair.of(Interaction.fromItem(item), Interaction.class));
 
         if (item.getItemSpecification().getItemType() == ItemType.FLOOR_ITEM) {
             entity

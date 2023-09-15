@@ -58,6 +58,8 @@ public class Item implements JsonSerializable {
     @Embedded
     private PersistentPosition position;
 
+    private String extraData;
+
     @ManyToOne
     @JoinColumn(columnDefinition="integer", name="item_specification_id")
     private ItemSpecification itemSpecification;
