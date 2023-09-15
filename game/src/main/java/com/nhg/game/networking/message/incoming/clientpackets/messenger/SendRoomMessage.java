@@ -9,6 +9,7 @@ import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
+import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 public class SendRoomMessage extends ClientPacket {
@@ -44,6 +45,10 @@ public class SendRoomMessage extends ClientPacket {
 
         if (response == null) return;
 
-        room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RoomChatMessage, response.text()));
+        room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RoomChatMessage, new JSONObject()
+                .put("text", response.text())
+                .put("authorId", user.getEntity().getId())
+                )
+        );
     }
 }
