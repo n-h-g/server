@@ -89,14 +89,29 @@ public class User implements JsonSerializable {
         this.humanData = new HumanData(look);
     }
 
+    /**
+     * Add the given item to the user's inventory.
+     *
+     * @param item the item to add.
+     */
     public void addItemToInventory(@NonNull Item item) {
         items.add(item);
     }
 
+    /**
+     * Remove the given item from the user's inventory.
+     *
+     * @param item the item to remove.
+     */
     public void removeItemFromInventory(@NonNull Item item) {
         items.remove(item);
     }
 
+    /**
+     * Update the user's credits with the given amount.
+     *
+     * @param amount add credits (positive amount) or remove credits (negative amount).
+     */
     public void updateCredits(int amount) {
         credits += amount;
     }
