@@ -17,6 +17,6 @@ public class BehaviourComponent extends Component {
 
     @Override
     public void cycle() {
-        behaviour.cycle(entity);
+        behaviour.onCycle(entity);
     }
 }

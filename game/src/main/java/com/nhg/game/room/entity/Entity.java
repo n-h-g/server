@@ -5,7 +5,6 @@ import com.nhg.game.item.ItemType;
 import com.nhg.game.item.interaction.Interaction;
 import com.nhg.game.networking.message.outgoing.JsonSerializable;
 import com.nhg.game.npc.behaviour.Behaviour;
-import com.nhg.game.npc.behaviour.RandomMovementBehaviour;
 import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.component.Component;
@@ -139,7 +138,7 @@ public class Entity implements JsonSerializable  {
     public static Entity fromBot(@NonNull Bot bot, @NonNull Room room) {
         return fromHumanData(bot.getHumanData(), room)
                 .addComponent(ComponentType.Name, Pair.of(bot.getName(), String.class))
-                .addComponent(ComponentType.Behaviour, Pair.of(new RandomMovementBehaviour(), Behaviour.class));
+                .addComponent(ComponentType.Behaviour, Pair.of(Behaviour.fromBot(bot), Behaviour.class));
     }
 
 }

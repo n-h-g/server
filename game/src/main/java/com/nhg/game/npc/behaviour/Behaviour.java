@@ -1,8 +1,14 @@
 package com.nhg.game.npc.behaviour;
 
+import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.room.entity.Entity;
+import lombok.NonNull;
 
 public interface Behaviour {
 
-    void cycle(Entity entity);
+    default void onCycle(Entity self) {}
+
+    static Behaviour fromBot(@NonNull Bot bot) {
+        return new RandomMovementBehaviour(bot);
+    }
 }
