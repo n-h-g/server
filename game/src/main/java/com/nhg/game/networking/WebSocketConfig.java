@@ -1,6 +1,6 @@
 package com.nhg.game.networking;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -10,14 +10,20 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebSocket
 @ComponentScan
-@AllArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
 
+    private final String handlerPath;
     private final WebSocketHandler webSocketHandler;
 
+    public WebSocketConfig(@Value("${websocket.handler.path}") String handlerPath, WebSocketHandler webSocketHandler) {
+        this.handlerPath = handlerPath;
+        this.webSocketHandler = webSocketHandler;
+    }
+
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketHandler, "/ballstorm")
+        registry.addHandler(webSocketHandler, handlerPath)
                 .setAllowedOrigins("*");
     }
+
 
 }
