@@ -4,11 +4,13 @@ import com.nhg.game.npc.behaviour.Behaviour;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class BehaviourComponent extends Component {
 
-    private final Behaviour behaviour;
-    public BehaviourComponent(Behaviour behaviour) {
-        this.behaviour = behaviour;
+    private final List<Behaviour> behaviours;
+    public BehaviourComponent(List<Behaviour> behaviours) {
+        this.behaviours = behaviours;
     }
     @Override
     public JSONObject toJson() throws JSONException {
@@ -17,6 +19,8 @@ public class BehaviourComponent extends Component {
 
     @Override
     public void cycle() {
-        behaviour.onCycle(entity);
+        for (Behaviour behaviour : behaviours) {
+            behaviour.onCycle(entity);
+        }
     }
 }
