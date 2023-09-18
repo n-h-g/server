@@ -138,10 +138,20 @@ public class Room implements Runnable, JsonSerializable {
         usersCount--;
     }
 
+    /**
+     * Add the given entity to the room's entities.
+     *
+     * @param entity the entity that needs to be added.
+     */
     public void addEntity(@NonNull Entity entity) {
         this.entities.putIfAbsent(entity.getId(), entity);
     }
 
+    /**
+     * Remove the given entity from the room's entities and notify all the users.
+     *
+     * @param entity the entity that needs to be removed.
+     */
     public void removeEntity(@NonNull Entity entity) {
         entities.remove(entity.getId());
 
@@ -180,12 +190,30 @@ public class Room implements Runnable, JsonSerializable {
         return entities.get(id);
     }
 
+    /**
+     * Set the state of the tile in the given coordinate to CLOSE.
+     *
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     *
+     * @see RoomLayout#getTile 
+     * @see Tile.State#CLOSE
+     */
     public void blockTile(int x, int y) {
         try {
             roomLayout.getTile(x, y).setState(Tile.State.CLOSE);
         } catch(IndexOutOfBoundsException ignored) {}
     }
 
+    /**
+     * Set the state of the tile in the given coordinate to OPEN.
+     *
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     *
+     * @see RoomLayout#getTile
+     * @see Tile.State#OPEN
+     */
     public void openTile(int x, int y) {
         try {
             roomLayout.getTile(x, y).setState(Tile.State.OPEN);
