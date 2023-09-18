@@ -1,5 +1,5 @@
 package com.nhg.game.utils.events;
 
 public interface EventListener {
-    void notify(Event event, Object... obj);
+    void notify(Event event, Object... params);
 }
