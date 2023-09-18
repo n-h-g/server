@@ -26,7 +26,7 @@ import java.util.EnumMap;
 import java.util.UUID;
 
 /**
- * Represent an entity in a room.
+ * Represents an entity in a room.
  *
  * @see Room
  */
@@ -39,10 +39,10 @@ public class Entity implements JsonSerializable  {
     @Getter
     private final EntityType type;
 
-    private final EnumMap<ComponentType, Component> components;
-
     @Getter
     private final Room room;
+
+    private final EnumMap<ComponentType, Component> components;
 
     public Entity(EntityType type, @NonNull Room room) {
         this.id = UUID.randomUUID();
@@ -62,6 +62,16 @@ public class Entity implements JsonSerializable  {
         }
     }
 
+    /**
+     * Add a component with the given type to the entity.
+     *
+     * @param type the type of the component.
+     * @param pairs list of pair (object-value, object-class) representing the component constructor parameters.
+     * @return the entity where the component is added (used for multiple operations on the entity).
+     *
+     * @see ComponentType
+     * @see Component
+     */
     @SafeVarargs
     public final Entity addComponent(ComponentType type, Pair<Object, Class<?>>... pairs) {
         Class<? extends Component> componentClass = type.getComponentClass();
@@ -81,10 +91,20 @@ public class Entity implements JsonSerializable  {
         return this;
     }
 
+    /**
+     * Get the component associated to the entity with the given type.
+     *
+     * @param type the type of the component.
+     * @return the requested component.
+     *
+     * @see ComponentType
+     * @see Component
+     */
     public Component getComponent(ComponentType type) {
         return components.get(type);
     }
 
+    @Override
     public JSONObject toJson() throws JSONException {
 
         JSONObject json = new JSONObject()
@@ -102,6 +122,15 @@ public class Entity implements JsonSerializable  {
         return json;
     }
 
+    /**
+     * Create an entity from HumanData.
+     * 
+     * @param humanData the data used to create the entity.
+     * @param room the room where the entity is created.
+     * @return the created entity.
+     * 
+     * @see HumanData
+     */
     public static Entity fromHumanData(@NonNull HumanData humanData, @NonNull Room room) {
         return new Entity(EntityType.HUMAN, room)
                 .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getInt3AtDoor(), Int3.class))
@@ -112,6 +141,16 @@ public class Entity implements JsonSerializable  {
                         Pair.of(humanData.getGender(), Gender.class));
     }
 
+    /**
+     * Create an entity from User.
+     * 
+     * @param user the user used to create the entity.
+     * @param room the room where the entity is created.
+     * @return the created entity.
+     *
+     * @see User
+     * @see #fromHumanData 
+     */
     public static Entity fromUser(@NonNull User user, @NonNull Room room) {
         return fromHumanData(user.getHumanData(), room)
                 .addComponent(ComponentType.User, Pair.of(user, User.class))
@@ -119,6 +158,31 @@ public class Entity implements JsonSerializable  {
 
     }
 
+    /**
+     * Create an entity from Bot.
+     *
+     * @param bot the bot used to create the entity.
+     * @param room the room where the entity is created.
+     * @return the created entity.
+     *
+     * @see Bot
+     * @see #fromHumanData
+     */
+    public static Entity fromBot(@NonNull Bot bot, @NonNull Room room) {
+        return fromHumanData(bot.getHumanData(), room)
+                .addComponent(ComponentType.Name, Pair.of(bot.getName(), String.class))
+                .addComponent(ComponentType.Behaviour, Pair.of(Behaviour.fromBot(bot), Behaviour.class));
+    }
+
+    /**
+     * Create an entity from Item.
+     *
+     * @param item the item used to create the entity.
+     * @param room the room where the entity is created.
+     * @return the created entity.
+     *
+     * @see Item
+     */
     public static Entity fromItem(@NonNull Item item, @NonNull Room room) {
         Entity entity = new Entity(EntityType.ITEM, room)
                 .addComponent(ComponentType.Name, Pair.of(item.getItemSpecification().getName(), String.class))
@@ -133,12 +197,6 @@ public class Entity implements JsonSerializable  {
         }
 
         return entity;
-    }
-
-    public static Entity fromBot(@NonNull Bot bot, @NonNull Room room) {
-        return fromHumanData(bot.getHumanData(), room)
-                .addComponent(ComponentType.Name, Pair.of(bot.getName(), String.class))
-                .addComponent(ComponentType.Behaviour, Pair.of(Behaviour.fromBot(bot), Behaviour.class));
     }
 
 }
