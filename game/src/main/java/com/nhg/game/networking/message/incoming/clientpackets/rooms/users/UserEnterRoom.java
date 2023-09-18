@@ -8,6 +8,7 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
+import com.nhg.game.utils.events.Event;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -47,5 +48,7 @@ public class UserEnterRoom extends ClientPacket {
 
         room.getUsers().sendBroadcastMessage(
                 new ServerPacket(OutgoingPacketHeaders.AddRoomEntity, user.getEntity()));
+
+        room.getEventHandler().emit(Event.ENTITY_ENTER_ROOM, user.getEntity());
     }
 }

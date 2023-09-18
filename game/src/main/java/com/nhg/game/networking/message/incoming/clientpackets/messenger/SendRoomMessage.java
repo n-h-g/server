@@ -9,6 +9,7 @@ import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
+import com.nhg.game.utils.events.Event;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
@@ -50,5 +51,7 @@ public class SendRoomMessage extends ClientPacket {
                 .put("authorId", user.getEntity().getId())
                 )
         );
+
+        room.getEventHandler().emit(Event.USER_MESSAGE, user, response.text());
     }
 }
