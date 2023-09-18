@@ -1,6 +1,6 @@
 package com.nhg.game.utils.pathfinder;
 
-import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Position3;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,13 +21,13 @@ public class Tile implements Comparable<Tile> {
     private double hCost;
 
     @Getter
-    private final Int3 position;
+    private final Position3 position;
 
     @Getter
     @Setter
     private Tile previousTile;
 
-    public Tile(Int3 position) {
+    public Tile(Position3 position) {
         this.position = position;
         this.state = position.getZ() == 0 ? State.CLOSE : State.OPEN;
     }

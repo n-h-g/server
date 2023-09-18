@@ -15,7 +15,7 @@ import com.nhg.game.room.entity.component.PositionComponent;
 import com.nhg.game.shared.PersistentPosition;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Position3;
 
 import java.util.UUID;
 
@@ -55,7 +55,7 @@ public class MoveItem extends ClientPacket {
 
         if (itemComponent == null) return;
 
-        positionComponent.setPosition(new Int3(x, y, z));
+        positionComponent.setPosition(new Position3(x, y, z));
 
         PersistentPosition persistentPosition = new PersistentPosition();
         persistentPosition.setX(x);

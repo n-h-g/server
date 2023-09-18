@@ -1,6 +1,6 @@
 package com.nhg.game.shared;
 
-import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Position3;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,9 +18,9 @@ public class PersistentPosition {
     private int y;
 
     @Column(columnDefinition = "integer default 0")
-    private int z;
+    private float z;
 
-    public Int3 getInt3Position() {
-        return new Int3(x,y,z);
+    public Position3 getPosition3() {
+        return new Position3(x,y,z);
     }
 }

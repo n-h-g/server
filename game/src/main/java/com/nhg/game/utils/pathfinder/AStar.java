@@ -1,6 +1,6 @@
 package com.nhg.game.utils.pathfinder;
 
-import com.nhg.game.utils.Int2;
+import com.nhg.game.utils.Position2;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
@@ -60,7 +60,7 @@ public class AStar {
         List<Tile> closedList = new LinkedList<>();
 
         Tile current;
-        List<Int2> adjPositions;
+        List<Position2> adjPositions;
         double tentative_gScore;
 
         try {
@@ -81,9 +81,9 @@ public class AStar {
                 if (current.equals(target))
                     return retrievePath(start, target);
 
-                adjPositions = getAdjacentPositions(current.getPosition().ToInt2XY());
+                adjPositions = getAdjacentPositions(current.getPosition().toPosition2());
 
-                for (Int2 adjPosition : adjPositions) {
+                for (Position2 adjPosition : adjPositions) {
 
                     Tile adjTile;
 
@@ -93,7 +93,7 @@ public class AStar {
                         continue;
                     }
 
-                    boolean isDiagonalMovement = isDiagonalMovement(current.getPosition().ToInt2XY(), adjPosition);
+                    boolean isDiagonalMovement = isDiagonalMovement(current.getPosition().toPosition2(), adjPosition);
 
                     tentative_gScore = current.getGCost()
                             + (isDiagonalMovement ? DiagonalMovementCost : OrthogonalMovementCost);
@@ -128,28 +128,28 @@ public class AStar {
 
 
 
-    private List<Int2> getAdjacentPositions(Int2 current) {
-        List<Int2> adj = new ArrayList<>();
+    private List<Position2> getAdjacentPositions(Position2 current) {
+        List<Position2> adj = new ArrayList<>();
 
-        adj.add(new Int2(current.getX() - 1, current.getY()));
-        adj.add(new Int2(current.getX() + 1, current.getY()));
-        adj.add(new Int2(current.getX(), current.getY() - 1));
-        adj.add(new Int2(current.getX(), current.getY() + 1));
+        adj.add(new Position2(current.getX() - 1, current.getY()));
+        adj.add(new Position2(current.getX() + 1, current.getY()));
+        adj.add(new Position2(current.getX(), current.getY() - 1));
+        adj.add(new Position2(current.getX(), current.getY() + 1));
 
         if (!isDiagonalMovementAllowed) return adj;
 
-        adj.add(new Int2(current.getX() + 1,current.getY() + 1));
-        adj.add(new Int2(current.getX() + 1,current.getY() - 1));
-        adj.add(new Int2(current.getX() - 1,current.getY() + 1));
-        adj.add(new Int2(current.getX() - 1,current.getY() - 1));
+        adj.add(new Position2(current.getX() + 1,current.getY() + 1));
+        adj.add(new Position2(current.getX() + 1,current.getY() - 1));
+        adj.add(new Position2(current.getX() - 1,current.getY() + 1));
+        adj.add(new Position2(current.getX() - 1,current.getY() - 1));
 
         return adj;
     }
 
-    private static boolean isDiagonalMovement(Int2 current, Int2 previous) {
-        return Objects.equals(previous, new Int2(current.getX() + 1, current.getY() + 1))
-                || Objects.equals(previous, new Int2(current.getX() + 1, current.getY() - 1))
-                || Objects.equals(previous, new Int2(current.getX() - 1, current.getY() + 1))
-                || Objects.equals(previous, new Int2(current.getX() - 1, current.getY() - 1));
+    private static boolean isDiagonalMovement(Position2 current, Position2 previous) {
+        return Objects.equals(previous, new Position2(current.getX() + 1, current.getY() + 1))
+                || Objects.equals(previous, new Position2(current.getX() + 1, current.getY() - 1))
+                || Objects.equals(previous, new Position2(current.getX() - 1, current.getY() + 1))
+                || Objects.equals(previous, new Position2(current.getX() - 1, current.getY() - 1));
     }
 }

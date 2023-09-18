@@ -1,6 +1,6 @@
 package com.nhg.game.room;
 
-import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Position3;
 import com.nhg.game.utils.PostgreSQLEnumType;
 import com.nhg.game.utils.Rotation;
 import com.nhg.game.utils.pathfinder.Layout;
@@ -109,7 +109,7 @@ public class RoomLayout implements Layout {
                         ? 10 + tile - 'A'
                         : Integer.parseInt(Character.toString(tile));
 
-                this.tiles[x][y] = new Tile(new Int3(x,y,z));
+                this.tiles[x][y] = new Tile(new Position3(x,y,z));
             }
         }
     }
@@ -127,14 +127,14 @@ public class RoomLayout implements Layout {
     }
 
     /**
-     * Get the coordinates of the door as an Int3.
+     * Get the coordinates of the door as Position3.
      *
-     * @return Int3 representing X,Y and Z coordinates of the door.
+     * @return Position3 representing X,Y and Z coordinates of the door.
      *
-     * @see Int3
+     * @see Position3
      */
-    public Int3 getInt3AtDoor() {
-        return new Int3(
+    public Position3 getDoorPosition3() {
+        return new Position3(
                 doorX,
                 doorY,
                 getTile(doorX, doorY).getPosition().getZ()

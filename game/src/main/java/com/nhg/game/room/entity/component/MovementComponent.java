@@ -4,8 +4,8 @@ import com.nhg.game.networking.message.outgoing.OutgoingPacketHeaders;
 import com.nhg.game.networking.message.outgoing.ServerPacket;
 import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.Action;
-import com.nhg.game.utils.Int2;
-import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Position2;
+import com.nhg.game.utils.Position3;
 import com.nhg.game.utils.Rotation;
 import com.nhg.game.utils.pathfinder.AStar;
 import com.nhg.game.utils.pathfinder.Tile;
@@ -23,7 +23,7 @@ public class MovementComponent extends Component {
 
     @Getter
     @Setter
-    private Int2 destination;
+    private Position2 destination;
 
     private final AStar aStar;
     private Queue<Tile> calculatedPath;
@@ -33,7 +33,7 @@ public class MovementComponent extends Component {
         this.calculatedPath = new LinkedList<>();
         this.aStar = new AStar(true);
 
-        this.destination = new Int2(0, 0);
+        this.destination = new Position2(0, 0);
     }
 
     public PositionComponent getPositionComponent() throws ComponentNotFoundException {
@@ -79,7 +79,7 @@ public class MovementComponent extends Component {
      */
     public void calculatePath() {
         try {
-            Int3 position = getPositionComponent().getPosition();
+            Position3 position = getPositionComponent().getPosition();
 
             calculatedPath = aStar.findPath(
                     entity.getRoom().getRoomLayout().getTile(position.getX(), position.getY()),
@@ -114,12 +114,12 @@ public class MovementComponent extends Component {
                 return;
             }
 
-            Int3 nextPosition = calculatedPath.poll().getPosition();
+            Position3 nextPosition = calculatedPath.poll().getPosition();
             actionComponent.addAction(Action.MOVE);
 
             if (bhrComponent != null) {
                 bhrComponent.setRotation(
-                        Rotation.CalculateRotation(positionComponent.getPosition().ToInt2XY(), nextPosition.ToInt2XY()));
+                        Rotation.CalculateRotation(positionComponent.getPosition().toPosition2(), nextPosition.toPosition2()));
             }
 
             positionComponent.setPosition(nextPosition);

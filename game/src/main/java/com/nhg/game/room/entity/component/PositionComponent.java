@@ -1,6 +1,6 @@
 package com.nhg.game.room.entity.component;
 
-import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Position3;
 import lombok.Getter;
 import lombok.Setter;
 import org.json.JSONException;
@@ -10,13 +10,13 @@ public class PositionComponent extends Component {
 
     @Getter
     @Setter
-    private Int3 position;
+    private Position3 position;
 
     public PositionComponent() {
-        position = Int3.Zero;
+        position = Position3.Zero;
     }
 
-    public PositionComponent(Int3 position) {
+    public PositionComponent(Position3 position) {
         this.position = position;
     }
 

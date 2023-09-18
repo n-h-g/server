@@ -8,7 +8,7 @@ import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.room.entity.component.MovementComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import com.nhg.game.utils.Int2;
+import com.nhg.game.utils.Position2;
 
 public class UserMove extends ClientPacket {
 
@@ -34,7 +34,7 @@ public class UserMove extends ClientPacket {
 
         MovementComponent mc = (MovementComponent) entity.getComponent(ComponentType.Movement);
 
-        mc.setDestination(new Int2(x,y));
+        mc.setDestination(new Position2(x,y));
         mc.calculatePath();
     }
 }

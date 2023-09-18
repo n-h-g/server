@@ -12,7 +12,7 @@ import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.shared.HumanData;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.Gender;
-import com.nhg.game.utils.Int3;
+import com.nhg.game.utils.Position3;
 import com.nhg.game.utils.Rotation;
 import lombok.Getter;
 import lombok.NonNull;
@@ -133,7 +133,7 @@ public class Entity implements JsonSerializable  {
      */
     public static Entity fromHumanData(@NonNull HumanData humanData, @NonNull Room room) {
         return new Entity(EntityType.HUMAN, room)
-                .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getInt3AtDoor(), Int3.class))
+                .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getDoorPosition3(), Position3.class))
                 .addComponent(ComponentType.BodyHeadRotation, Pair.of(room.getRoomLayout().getDoorRotation(), Rotation.class))
                 .addComponent(ComponentType.Action)
                 .addComponent(ComponentType.Movement)
@@ -191,7 +191,7 @@ public class Entity implements JsonSerializable  {
 
         if (item.getItemSpecification().getItemType() == ItemType.FLOOR_ITEM) {
             entity
-                .addComponent(ComponentType.Position, Pair.of(item.getPosition().getInt3Position(), Int3.class))
+                .addComponent(ComponentType.Position, Pair.of(item.getPosition().getPosition3(), Position3.class))
                 .addComponent(ComponentType.Rotation, Pair.of(item.getRotation(), Rotation.class));
 
         }

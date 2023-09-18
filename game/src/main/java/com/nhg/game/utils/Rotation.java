@@ -29,7 +29,7 @@ public enum Rotation {
         return NORTH;
     }
 
-    public static Rotation CalculateRotation(Int2 point1, Int2 point2) {
+    public static Rotation CalculateRotation(Position2 point1, Position2 point2) {
         if (point1.getX() > point2.getX()) {
             if (point1.getY() > point2.getY()) {
                 return Rotation.NORTH_EAST;

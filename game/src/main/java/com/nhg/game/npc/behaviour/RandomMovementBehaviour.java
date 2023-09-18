@@ -11,7 +11,7 @@ import com.nhg.game.room.entity.component.MovementComponent;
 import com.nhg.game.room.entity.component.PositionComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import com.nhg.game.utils.Int2;
+import com.nhg.game.utils.Position2;
 import com.nhg.game.utils.events.Event;
 import com.nhg.game.utils.events.EventListener;
 import lombok.extern.slf4j.Slf4j;
@@ -54,15 +54,15 @@ public class RandomMovementBehaviour implements Behaviour, EventListener {
 
         if (positionComponent == null || movementComponent == null) return;
 
-        movementComponent.setDestination(randomDestination(positionComponent.getPosition().ToInt2XY()));
+        movementComponent.setDestination(randomDestination(positionComponent.getPosition().toPosition2()));
         movementComponent.calculatePath();
     }
 
-    private Int2 randomDestination(Int2 currentPosition) {
+    private Position2 randomDestination(Position2 currentPosition) {
         int randX = random.nextInt(range * 2 + 1) - range;
         int randY = random.nextInt(range * 2 + 1) - range;
 
-        return new Int2(
+        return new Position2(
                 currentPosition.getX() + randX,
                 currentPosition.getY() + randY
         );

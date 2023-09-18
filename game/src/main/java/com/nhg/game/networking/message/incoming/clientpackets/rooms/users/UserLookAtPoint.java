@@ -12,7 +12,7 @@ import com.nhg.game.room.entity.component.ComponentType;
 import com.nhg.game.room.entity.component.PositionComponent;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
-import com.nhg.game.utils.Int2;
+import com.nhg.game.utils.Position2;
 import com.nhg.game.utils.Rotation;
 
 public class UserLookAtPoint extends ClientPacket {
@@ -46,7 +46,7 @@ public class UserLookAtPoint extends ClientPacket {
         }
 
         Rotation rotation = Rotation.CalculateRotation(
-                new Int2(pc.getPosition().getX(), pc.getPosition().getY()), new Int2(x, y));
+                new Position2(pc.getPosition().getX(), pc.getPosition().getY()), new Position2(x, y));
 
         bhr.setRotation(rotation);
 
