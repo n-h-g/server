@@ -126,6 +126,13 @@ public class RoomLayout implements Layout {
         return tiles[x][y];
     }
 
+    /**
+     * Get the coordinates of the door as an Int3.
+     *
+     * @return Int3 representing X,Y and Z coordinates of the door.
+     *
+     * @see Int3
+     */
     public Int3 getInt3AtDoor() {
         return new Int3(
                 doorX,
