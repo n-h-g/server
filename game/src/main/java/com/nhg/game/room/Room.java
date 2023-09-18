@@ -8,6 +8,8 @@ import com.nhg.game.npc.bot.Bot;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
 import com.nhg.game.user.UserGroup;
+import com.nhg.game.utils.events.Event;
+import com.nhg.game.utils.events.EventHandler;
 import com.nhg.game.utils.pathfinder.Tile;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -83,11 +85,16 @@ public class Room implements Runnable, JsonSerializable {
     @Setter(AccessLevel.NONE)
     private final Map<UUID, Entity> entities;
 
+    @Transient
+    @Setter(AccessLevel.NONE)
+    private final EventHandler eventHandler;
+
     public Room() {
         this.users = new UserGroup();
         this.items = new ArrayList<>();
         this.bots = new ArrayList<>();
         this.entities = new ConcurrentHashMap<>();
+        this.eventHandler = new EventHandler(Event.ENTITY_ENTER_ROOM, Event.USER_MESSAGE);
     }
 
     public Room(String name, User owner, String layout ,int doorX, int doorY, int doorRotation) {
