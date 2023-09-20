@@ -2,6 +2,7 @@ package com.nhg.game.command;
 
 import com.nhg.game.command.impl.TestCommand;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class CommandHandler {
 
@@ -39,7 +41,12 @@ public class CommandHandler {
 
         if (command == null) return false;
 
-        command.execute(params);
+        try {
+            command.execute(params);
+        } catch(Exception e) {
+            log.error("Error while handling command '"+ command.getName() +"': "+ e);
+        }
+
         return true;
     }
 
