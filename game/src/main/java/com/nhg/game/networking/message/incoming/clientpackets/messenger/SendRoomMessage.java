@@ -1,5 +1,6 @@
 package com.nhg.game.networking.message.incoming.clientpackets.messenger;
 
+import com.nhg.game.command.CommandHandler;
 import com.nhg.game.dto.ChatMessageRequest;
 import com.nhg.game.dto.ChatMessageResponse;
 import com.nhg.game.networking.WebSocketClient;
@@ -16,9 +17,11 @@ import org.springframework.web.client.RestTemplate;
 public class SendRoomMessage extends ClientPacket {
 
     private final RestTemplate restTemplate;
+    private final CommandHandler commandHandler;
 
     public SendRoomMessage() {
         restTemplate = BeanRetriever.get("restTemplate", RestTemplate.class);
+        commandHandler = BeanRetriever.get(CommandHandler.class);
     }
 
     @Override
@@ -31,6 +34,10 @@ public class SendRoomMessage extends ClientPacket {
         String text = body.getString("text");
 
         Room room = user.getEntity().getRoom();
+
+        if (commandHandler.handle(text)) {
+            return;
+        }
 
         ChatMessageRequest request = new ChatMessageRequest(
                 user.getId(),

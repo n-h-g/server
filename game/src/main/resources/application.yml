@@ -5,6 +5,11 @@ websocket:
   handler:
     path: /nhg/game
 
+commands:
+  prefixes:
+    - :
+    - /
+
 spring:
   application:
     name: game
