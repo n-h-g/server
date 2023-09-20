@@ -95,7 +95,10 @@ public class RoomService {
     }
 
     /**
-     * The specified user enters the room with the specified id then start the room's task.
+     * The given user enters to the room with the given id.
+     *
+     * If the room is active, the user enters the room, otherwise retrieve the room
+     * from the database, if it exists starts its task then the user can enter.
      *
      * @param user user that is entering the room.
      * @param roomId target room's id.
@@ -104,13 +107,18 @@ public class RoomService {
      * @see #startRoomTask
      */
     public boolean userEnterRoom(@NonNull User user, @NonNull Integer roomId) {
-        Room room = this.getRoomById(roomId);
-
-        if (room == null) return false;
-
         if(user.getEntity() != null) return false;
 
-        this.prepareRoom(room);
+        Room room = this.getActiveRoomById(roomId);
+
+        // if the room isn't active get it from the database and start its task.
+        if (room == null) {
+            room = this.getPersistentRoomById(roomId);
+
+            if (room == null) return false;
+
+            this.prepareRoom(room);
+        }
 
         room.userEnter(user);
 
@@ -180,7 +188,7 @@ public class RoomService {
      * @see #checkEmptyRoomAndScheduleUnload
      */
     public boolean userExitRoom(@NonNull User user, int roomId) {
-        Room room = this.getRoomById(roomId);
+        Room room = this.getActiveRoomById(roomId);
 
         if (room == null) return false;
 
@@ -292,20 +300,6 @@ public class RoomService {
     }
 
     /**
-     * Returns the room with the specified id, or null if it doesn't exist.
-     * If the room is active, it retrieves the room from active rooms otherwise from the repository.
-     *
-     * @param id room id
-     * @return the room with the specified id, or null if it doesn't exist.
-     * @see #getActiveRoomById
-     */
-    public Room getRoomById(int id) {
-        return activeRooms.containsKey(id)
-                ? getActiveRoomById(id)
-                : roomRepository.findById(id).orElse(null);
-    }
-
-    /**
      * Returns the active room with the specified id, or null if it doesn't exist.
      *
      * @param id active room id
@@ -313,6 +307,21 @@ public class RoomService {
      */
     public Room getActiveRoomById(int id) {
         return activeRooms.get(id);
+    }
+
+    /**
+     * Returns the room with the specified id from the database, or null if it doesn't exist.
+     *
+     * The 'persistent' room should be used only for database operations (CRUD),
+     * the transient fields doesn't have a set value and using them can lead to unwanted behavior.
+     * For appropriate usage of transient fields use <code>getActiveRoomById</code>.
+     *
+     * @param id room id
+     * @return the room with the given id retrieved from the database, or null if it doesn't exist.
+     * @see #getActiveRoomById
+     */
+    public Room getPersistentRoomById(int id) {
+        return roomRepository.findById(id).orElse(null);
     }
 
     /**

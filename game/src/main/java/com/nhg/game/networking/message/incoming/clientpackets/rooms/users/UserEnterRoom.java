@@ -41,7 +41,7 @@ public class UserEnterRoom extends ClientPacket {
             return;
         }
 
-        Room room = roomService.getRoomById(roomId);
+        Room room = roomService.getActiveRoomById(roomId);
 
         client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomData, room));
         client.sendMessage(new ServerPacket(OutgoingPacketHeaders.LoadRoomEntities, room.getEntities().values()));

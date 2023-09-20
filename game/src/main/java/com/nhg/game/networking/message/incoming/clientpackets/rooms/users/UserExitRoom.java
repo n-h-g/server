@@ -34,7 +34,7 @@ public class UserExitRoom extends ClientPacket {
             return;
         }
 
-        Room room = roomService.getRoomById(roomId);
+        Room room = roomService.getActiveRoomById(roomId);
 
         Entity entity = user.getEntity();
 

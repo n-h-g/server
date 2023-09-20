@@ -31,7 +31,7 @@ public class SaveRoomSettings extends ClientPacket {
         boolean deleteRoom = body.getBoolean("deleteRoom");
         String name = body.getString("name");
 
-        Room room = roomService.getRoomById(id);
+        Room room = roomService.getActiveRoomById(id);
 
         if (user == null || room == null) return;
 

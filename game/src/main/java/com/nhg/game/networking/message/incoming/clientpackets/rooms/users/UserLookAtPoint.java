@@ -50,7 +50,7 @@ public class UserLookAtPoint extends ClientPacket {
 
         bhr.setRotation(rotation);
 
-        Room room = roomService.getRoomById(roomId);
+        Room room = roomService.getActiveRoomById(roomId);
 
         room.getUsers().sendBroadcastMessage(
                 new ServerPacket(OutgoingPacketHeaders.UpdateEntity, user.getEntity().toJson()));
