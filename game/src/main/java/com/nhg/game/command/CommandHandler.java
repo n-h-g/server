@@ -17,9 +17,10 @@ public class CommandHandler {
     @Value("${messages.command_prefixes}")
     private String[] commandPrefixes;
 
-    private Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands;
 
     public CommandHandler() {
+        commands = new HashMap<>();
         registerCommands();
     }
 
@@ -35,9 +36,16 @@ public class CommandHandler {
         // remove the command prefix
         text = text.substring(1);
 
-        String[] params = text.split(" ");
+        String[] nameAndParams = text.split(" ", 2);
 
-        Command command = commands.get(params[0]);
+        String name = nameAndParams[0];
+        String[] params = new String[]{};
+
+        if (nameAndParams.length > 1) {
+            params = nameAndParams[1].split(" ");
+        }
+
+        Command command = commands.get(name);
 
         if (command == null) return false;
 
