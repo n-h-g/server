@@ -35,9 +35,12 @@ public class CreateRoom extends ClientPacket {
         int door_dir = body.getInt("door_dir");
         int maxUsers = body.getInt("maxUsers");
 
-
         Room room = roomService.save(
                 new Room(name, user, layout, door_x, door_y, door_dir)
         );
+
+        if (room == null) return;
+
+        client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendRoomId, room.getId()));
     }
 }
