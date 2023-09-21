@@ -5,22 +5,24 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Configuration
 @Component
 public class CommandHandler {
 
-    @Value("${messages.command_prefixes}")
     private String[] commandPrefixes;
 
     private final Map<String, Command> commands;
 
-    public CommandHandler() {
-        commands = new HashMap<>();
+    public CommandHandler(@Value("${commands.prefixes}") String... commandPrefixes) {
+        this.commands = new HashMap<>();
+        this.commandPrefixes = commandPrefixes;
         registerCommands();
     }
 

@@ -6,9 +6,9 @@ websocket:
     path: /nhg/game
 
 commands:
-  prefixes:
-    - :
-    - /
+  prefixes: >
+    :,
+    /
 
 spring:
   application:
