@@ -1,19 +1,22 @@
 package com.nhg.game.command;
 
-import com.nhg.game.command.impl.TestCommand;
+import com.nhg.game.command.impl.CreditsCommand;
+import com.nhg.game.command.impl.GiveItemCommand;
+import com.nhg.game.user.User;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@Configuration
 @Component
+@DependsOn("appCtxUtils")
 public class CommandHandler {
 
     private String[] commandPrefixes;
@@ -23,6 +26,10 @@ public class CommandHandler {
     public CommandHandler(@Value("${commands.prefixes}") String... commandPrefixes) {
         this.commands = new HashMap<>();
         this.commandPrefixes = commandPrefixes;
+    }
+
+    @PostConstruct
+    private void init() {
         registerCommands();
     }
 
@@ -32,7 +39,7 @@ public class CommandHandler {
      * @param text the text that could be a command.
      * @return true if the command is executed correctly, false if the text doesn't contain a valid command.
      */
-    public boolean handle(@NonNull String text) {
+    public boolean handle(@NonNull String text, @NonNull User user) {
         if (!hasCommandPrefixes(text)) return false;
 
         // remove the command prefix
@@ -52,7 +59,7 @@ public class CommandHandler {
         if (command == null) return false;
 
         try {
-            command.execute(params);
+            command.execute(user, params);
         } catch(Exception e) {
             log.error("Error while handling command '"+ command.getName() +"': "+ e);
         }
@@ -72,7 +79,8 @@ public class CommandHandler {
 
     private void registerCommands() {
         Command[] commands = {
-                new TestCommand()
+                new GiveItemCommand(),
+                new CreditsCommand()
         };
 
         for (Command command : commands) {

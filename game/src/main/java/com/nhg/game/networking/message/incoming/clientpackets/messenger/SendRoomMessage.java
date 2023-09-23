@@ -35,7 +35,7 @@ public class SendRoomMessage extends ClientPacket {
 
         Room room = user.getEntity().getRoom();
 
-        if (commandHandler.handle(text)) {
+        if (commandHandler.handle(text, user)) {
             return;
         }
 

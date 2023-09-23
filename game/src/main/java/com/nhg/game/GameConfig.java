@@ -1,12 +1,12 @@
 package com.nhg.game;
 
+import com.nhg.game.utils.ApplicationContextUtils;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -25,6 +25,11 @@ public class GameConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
+     @Bean(name="appCtxUtils")
+     public ApplicationContextUtils applicationContextUtils() {
+        return new ApplicationContextUtils();
+     }
 
     @Bean
     public Docket api() {

@@ -46,7 +46,7 @@ public class BuyItem extends ClientPacket {
             return;
         }
 
-        Item item = itemService.itemFromCataloguePurchase(catalogueItem, user);
+        Item item = itemService.itemFromSpecificationName(catalogueItem.name(), user);
 
         if (item == null) return;
 
