@@ -1,6 +1,5 @@
 package com.nhg.game.item;
 
-import com.nhg.game.dto.CatalogueItem;
 import com.nhg.game.room.Room;
 import com.nhg.game.user.User;
 import lombok.AllArgsConstructor;
@@ -77,21 +76,20 @@ public class ItemService {
     }
 
     /**
-     * It is used to create an item after it's purchase from catalogue.
+     * It is used to create an item by its specification name.
      * The item created will have the given user as the owner.
      *
-     * @param catalogueItem catalogue item dto.
+     * @param specName the item specification name.
      * @param user the user to be set as the item's owner.
      * @return the item created.
      * @see #getItemSpecificationByName 
      */
-    public Item itemFromCataloguePurchase(@NonNull CatalogueItem catalogueItem, @NonNull User user) {
-        ItemSpecification itemSpec = getItemSpecificationByName(catalogueItem.name());
+    public Item itemFromSpecificationName(@NonNull String specName, @NonNull User user) {
+        ItemSpecification itemSpec = getItemSpecificationByName(specName);
 
         if (itemSpec == null) return null;
 
         return new Item(itemSpec, user);
-
     }
 
     /**

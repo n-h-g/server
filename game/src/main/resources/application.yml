@@ -47,7 +47,7 @@ eureka:
 logging:
   level:
     com:
-      cubs3d:
+      nhg:
         game: DEBUG
     org:
       springframework:
