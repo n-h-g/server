@@ -8,18 +8,21 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.RoomService;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.BeanRetriever;
+import com.nhg.game.networking.Clients;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 public class SaveRoomSettings extends ClientPacket {
-
+    private final Clients clients;
     private final RoomService roomService;
 
     public SaveRoomSettings() {
         roomService = BeanRetriever.get(RoomService.class);
+        clients = BeanRetriever.get(Clients.class);
     }
 
     @Override
@@ -48,6 +51,10 @@ public class SaveRoomSettings extends ClientPacket {
             );
             user.setEntity(null);
             roomService.delete(room);
+            List<Room> activeRooms = roomService.getActiveRooms();
+            clients.SendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.SendAllRooms, activeRooms));
+            List<Room> roomsByOwner = roomService.getRoomsByOwner(user);
+            client.sendMessage(new ServerPacket(OutgoingPacketHeaders.SendMyRooms, roomsByOwner));
             return;
         }
 
