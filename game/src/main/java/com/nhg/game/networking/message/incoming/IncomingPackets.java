@@ -7,6 +7,7 @@ import com.nhg.game.networking.message.incoming.clientpackets.catalogue.Catalogu
 import com.nhg.game.networking.message.incoming.clientpackets.catalogue.CataloguePages;
 import com.nhg.game.networking.message.incoming.clientpackets.items.InventoryItems;
 import com.nhg.game.networking.message.incoming.clientpackets.messenger.SendRoomMessage;
+import com.nhg.game.networking.message.incoming.clientpackets.moderation.AllTickets;
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.AllRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.navigator.MyRooms;
 import com.nhg.game.networking.message.incoming.clientpackets.rooms.CreateRoom;
@@ -50,7 +51,8 @@ public final class IncomingPackets {
             new Pair(44, SaveRoomSettings.class),
             new Pair(800, CataloguePages.class),
             new Pair(801, CatalogueItems.class),
-            new Pair(802, BuyItem.class)
+            new Pair(802, BuyItem.class),
+            new Pair(900, AllTickets.class)
    };
 
 }

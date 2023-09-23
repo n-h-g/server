@@ -51,7 +51,7 @@ public class SendRoomMessage extends ClientPacket {
                 ChatMessageResponse.class
         );
 
-        if (response == null) return;
+        if (response == null || response.text().isEmpty()) return;
 
         room.getUsers().sendBroadcastMessage(new ServerPacket(OutgoingPacketHeaders.RoomChatMessage, new JSONObject()
                 .put("text", response.text())

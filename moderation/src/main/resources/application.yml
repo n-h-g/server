@@ -1,21 +1,16 @@
 server:
-  port: 8086
-
-security:
-  jwt:
-    secret_key: cubs3d-jwt-@SeCr3tK3y
-    expiration_ms: 86400000
+  port: 8091
 
 spring:
   application:
-    name: account
+    name: moderation
   output:
     ansi:
       enabled: ALWAYS
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/account
+    url: jdbc:postgresql://localhost:5432/moderation
   jpa:
     properties:
       hibernate:
