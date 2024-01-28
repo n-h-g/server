@@ -84,7 +84,7 @@ services:
       POSTGRES_USER: ${ACCOUNT_POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${ACCOUNT_POSTGRES_PASSWORD:-postgres}
       PGDATA: /data/postgres
-      POSTGRES_DB: db
+      POSTGRES_DB: ${ACCOUNT_POSTGRES_DB_NAME:-db}
     volumes:
       - account-service-db:/data/postgres
     ports:
@@ -98,7 +98,7 @@ services:
       POSTGRES_USER: ${CATALOGUE_POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${CATALOGUE_POSTGRES_PASSWORD:-postgres}
       PGDATA: /data/postgres
-      POSTGRES_DB: db
+      POSTGRES_DB: ${CATALOGUE_POSTGRES_DB_NAME:-db}
     volumes:
       - catalogue-service-db:/data/postgres
     ports:
@@ -112,7 +112,7 @@ services:
       POSTGRES_USER: ${GAME_POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${GAME_POSTGRES_PASSWORD:-postgres}
       PGDATA: /data/postgres
-      POSTGRES_DB: db
+      POSTGRES_DB: ${GAME_POSTGRES_DB_NAME:-db}
     volumes:
       - game-service-db:/data/postgres
     ports:
@@ -126,7 +126,7 @@ services:
       POSTGRES_USER: ${MESSENGER_POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${MESSENGER_POSTGRES_PASSWORD:-postgres}
       PGDATA: /data/postgres
-      POSTGRES_DB: db
+      POSTGRES_DB: ${MESSENGER_POSTGRES_DB_NAME:-db}
     volumes:
       - messenger-service-db:/data/postgres
     ports:
@@ -140,7 +140,7 @@ services:
       POSTGRES_USER: ${MODERATION_POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${MODERATION_POSTGRES_PASSWORD:-postgres}
       PGDATA: /data/postgres
-      POSTGRES_DB: db
+      POSTGRES_DB: ${MODERATION_POSTGRES_DB_NAME:-db}
     volumes:
       - moderation-service-db:/data/postgres
     ports:
