@@ -13,14 +13,17 @@ commands:
 spring:
   application:
     name: game
+
   output:
     ansi:
       enabled: ALWAYS
+
   datasource:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/game
     initialization: ALWAYS
+
   jpa:
     properties:
       hibernate:
@@ -32,17 +35,24 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
   redis:
       host: http://localhost
       port: 6379
       database: 1
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8088/eureka
-      fetch-registry: true
-      register-with-eureka: true
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        healthCheckCriticalTimeout: 45s
+        queryPassing: true
+    loadbalancer:
+      ribbon.enabled: false
 
 logging:
   level:

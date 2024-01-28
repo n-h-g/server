@@ -4,13 +4,16 @@ server:
 spring:
   application:
     name: moderation
+
   output:
     ansi:
       enabled: ALWAYS
+
   datasource:
     username: postgres
     password: postgres
     url: jdbc:postgresql://localhost:5432/moderation
+
   jpa:
     properties:
       hibernate:
@@ -20,9 +23,15 @@ spring:
       ddl-auto: update
     show-sql: true
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8088/eureka
-      fetch-registry: true
-      register-with-eureka: true
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        healthCheckCriticalTimeout: 45s
+        queryPassing: true
+    loadbalancer:
+      ribbon.enabled: false
