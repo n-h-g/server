@@ -35,6 +35,8 @@ services:
         SERVICE_NAME: game
     deploy:
       replicas: 1
+    ports:
+      - "${GAME_SERVICE_PORT:-8083}:8080"
     depends_on:
       - "consul"
       - "game-service-db"
