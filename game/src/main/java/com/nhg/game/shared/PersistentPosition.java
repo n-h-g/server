@@ -17,7 +17,7 @@ public class PersistentPosition {
     @Column(columnDefinition = "integer default 0")
     private int y;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(columnDefinition = "real default 0")
     private float z;
 
     public Position3 getPosition3() {
