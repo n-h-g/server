@@ -1,4 +1,13 @@
 services:
+
+  consul:
+    container_name: consul
+    image: docker.io/hashicorp/consul
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+
   postgres:
     container_name: postgres
     image: postgres
@@ -13,6 +22,7 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -27,12 +37,6 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-
-networks:
-  postgres:
-    driver: bridge
-  spring:
-    driver: bridge
 
 volumes:
   postgres:
