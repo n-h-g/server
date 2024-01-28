@@ -5,6 +5,8 @@ import com.nhg.game.room.Room;
 import com.nhg.game.room.entity.Entity;
 import com.nhg.game.user.User;
 import com.nhg.game.utils.Rotation;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -52,6 +54,7 @@ public class Item implements JsonSerializable {
     @JoinColumn(columnDefinition="integer", name="owner_id")
     private User owner;
 
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "rotation default 'NORTH'")
     private Rotation rotation;
 
