@@ -101,7 +101,7 @@ services:
     volumes:
       - catalogue-service-db:/data/postgres
     ports:
-      - "${CATALOGUE_POSTGRES_PORT:-5432}:5432"
+      - "${CATALOGUE_POSTGRES_PORT:-5433}:5432"
     restart: unless-stopped
 
   game-service-db:
@@ -114,7 +114,7 @@ services:
     volumes:
       - game-service-db:/data/postgres
     ports:
-      - "${GAME_POSTGRES_PORT:-5432}:5432"
+      - "${GAME_POSTGRES_PORT:-5434}:5432"
     restart: unless-stopped
 
   messenger-service-db:
@@ -127,7 +127,7 @@ services:
     volumes:
       - messenger-service-db:/data/postgres
     ports:
-      - "${MESSENGER_POSTGRES_PORT:-5432}:5432"
+      - "${MESSENGER_POSTGRES_PORT:-5435}:5432"
     restart: unless-stopped
 
   moderation-service-db:
@@ -140,7 +140,7 @@ services:
     volumes:
       - moderation-service-db:/data/postgres
     ports:
-      - "${MODERATION_POSTGRES_PORT:-5432}:5432"
+      - "${MODERATION_POSTGRES_PORT:-5436}:5432"
     restart: unless-stopped
 
   pgadmin:
