@@ -1,5 +1,70 @@
 services:
 
+  account:
+    image: nhg/account
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: account
+    deploy:
+      replicas: 1
+    depends_on:
+      - "consul"
+      - "account-service-db"
+
+  catalogue:
+    image: nhg/catalogue
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: catalogue
+    deploy:
+      replicas: 1
+    depends_on:
+      - "consul"
+      - "catalogue-service-db"
+
+  game:
+    image: nhg/game
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: game
+    deploy:
+      replicas: 1
+    depends_on:
+      - "consul"
+      - "game-service-db"
+
+  messenger:
+    image: nhg/messenger
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: messenger
+    deploy:
+      replicas: 1
+    depends_on:
+      - "consul"
+      - "messenger-service-db"
+
+  moderation:
+    image: nhg/moderation
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: moderation
+    deploy:
+      replicas: 1
+    depends_on:
+      - "consul"
+      - "moderation-service-db"
+
   consul:
     container_name: consul
     image: docker.io/hashicorp/consul
@@ -8,19 +73,69 @@ services:
       - "8500:8500"
       - "8600:8600"
 
-  postgres:
-    container_name: postgres
+  account-service-db:
+    container_name: account-service-db
     image: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ${ACCOUNT_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${ACCOUNT_POSTGRES_PASSWORD:-postgres}
       PGDATA: /data/postgres
     volumes:
-      - postgres:/data/postgres
+      - account-service-db:/data/postgres
     ports:
-      - "5432:5432"
-    networks:
-      - postgres
+      - "${ACCOUNT_POSTGRES_PORT:-5432}:5432"
+    restart: unless-stopped
+
+  catalogue-service-db:
+    container_name: catalogue-service-db
+    image: postgres
+    environment:
+      POSTGRES_USER: ${CATALOGUE_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${CATALOGUE_POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+      - catalogue-service-db:/data/postgres
+    ports:
+      - "${CATALOGUE_POSTGRES_PORT:-5432}:5432"
+    restart: unless-stopped
+
+  game-service-db:
+    container_name: game-service-db
+    image: postgres
+    environment:
+      POSTGRES_USER: ${GAME_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${GAME_POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+      - game-service-db:/data/postgres
+    ports:
+      - "${GAME_POSTGRES_PORT:-5432}:5432"
+    restart: unless-stopped
+
+  messenger-service-db:
+    container_name: messenger-service-db
+    image: postgres
+    environment:
+      POSTGRES_USER: ${MESSENGER_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${MESSENGER_POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+      - messenger-service-db:/data/postgres
+    ports:
+      - "${MESSENGER_POSTGRES_PORT:-5432}:5432"
+    restart: unless-stopped
+
+  moderation-service-db:
+    container_name: moderation-service-db
+    image: postgres
+    environment:
+      POSTGRES_USER: ${MODERATION_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${MODERATION_POSTGRES_PASSWORD:-postgres}
+      PGDATA: /data/postgres
+    volumes:
+      - moderation-service-db:/data/postgres
+    ports:
+      - "${MODERATION_POSTGRES_PORT:-5432}:5432"
     restart: unless-stopped
 
   pgadmin:
@@ -33,11 +148,13 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
-      - "5050:80"
-    networks:
-      - postgres
+      - "${PGADMIN_PORT:-5050}:80"
     restart: unless-stopped
 
 volumes:
-  postgres:
+  account-service-db:
+  catalogue-service-db:
+  game-service-db:
+  messenger-service-db:
+  moderation-service-db:
   pgadmin:
