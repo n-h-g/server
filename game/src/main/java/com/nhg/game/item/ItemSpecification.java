@@ -1,31 +1,25 @@
 package com.nhg.game.item;
 
-import com.nhg.game.utils.PostgreSQLEnumType;
+import jakarta.persistence.Convert;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import java.util.List;
 
 
 @Getter
 @Setter
-@javax.persistence.Entity
+@jakarta.persistence.Entity
 @Slf4j
-@TypeDef(
-        name = "pgsql_enum",
-        typeClass = PostgreSQLEnumType.class
-)
 public class ItemSpecification {
 
     @Id
@@ -41,7 +35,6 @@ public class ItemSpecification {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "item_type default 'FLOOR_ITEM'", nullable = false)
-    @Type(type = "pgsql_enum")
     private ItemType itemType;
 
     private String name;

@@ -4,8 +4,8 @@ import com.nhg.game.utils.Position3;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 @Getter
 @Setter

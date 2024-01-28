@@ -7,7 +7,6 @@ services:
       dockerfile: Dockerfile
       args:
         SERVICE_NAME: account
-        SERVICE_VERSION: ${NHG_VERSION:-1.0-SNAPSHOT}
     deploy:
       replicas: 1
     depends_on:
@@ -21,7 +20,6 @@ services:
       dockerfile: Dockerfile
       args:
         SERVICE_NAME: catalogue
-        SERVICE_VERSION: ${NHG_VERSION:-1.0-SNAPSHOT}
     deploy:
       replicas: 1
     depends_on:
@@ -35,7 +33,6 @@ services:
       dockerfile: Dockerfile
       args:
         SERVICE_NAME: game
-        SERVICE_VERSION: ${NHG_VERSION:-1.0-SNAPSHOT}
     deploy:
       replicas: 1
     depends_on:
@@ -49,7 +46,6 @@ services:
       dockerfile: Dockerfile
       args:
         SERVICE_NAME: messenger
-        SERVICE_VERSION: ${NHG_VERSION:-1.0-SNAPSHOT}
     deploy:
       replicas: 1
     depends_on:
@@ -63,7 +59,6 @@ services:
       dockerfile: Dockerfile
       args:
         SERVICE_NAME: moderation
-        SERVICE_VERSION: ${NHG_VERSION:-1.0-SNAPSHOT}
     deploy:
       replicas: 1
     depends_on:

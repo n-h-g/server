@@ -1,7 +1,6 @@
 package com.nhg.game.room;
 
 import com.nhg.game.utils.Position3;
-import com.nhg.game.utils.PostgreSQLEnumType;
 import com.nhg.game.utils.Rotation;
 import com.nhg.game.utils.pathfinder.Layout;
 import com.nhg.game.utils.pathfinder.Tile;
@@ -9,25 +8,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.PostLoad;
-import javax.persistence.Transient;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.Transient;
 import java.util.stream.Stream;
 
 @Slf4j
 @Getter
 @Setter
 @Embeddable
-@TypeDef(
-        name = "pgsql_enum",
-        typeClass = PostgreSQLEnumType.class
-)
 @NoArgsConstructor
 public class RoomLayout implements Layout {
 
@@ -52,7 +45,6 @@ public class RoomLayout implements Layout {
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "rotation default 'SOUTH'")
-    @Type(type = "pgsql_enum")
     private Rotation doorRotation;
 
     @Transient

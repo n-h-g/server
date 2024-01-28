@@ -1,0 +1,7 @@
+rootProject.name = "nhg"
+
+include(":account")
+include(":catalogue")
+include(":game")
+include(":moderation")
+include(":messenger")

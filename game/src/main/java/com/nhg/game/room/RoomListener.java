@@ -3,7 +3,7 @@ package com.nhg.game.room;
 import com.nhg.game.utils.BeanRetriever;
 import lombok.NonNull;
 
-import javax.persistence.PostLoad;
+import jakarta.persistence.PostLoad;
 
 public class RoomListener {
 
