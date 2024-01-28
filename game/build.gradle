@@ -21,7 +21,6 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'org.json:json:20231013'
-    implementation 'io.hypersistence:hypersistence-utils-hibernate-63:3.7.0'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
