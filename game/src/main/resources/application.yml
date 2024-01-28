@@ -21,7 +21,7 @@ spring:
   datasource:
     username: postgres
     password: postgres
-    url: jdbc:postgresql://localhost:5432/game
+    url: jdbc:postgresql://game-service-db:5432/db
     initialization: ALWAYS
 
   jpa:
