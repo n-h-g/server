@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.nhg.game.shared.PersistentPosition;
