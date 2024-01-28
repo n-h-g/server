@@ -52,7 +52,7 @@ public class Item implements JsonSerializable {
     @JoinColumn(columnDefinition="integer", name="owner_id")
     private User owner;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(columnDefinition = "rotation default 'NORTH'")
     private Rotation rotation;
 
     @Embedded
