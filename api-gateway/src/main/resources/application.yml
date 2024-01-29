@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: api-gateway
+  output:
+    ansi:
+      enabled: ALWAYS
+  cloud:
+    consul:
+      host: consul
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        healthCheckCriticalTimeout: 45s
+        queryPassing: true
+    loadbalancer:
+      ribbon.enabled: false
+
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: account_route
+          uri: lb://account
+          predicates:
+            - Path=/account/**
+          filters:
+            - StripPrefix=1
+
+        - id: catalogue_route
+          uri: lb://catalogue
+          predicates:
+            - Path=/catalogue/**
+          filters:
+            - StripPrefix=1
+
+        - id: game_route
+          uri: lb://game
+          predicates:
+            - Path=/game/**
+          filters:
+            - StripPrefix=1
+
+        - id: messenger_route
+          uri: lb://messenger
+          predicates:
+            - Path=/messenger/**
+          filters:
+            - StripPrefix=1
+
+        - id: moderation_route
+          uri: lb://moderation
+          predicates:
+            - Path=/moderation/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 8080
+
+management:
+  endpoint.gateway.enabled: true
+  endpoints.web.exposure.include: info,health,gateway,beans
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.web.HttpLogging: INFO
+    org.springframework.cloud.gateway: INFO
