@@ -1,7 +1,9 @@
 rootProject.name = "nhg"
 
+include(":api-gateway")
 include(":account")
 include(":catalogue")
 include(":game")
 include(":moderation")
 include(":messenger")
+
