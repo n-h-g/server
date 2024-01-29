@@ -1,12 +1,18 @@
-package com.nhg.account.model;
+package com.nhg.account.adapter.out.jpa.entity;
 
-import jakarta.persistence.Id;
+import com.nhg.account.domain.Account;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
-import lombok.*;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -14,7 +20,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account {
+@Table(name = "account")
+public class AccountJpa {
 
     @Id
     @GeneratedValue(
@@ -34,5 +41,14 @@ public class Account {
 
     @Column(nullable = false)
     private String password;
+
+    public Account toAccount() {
+        return Account.builder()
+                .id(getId())
+                .username(getUsername())
+                .email(getEmail())
+                .password(getPassword())
+                .build();
+    }
 
 }

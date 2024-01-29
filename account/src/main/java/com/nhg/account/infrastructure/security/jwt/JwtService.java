@@ -1,4 +1,4 @@
-package com.nhg.account.service.security;
+package com.nhg.account.infrastructure.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
