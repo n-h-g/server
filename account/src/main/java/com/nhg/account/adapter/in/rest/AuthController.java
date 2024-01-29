@@ -1,9 +1,9 @@
 package com.nhg.account.adapter.in.rest;
 
-import com.nhg.account.application.dto.TokenDataDto;
-import com.nhg.account.application.dto.TokenDto;
-import com.nhg.account.application.dto.TokenValidDto;
-import com.nhg.account.application.usecase.JwtUseCase;
+import com.nhg.account.infrastructure.security.jwt.dto.TokenDataDto;
+import com.nhg.account.infrastructure.security.jwt.dto.TokenDto;
+import com.nhg.account.infrastructure.security.jwt.dto.TokenValidDto;
+import com.nhg.account.infrastructure.security.jwt.JwtService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import java.util.Date;
 @RequestMapping("api/v1/auth")
 public class AuthController {
 
-    private final JwtUseCase jwtUseCase;
+    private final JwtService jwtUseCase;
 
     @GetMapping("/generate_token/{username}")
     public TokenDto generateToken(@PathVariable String username) {

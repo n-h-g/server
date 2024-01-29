@@ -1,4 +1,4 @@
-package com.nhg.account.application.usecase;
+package com.nhg.account.infrastructure.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -15,7 +15,7 @@ import java.util.Date;
  *
  */
 @Service
-public class JwtUseCase {
+public class JwtService {
 
     @Value("${security.jwt.secret_key}")
     private String jwtSecretKey;

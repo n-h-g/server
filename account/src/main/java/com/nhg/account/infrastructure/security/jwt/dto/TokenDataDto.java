@@ -1,4 +1,4 @@
-package com.nhg.account.application.dto;
+package com.nhg.account.infrastructure.security.jwt.dto;
 
 import java.util.Date;
 
