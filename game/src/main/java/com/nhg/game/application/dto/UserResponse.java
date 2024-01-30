@@ -3,7 +3,7 @@ package com.nhg.game.application.dto;
 import com.nhg.game.domain.shared.human.Gender;
 import com.nhg.game.domain.user.User;
 
-public record UserDto(
+public record UserResponse(
     int id,
     String username,
     String motto,
@@ -12,8 +12,8 @@ public record UserDto(
     int credits
 ) {
 
-    public static UserDto fromDomain(User user) {
-        return new UserDto(
+    public static UserResponse fromDomain(User user) {
+        return new UserResponse(
                 user.getId(),
                 user.getUsername(),
                 user.getMotto(),
