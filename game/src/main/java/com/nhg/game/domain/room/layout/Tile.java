@@ -18,4 +18,9 @@ public class Tile {
         this.position = position;
         this.state = position.getZ() == 0 ? State.CLOSE : State.OPEN;
     }
+
+    @Override
+    public String toString() {
+        return position.toString();
+    }
 }
