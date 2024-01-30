@@ -27,6 +27,7 @@ public abstract class IncomingPacket implements ClientPacket<Integer, JSONObject
 
     public static final Map<Integer, Class<? extends ClientPacket<Integer, JSONObject>>> HeaderClassMap =
             Map.ofEntries(
-                    Map.entry(1, Handshake.class)
+                    Map.entry(1, Handshake.class),
+                    Map.entry(4, Ping.class)
             );
 }
