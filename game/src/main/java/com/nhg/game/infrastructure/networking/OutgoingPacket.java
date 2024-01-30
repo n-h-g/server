@@ -1,73 +1,81 @@
+package com.nhg.game.infrastructure.networking;
 
-package com.nhg.game.networking.message.outgoing;
-
-import com.nhg.game.networking.message.WebSocketJsonPacket;
+import com.nhg.game.infrastructure.mapper.JsonSerializable;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Packets sent by server to client.
- *
- * @see WebSocketJsonPacket
- * @see OutgoingPacketHeaders
- */
+@Getter
+@Setter
 @Slf4j
-public class ServerPacket extends WebSocketJsonPacket {
+public class OutgoingPacket implements Packet<Integer, JSONObject> {
 
-    public ServerPacket(int header) {
+    protected Integer header;
+    protected JSONObject body;
+    protected Client<?> client;
+
+    @Override
+    public String toString() {
+        return "{\"header\": " + this.getHeader() + ", \"body\": " + this.body.toString() + "}";
+    }
+
+    public OutgoingPacket(int header) {
         this.header = header;
         this.body = new JSONObject();
     }
 
-    public ServerPacket(int header, JSONObject jsonObject) {
+    public OutgoingPacket(int header, JSONObject jsonObject) {
         this(header);
         this.body = jsonObject;
     }
 
-    public ServerPacket(int header, String data) {
+    public OutgoingPacket(int header, String data) {
         this(header);
 
         try {
             this.body.put("data", data);
         } catch (JSONException e) {
-            log.error("Error creating packet with id: "+ header);
+            log.error("Error creating packet with id: " + header);
         }
 
     }
-    public ServerPacket(int header, boolean data) {
+
+    public OutgoingPacket(int header, boolean data) {
         this(header);
 
         try {
             this.body.put("data", data);
         } catch (JSONException e) {
-            log.error("Error creating packet with id: "+ header);
+            log.error("Error creating packet with id: " + header);
         }
 
     }
-    public ServerPacket(int header, int data) {
+
+    public OutgoingPacket(int header, int data) {
         this(header);
 
         try {
             this.body.put("data", data);
         } catch (JSONException e) {
-            log.error("Error creating packet with id: "+ header);
+            log.error("Error creating packet with id: " + header);
         }
 
     }
 
-    public ServerPacket(int header, JsonSerializable jsonSerializable) {
+    public OutgoingPacket(int header, JsonSerializable jsonSerializable) {
         this(header);
 
         try {
             this.body = jsonSerializable.toJson();
         } catch (JSONException e) {
-            log.error("Error creating packet with id: "+ header);
+            log.error("Error creating packet with id: " + header);
         }
     }
 
-    public ServerPacket(int header, Iterable<? extends JsonSerializable> col) {
+    public OutgoingPacket(int header, Iterable<? extends JsonSerializable> col) {
         this(header);
 
         JSONArray data = new JSONArray();
@@ -79,11 +87,11 @@ public class ServerPacket extends WebSocketJsonPacket {
             this.body.put("data", data);
 
         } catch (JSONException e) {
-            log.error("Error creating packet with id: "+ header);
+            log.error("Error creating packet with id: " + header);
         }
     }
 
-    public ServerPacket(int header, JsonSerializable[] col) {
+    public OutgoingPacket(int header, JsonSerializable[] col) {
         this(header);
 
         JSONArray data = new JSONArray();
@@ -95,7 +103,7 @@ public class ServerPacket extends WebSocketJsonPacket {
             this.body.put("data", data);
 
         } catch (JSONException e) {
-            log.error("Error creating packet with id: "+ header);
+            log.error("Error creating packet with id: " + header);
         }
 
     }
