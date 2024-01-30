@@ -1,8 +1,8 @@
-package com.nhg.game.networking;
+package com.nhg.game.infrastructure.networking;
 
-import com.nhg.game.networking.message.Packet;
+public interface Client<ClientId> {
 
-public interface Client {
+    ClientId getId();
 
     /**
      * Send a message to this client.
