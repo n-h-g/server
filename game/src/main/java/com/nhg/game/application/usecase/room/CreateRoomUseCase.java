@@ -14,11 +14,15 @@ public class CreateRoomUseCase {
 
     public Room createRoom(CreateRoomRequest request) {
         // TODO validation
-        Room room = Room.builder()
-                .name(request.name())
-                .description(request.description())
-                .owner(request.owner())
-                .build();
+        Room room = new Room(
+                request.name(),
+                request.description(),
+                request.owner(),
+                request.layout(),
+                request.doorX(),
+                request.doorY(),
+                request.doorDirection()
+        );
 
         room = roomRepository.save(room);
 
