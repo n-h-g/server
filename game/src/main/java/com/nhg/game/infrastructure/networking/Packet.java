@@ -1,4 +1,4 @@
-package com.nhg.game.networking.message;
+package com.nhg.game.infrastructure.networking;
 
 /**
  * Generic representation of a packet.
