@@ -1,6 +1,4 @@
-package com.nhg.game.networking.message.incoming;
-
-import com.nhg.game.networking.Client;
+package com.nhg.game.infrastructure.networking;
 
 public interface PacketHandler<Header, Body> {
 
