@@ -1,4 +1,4 @@
-package com.nhg.game.utils;
+package com.nhg.game.domain.shared.human;
 
 public enum Gender {
     MALE('m'),
@@ -14,3 +14,4 @@ public enum Gender {
         return symbol;
     }
 }
+
