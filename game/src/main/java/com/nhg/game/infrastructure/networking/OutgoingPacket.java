@@ -31,7 +31,11 @@ public class OutgoingPacket implements Packet<Integer, JSONObject> {
         this(header);
 
         try {
-            this.body.put("data", data);
+            try {
+                this.body = new JSONObject(data);
+            } catch (JSONException e) {
+                this.body.put("data", data);
+            }
         } catch (JSONException e) {
             log.error("Error creating packet with id: " + header);
         }
