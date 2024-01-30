@@ -1,4 +1,4 @@
-package com.nhg.game.utils;
+package com.nhg.game.domain.shared.position;
 
 import lombok.Getter;
 
