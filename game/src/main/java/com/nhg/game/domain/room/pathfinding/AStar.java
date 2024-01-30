@@ -1,7 +1,6 @@
-package com.nhg.game.application.pathfinding;
+package com.nhg.game.domain.room.pathfinding;
 
 import com.nhg.game.domain.room.layout.Layout;
-import com.nhg.game.domain.room.layout.Pathfinder;
 import com.nhg.game.domain.room.layout.Tile;
 import com.nhg.game.domain.shared.position.Position2;
 import lombok.extern.slf4j.Slf4j;
