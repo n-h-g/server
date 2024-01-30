@@ -6,7 +6,7 @@ public final class OutPacketHeaders {
 
     //region# Handshake and generic (0 to 99)
     public static final int LoginMessageCheck = 1;
-    public static final int PongResponse = 2;
+    public static final int Pong = 2;
     public static final int DisconnectClient = 3;
     public static final int HotelView = 4;
     public static final int BubbleAlert = 5;
