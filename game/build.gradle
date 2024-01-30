@@ -22,6 +22,8 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'org.json:json:20231013'
 
+    implementation project(':common')
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
