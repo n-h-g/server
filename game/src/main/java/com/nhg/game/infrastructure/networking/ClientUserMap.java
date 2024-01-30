@@ -10,8 +10,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class ClientUserMap<ClientId> implements Map<ClientId, User> {
-    private final Map<ClientId, User> users = new ConcurrentHashMap<>();
+public class ClientUserMap implements Map<String, User> {
+    private final Map<String, User> users = new ConcurrentHashMap<>();
 
     @Override
     public int size() {
@@ -39,7 +39,7 @@ public class ClientUserMap<ClientId> implements Map<ClientId, User> {
     }
 
     @Override
-    public User put(ClientId key, User value) {
+    public User put(String key, User value) {
         return users.put(key, value);
     }
 
@@ -49,7 +49,7 @@ public class ClientUserMap<ClientId> implements Map<ClientId, User> {
     }
 
     @Override
-    public void putAll(@Nonnull Map<? extends ClientId, ? extends User> m) {
+    public void putAll(@Nonnull Map<? extends String, ? extends User> m) {
         users.putAll(m);
     }
 
@@ -60,7 +60,7 @@ public class ClientUserMap<ClientId> implements Map<ClientId, User> {
 
     @Override
     @Nonnull
-    public Set<ClientId> keySet() {
+    public Set<String> keySet() {
         return users.keySet();
     }
 
@@ -72,7 +72,7 @@ public class ClientUserMap<ClientId> implements Map<ClientId, User> {
 
     @Override
     @Nonnull
-    public Set<Entry<ClientId, User>> entrySet() {
+    public Set<Entry<String, User>> entrySet() {
         return users.entrySet();
     }
 }

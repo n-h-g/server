@@ -9,9 +9,8 @@ import com.nhg.game.infrastructure.networking.OutgoingPacket;
 
 public class Ping extends IncomingPacket {
 
-    private final ClientUserMap<String> clientUserMap;
+    private final ClientUserMap clientUserMap;
 
-    @SuppressWarnings("unchecked")
     public Ping() {
         clientUserMap = BeanRetriever.get(ClientUserMap.class);
     }

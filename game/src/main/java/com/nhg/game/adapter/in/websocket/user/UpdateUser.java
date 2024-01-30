@@ -11,10 +11,9 @@ import com.nhg.game.infrastructure.networking.OutgoingPacket;
 
 public class UpdateUser extends IncomingPacket {
 
-    private final ClientUserMap<String> clientUserMap;
+    private final ClientUserMap clientUserMap;
     private final ObjectMapper objectMapper;
 
-    @SuppressWarnings("unchecked")
     public UpdateUser() {
         clientUserMap = BeanRetriever.get(ClientUserMap.class);
         objectMapper = BeanRetriever.get(ObjectMapper.class);

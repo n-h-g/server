@@ -17,10 +17,8 @@ public class Handshake extends IncomingPacket {
 
     private final RestTemplate restTemplate;
     private final FindUserUseCase findUser;
-    private final ClientUserMap<String> clientUserMap;
+    private final ClientUserMap clientUserMap;
 
-
-    @SuppressWarnings("unchecked")
     public Handshake() {
         restTemplate = BeanRetriever.get("restTemplate", RestTemplate.class);
         findUser = BeanRetriever.get(FindUserUseCase.class);
