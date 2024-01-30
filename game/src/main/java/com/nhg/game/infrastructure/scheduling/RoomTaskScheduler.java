@@ -1,4 +1,4 @@
-package com.nhg.game.infrastructure.scheduler;
+package com.nhg.game.infrastructure.scheduling;
 
 import com.nhg.game.domain.room.Room;
 import lombok.NonNull;
