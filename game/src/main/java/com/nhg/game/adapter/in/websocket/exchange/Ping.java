@@ -1,5 +1,6 @@
-package com.nhg.game.adapter.in.websocket;
+package com.nhg.game.adapter.in.websocket.exchange;
 
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 import com.nhg.game.infrastructure.networking.ClientUserMap;

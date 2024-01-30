@@ -1,5 +1,7 @@
 package com.nhg.game.adapter.in.websocket;
 
+import com.nhg.game.adapter.in.websocket.exchange.Handshake;
+import com.nhg.game.adapter.in.websocket.exchange.Ping;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.ClientPacket;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
-package com.nhg.game.adapter.in.websocket;
+package com.nhg.game.adapter.in.websocket.exchange;
 
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.application.usecase.user.FindUserUseCase;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
