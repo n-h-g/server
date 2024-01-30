@@ -7,3 +7,5 @@ include(":game")
 include(":moderation")
 include(":messenger")
 
+include 'common'
+
