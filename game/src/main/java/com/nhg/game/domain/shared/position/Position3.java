@@ -19,4 +19,9 @@ public class Position3 {
     public Position2 toPosition2() {
         return new Position2(x,y);
     }
+
+    @Override
+    public String toString() {
+        return "("+ x +";"+ y +";"+ z + ")";
+    }
 }
