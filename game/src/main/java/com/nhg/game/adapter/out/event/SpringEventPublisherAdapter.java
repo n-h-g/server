@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SpringEventPublisher implements GameEventPublisher {
+public class SpringEventPublisherAdapter implements GameEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
