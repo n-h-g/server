@@ -1,10 +1,16 @@
 package com.nhg.game.infrastructure.scheduling;
 
+import com.nhg.common.domain.event.DomainEvent;
+import com.nhg.game.application.event.room.RoomCreatedEvent;
+import com.nhg.game.application.event.room.RoomDeletedEvent;
+import com.nhg.game.application.event.room.UserExitRoomEvent;
+import com.nhg.game.application.repository.ActiveRoomRepository;
 import com.nhg.game.domain.room.Room;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +42,37 @@ public class RoomTaskScheduler {
     @Qualifier("taskScheduler")
     private final TaskScheduler taskScheduler;
 
+    private final ActiveRoomRepository activeRoomRepository;
+
     private final Map<Integer, ScheduledFuture<?>> activeRoomsTasks = new ConcurrentHashMap<>();
+
+
+    @EventListener
+    public void handleEvent(DomainEvent domainEvent) {
+        if (domainEvent instanceof RoomCreatedEvent event) {
+            Room room = activeRoomRepository.get(event.getRoomId());
+
+            if (room == null) return;
+
+            startRoomTask(room);
+        }
+
+        if (domainEvent instanceof RoomDeletedEvent event) {
+            Room room = activeRoomRepository.get(event.getRoomId());
+
+            if (room == null) return;
+
+            stopRoomTask(room);
+        }
+
+        if (domainEvent instanceof UserExitRoomEvent event) {
+            Room room = activeRoomRepository.get(event.getRoomId());
+
+            if (room == null) return;
+
+            checkEmptyRoomAndScheduleStop(room);
+        }
+    }
 
 
     /**
@@ -83,6 +119,8 @@ public class RoomTaskScheduler {
     private void stopRoomTask(@NonNull Room room) {
         // Remove the room from activeRoomsTasks
         ScheduledFuture<?> task = activeRoomsTasks.remove(room.getId());
+
+        activeRoomRepository.remove(room.getId());
 
         // Stop the room's task
         if (task != null && task.cancel(true)) {
