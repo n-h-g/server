@@ -1,10 +1,8 @@
 package com.nhg.game.domain.room.entity.component;
 
-
-import com.fasterxml.jackson.databind.JsonSerializable;
 import com.nhg.game.domain.room.entity.Entity;
 
-public abstract class Component implements JsonSerializable {
+public abstract class Component {
 
     protected Entity entity;
 
