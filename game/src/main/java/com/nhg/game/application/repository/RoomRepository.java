@@ -8,7 +8,7 @@ public interface RoomRepository {
 
     Room save(Room room);
 
-    Optional<Room> find(int roomId);
+    Optional<Room> findById(int roomId);
 
     void delete(int id);
 }
