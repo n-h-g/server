@@ -52,12 +52,10 @@ public class RoomTaskScheduler {
         if (domainEvent instanceof RoomActivatedEvent event) {
             activeRoomRepository.find(event.getRoomId()).ifPresent(this::startRoomTask);
         }
-
-        if (domainEvent instanceof RoomDeletedEvent event) {
+        else if (domainEvent instanceof RoomDeletedEvent event) {
             activeRoomRepository.find(event.getRoomId()).ifPresent(this::stopRoomTask);
         }
-
-        if (domainEvent instanceof UserExitRoomEvent event) {
+        else if (domainEvent instanceof UserExitRoomEvent event) {
             activeRoomRepository.find(event.getRoomId()).ifPresent(this::checkEmptyRoomAndScheduleStop);
         }
     }
