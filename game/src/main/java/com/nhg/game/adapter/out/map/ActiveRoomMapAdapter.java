@@ -24,7 +24,7 @@ public class ActiveRoomMapAdapter implements ActiveRoomRepository {
     }
 
     @Override
-    public Optional<Room> find(int roomId) {
+    public Optional<Room> findById(int roomId) {
         return Optional.ofNullable(activeRooms.get(roomId));
     }
 }

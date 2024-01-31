@@ -10,5 +10,5 @@ public interface ActiveRoomRepository {
 
     void remove(int roomId);
 
-    Optional<Room> find(int roomId);
+    Optional<Room> findById(int roomId);
 }
