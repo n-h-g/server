@@ -18,7 +18,7 @@ public class Ping extends IncomingPacket {
     @Override
     public void handle() {
 
-        boolean doLogin = !clientUserMap.containsKey((String) client.getId());
+        boolean doLogin = !clientUserMap.containsClientId(client.getId());
 
         client.sendMessage(new OutgoingPacket(OutPacketHeaders.Pong, doLogin));
     }

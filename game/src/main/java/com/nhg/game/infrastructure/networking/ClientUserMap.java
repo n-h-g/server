@@ -1,78 +1,64 @@
 package com.nhg.game.infrastructure.networking;
 
 import com.nhg.game.domain.user.User;
-import jakarta.annotation.Nonnull;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class ClientUserMap implements Map<String, User> {
-    private final Map<String, User> users = new ConcurrentHashMap<>();
+@RequiredArgsConstructor
+public class ClientUserMap {
 
-    @Override
+    private final ClientRepository clientRepository;
+    private final Map<Object, User> users = new ConcurrentHashMap<>();
+    private final Map<Integer, Object> clientIds = new ConcurrentHashMap<>();
+
+
     public int size() {
         return users.size();
     }
 
-    @Override
     public boolean isEmpty() {
         return users.isEmpty();
     }
 
-    @Override
-    public boolean containsKey(Object key) {
-        return users.containsKey(key);
+    public boolean containsClientId(@NonNull Object clientId) {
+        return users.containsKey(clientId);
+    }
+    public boolean containsUserId(@NonNull Integer userId) {
+        return clientIds.containsKey(userId);
     }
 
-    @Override
-    public boolean containsValue(Object value) {
-        return users.containsValue(value);
+    public User getUser(Object clientId) {
+        return users.get(clientId);
     }
 
-    @Override
-    public User get(Object key) {
-        return users.get(key);
+    @SuppressWarnings("unchecked")
+    public Client getClient(@NonNull Integer userId) {
+        Object clientId = clientIds.get(userId);
+
+        return clientRepository.get(clientId);
     }
 
-    @Override
-    public User put(String key, User value) {
-        return users.put(key, value);
+    public void put(@NonNull Object clientId, @NonNull User user) {
+        clientIds.put(user.getId(), clientId);
+        users.put(clientId, user);
     }
 
-    @Override
-    public User remove(Object key) {
-        return users.remove(key);
+    public void remove(@NonNull Object clientId) {
+        User user = users.remove(clientId);
+
+        if (user == null) return;
+
+        clientIds.remove(user.getId());
     }
 
-    @Override
-    public void putAll(@Nonnull Map<? extends String, ? extends User> m) {
-        users.putAll(m);
-    }
 
-    @Override
     public void clear() {
+        clientIds.clear();
         users.clear();
-    }
-
-    @Override
-    @Nonnull
-    public Set<String> keySet() {
-        return users.keySet();
-    }
-
-    @Override
-    @Nonnull
-    public Collection<User> values() {
-        return users.values();
-    }
-
-    @Override
-    @Nonnull
-    public Set<Entry<String, User>> entrySet() {
-        return users.entrySet();
     }
 }
