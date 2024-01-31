@@ -25,10 +25,12 @@ public class Room implements Runnable {
     private RoomLayout roomLayout;
 
     private final Map<Integer, User> users;
+    private final Map<Integer, Entity> userEntities;
     private final Map<UUID, Entity> entities;
 
     public Room() {
         this.users = new ConcurrentHashMap<>();
+        this.userEntities = new ConcurrentHashMap<>();
         this.entities = new ConcurrentHashMap<>();
     }
 
@@ -48,12 +50,13 @@ public class Room implements Runnable {
      * @param user the user entering the room.
      */
     public void userEnter(@NonNull User user) {
+        if (userEntities.containsKey(user.getId())) return;
+
         users.put(user.getId(), user);
 
-        if(user.getEntity() != null) return;
-
         Entity entity = Entity.fromUser(user, this);
-        user.setEntity(entity);
+        userEntities.put(user.getId(), entity);
+
         addEntity(entity);
     }
 
@@ -66,12 +69,9 @@ public class Room implements Runnable {
     public void userExit(@NonNull User user) {
         users.remove(user.getId());
 
-        Entity entity = user.getEntity();
-
-        if (entity == null) return;
+        Entity entity = userEntities.remove(user.getId());
 
         removeEntity(entity);
-        user.setEntity(null);
     }
 
     /**

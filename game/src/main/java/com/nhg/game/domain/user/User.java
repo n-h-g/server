@@ -1,7 +1,6 @@
 package com.nhg.game.domain.user;
 
 
-import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.shared.human.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +17,4 @@ public class User {
     private Gender gender;
     private String look;
     private int credits;
-
-    private Entity entity;
 }
