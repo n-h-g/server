@@ -4,6 +4,10 @@ package com.nhg.game.domain.room.entity;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.component.Component;
 import com.nhg.game.domain.room.entity.component.ComponentType;
+import com.nhg.game.domain.shared.human.Gender;
+import com.nhg.game.domain.shared.position.Position3;
+import com.nhg.game.domain.shared.position.Rotation;
+import com.nhg.game.domain.user.User;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -90,6 +94,28 @@ public class Entity {
      */
     public Component getComponent(ComponentType type) {
         return components.get(type);
+    }
+
+    /**
+     * Create an entity from User.
+     *
+     * @param user the user used to create the entity.
+     * @param room the room where the entity is created.
+     * @return the created entity.
+     *
+     * @see User
+     */
+    public static Entity fromUser(@NonNull User user, @NonNull Room room) {
+        return new Entity(EntityType.HUMAN, room)
+                .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getDoorPosition3(), Position3.class))
+                .addComponent(ComponentType.BodyHeadRotation, Pair.of(room.getRoomLayout().getDoorRotation(), Rotation.class))
+                .addComponent(ComponentType.Action)
+                .addComponent(ComponentType.Movement)
+                .addComponent(ComponentType.HumanAspect, Pair.of(user.getLook(), String.class),
+                        Pair.of(user.getGender(), Gender.class))
+                .addComponent(ComponentType.User, Pair.of(user, User.class))
+                .addComponent(ComponentType.Name, Pair.of(user.getUsername(), String.class));
+
     }
 
 }
