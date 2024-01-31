@@ -1,6 +1,7 @@
 package com.nhg.game.domain.room;
 
 
+import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.room.layout.RoomLayout;
 import com.nhg.game.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
@@ -23,9 +25,11 @@ public class Room implements Runnable {
     private RoomLayout roomLayout;
 
     private final Map<Integer, User> users;
+    private final Map<UUID, Entity> entities;
 
     public Room() {
         this.users = new ConcurrentHashMap<>();
+        this.entities = new ConcurrentHashMap<>();
     }
 
     public Room(String name, String description, User owner, String layout, int doorX, int doorY, int doorRotation) {
@@ -45,6 +49,12 @@ public class Room implements Runnable {
      */
     public void userEnter(@NonNull User user) {
         users.put(user.getId(), user);
+
+        if(user.getEntity() != null) return;
+
+        Entity entity = Entity.fromUser(user, this);
+        user.setEntity(entity);
+        addEntity(entity);
     }
 
     /**
@@ -55,6 +65,13 @@ public class Room implements Runnable {
      */
     public void userExit(@NonNull User user) {
         users.remove(user.getId());
+
+        Entity entity = user.getEntity();
+
+        if (entity == null) return;
+
+        removeEntity(entity);
+        user.setEntity(null);
     }
 
     /**
@@ -65,6 +82,26 @@ public class Room implements Runnable {
      */
     public boolean isEmpty() {
         return users.isEmpty();
+    }
+
+    /**
+     * Add the given entity to the room's entities.
+     *
+     * @param entity the entity that needs to be added.
+     */
+    public void addEntity(@NonNull Entity entity) {
+        this.entities.putIfAbsent(entity.getId(), entity);
+    }
+
+    /**
+     * Remove the given entity from the room's entities and notify all the users.
+     *
+     * @param entity the entity that needs to be removed.
+     */
+    public void removeEntity(@NonNull Entity entity) {
+        entities.remove(entity.getId());
+
+        // TODO event (use case)
     }
 
     @Override
