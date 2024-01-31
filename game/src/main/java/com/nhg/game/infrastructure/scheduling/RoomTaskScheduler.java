@@ -50,7 +50,7 @@ public class RoomTaskScheduler {
     @EventListener
     public void handleEvent(DomainEvent domainEvent) {
         if (domainEvent instanceof RoomActivatedEvent event) {
-            activeRoomRepository.find(event.getRoomId()).ifPresent(this::stopRoomTask);
+            activeRoomRepository.find(event.getRoomId()).ifPresent(this::startRoomTask);
         }
 
         if (domainEvent instanceof RoomDeletedEvent event) {
