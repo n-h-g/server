@@ -1,7 +1,7 @@
 package com.nhg.game.infrastructure.scheduling;
 
 import com.nhg.common.domain.event.DomainEvent;
-import com.nhg.game.application.event.room.RoomCreatedEvent;
+import com.nhg.game.application.event.room.RoomActivatedEvent;
 import com.nhg.game.application.event.room.RoomDeletedEvent;
 import com.nhg.game.application.event.room.UserExitRoomEvent;
 import com.nhg.game.application.repository.ActiveRoomRepository;
@@ -49,7 +49,7 @@ public class RoomTaskScheduler {
 
     @EventListener
     public void handleEvent(DomainEvent domainEvent) {
-        if (domainEvent instanceof RoomCreatedEvent event) {
+        if (domainEvent instanceof RoomActivatedEvent event) {
             Room room = activeRoomRepository.get(event.getRoomId());
 
             if (room == null) return;
