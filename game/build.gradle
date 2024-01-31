@@ -21,7 +21,9 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'org.json:json:20231013'
+    implementation 'org.aspectj:aspectjtools:1.6.2'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.16.1'
+
 
     implementation project(':common')
 
