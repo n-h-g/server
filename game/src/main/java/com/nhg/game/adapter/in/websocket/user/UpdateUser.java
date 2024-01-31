@@ -21,7 +21,7 @@ public class UpdateUser extends IncomingPacket {
 
     @Override
     public void handle() throws Exception {
-        User user = clientUserMap.get((String) client.getId());
+        User user = clientUserMap.getUser(client.getId());
 
         if (user == null) return;
 
