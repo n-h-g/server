@@ -69,7 +69,7 @@ public class UserEnterRoom extends IncomingPacket {
                     objectMapper.writeValueAsString(userEntity)
             ));
 
-            exitRoomUseCase.userExitRoom(user);
+            exitRoomUseCase.userExitRoom(user, room);
         }
 
         room = enterRoomUseCase.userEnterRoom(user, room);
