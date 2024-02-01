@@ -26,12 +26,10 @@ public class Room implements Runnable {
     private RoomLayout roomLayout;
 
     private final Map<Integer, User> users;
-    private final Map<Integer, Entity> userEntities;
     private final Map<UUID, Entity> entities;
 
     public Room() {
         this.users = new ConcurrentHashMap<>();
-        this.userEntities = new ConcurrentHashMap<>();
         this.entities = new ConcurrentHashMap<>();
     }
 
@@ -44,35 +42,12 @@ public class Room implements Runnable {
         this.roomLayout = new RoomLayout(layout, doorX, doorY, doorRotation);
     }
 
-    /**
-     * The specified user enters the room and is added to the user group in the room.
-     * Then an entity is associated with the user, created and added to the entities' collection.
-     *
-     * @param user the user entering the room.
-     */
     public void userEnter(@NonNull User user) {
-        if (userEntities.containsKey(user.getId())) return;
-
         users.put(user.getId(), user);
-
-        Entity entity = Entity.fromUser(user, this);
-        userEntities.put(user.getId(), entity);
-
-        addEntity(entity);
     }
 
-    /**
-     * The specified user exits the room and is removed from the user group in the room.
-     * If the user has an entity in the room it's removed and all the other users are notified.
-     *
-     * @param user the user exiting the room.
-     */
     public void userExit(@NonNull User user) {
         users.remove(user.getId());
-
-        Entity entity = userEntities.remove(user.getId());
-
-        removeEntity(entity);
     }
 
     /**
@@ -102,7 +77,7 @@ public class Room implements Runnable {
     public void removeEntity(@NonNull Entity entity) {
         entities.remove(entity.getId());
 
-        // TODO event (use case)
+        //TODO event (use case)
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.dto.RoomResponse;
+import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.FindRoomUseCase;
 import com.nhg.game.application.usecase.room.user.UserEnterRoomUseCase;
 import com.nhg.game.application.usecase.room.user.UserExitRoomUseCase;
@@ -26,6 +27,7 @@ public class UserEnterRoom extends IncomingPacket {
     private final FindRoomUseCase findRoomUseCase;
     private final UserEnterRoomUseCase enterRoomUseCase;
     private final UserExitRoomUseCase exitRoomUseCase;
+    private final UserEntityRepository userEntityRepository;
     private final ObjectMapper objectMapper;
 
     public UserEnterRoom() {
@@ -33,6 +35,7 @@ public class UserEnterRoom extends IncomingPacket {
         findRoomUseCase = BeanRetriever.get(FindRoomUseCase.class);
         enterRoomUseCase = BeanRetriever.get(UserEnterRoomUseCase.class);
         exitRoomUseCase = BeanRetriever.get(UserExitRoomUseCase.class);
+        userEntityRepository = BeanRetriever.get(UserEntityRepository.class);
         objectMapper = BeanRetriever.get(ObjectMapper.class);
     }
 
@@ -60,13 +63,13 @@ public class UserEnterRoom extends IncomingPacket {
         // users who were already in the room.
         Collection<User> roomUsers = room.getUsers().values();
 
-        Entity userEntity = room.getUserEntities().get(user.getId());
+        Optional<Entity> userEntityOpt = userEntityRepository.findEntityByUserId(user.getId());
 
         // the user already had an entity in the room, remove it before entering.
-        if (userEntity != null) {
+        if (userEntityOpt.isPresent()) {
             BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
                     OutPacketHeaders.RemoveRoomEntity,
-                    objectMapper.writeValueAsString(userEntity)
+                    objectMapper.writeValueAsString(userEntityOpt.get())
             ));
 
             exitRoomUseCase.userExitRoom(user, room);
@@ -92,7 +95,7 @@ public class UserEnterRoom extends IncomingPacket {
 
         // add the new entity to all clients that were already in the room.
         {
-            userEntity = room.getUserEntities().get(user.getId());
+            Entity userEntity = userEntityRepository.findEntityByUserId(user.getId()).get();
 
             BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
                     OutPacketHeaders.AddRoomEntity,
