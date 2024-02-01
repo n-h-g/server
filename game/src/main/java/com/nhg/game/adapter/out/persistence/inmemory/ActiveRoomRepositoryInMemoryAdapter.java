@@ -4,6 +4,8 @@ import com.nhg.game.application.repository.ActiveRoomRepository;
 import com.nhg.game.domain.room.Room;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,5 +28,10 @@ public class ActiveRoomRepositoryInMemoryAdapter implements ActiveRoomRepository
     @Override
     public Optional<Room> findById(int roomId) {
         return Optional.ofNullable(activeRooms.get(roomId));
+    }
+
+    @Override
+    public List<Room> getAll() {
+        return new ArrayList<>(activeRooms.values());
     }
 }
