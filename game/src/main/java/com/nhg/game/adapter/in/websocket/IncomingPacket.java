@@ -2,6 +2,11 @@ package com.nhg.game.adapter.in.websocket;
 
 import com.nhg.game.adapter.in.websocket.exchange.Handshake;
 import com.nhg.game.adapter.in.websocket.exchange.Ping;
+import com.nhg.game.adapter.in.websocket.navigator.AllRooms;
+import com.nhg.game.adapter.in.websocket.navigator.MyRooms;
+import com.nhg.game.adapter.in.websocket.room.user.UserEnterRoom;
+import com.nhg.game.adapter.in.websocket.room.user.UserExitRoom;
+import com.nhg.game.adapter.in.websocket.room.user.UserMove;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.packet.ClientPacket;
 import lombok.AllArgsConstructor;
@@ -30,6 +35,11 @@ public abstract class IncomingPacket implements ClientPacket<Integer, JSONObject
     public static final Map<Integer, Class<? extends ClientPacket<Integer, JSONObject>>> HeaderClassMap =
             Map.ofEntries(
                     Map.entry(1, Handshake.class),
-                    Map.entry(4, Ping.class)
+                    Map.entry(4, Ping.class),
+                    Map.entry(6, AllRooms.class),
+                    Map.entry(7, MyRooms.class),
+                    Map.entry(8, UserEnterRoom.class),
+                    Map.entry(9, UserExitRoom.class),
+                    Map.entry(10, UserMove.class)
             );
 }
