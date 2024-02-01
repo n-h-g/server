@@ -1,6 +1,8 @@
 package com.nhg.game.application.dto;
 
+import com.nhg.game.application.repository.ActiveRoomRepository;
 import com.nhg.game.domain.room.Room;
+import com.nhg.game.infrastructure.context.BeanRetriever;
 
 public record RoomResponse(
         int id,
@@ -15,6 +17,15 @@ public record RoomResponse(
 ) {
 
     public static RoomResponse fromDomain(Room room) {
+
+        ActiveRoomRepository activeRoomRepository = BeanRetriever.get(ActiveRoomRepository.class);
+
+        int usersCount = room.getUsers().isEmpty()
+                ? activeRoomRepository.findById(room.getId())
+                        .map(activeRoom -> activeRoom.getUsers().size())
+                        .orElse(0)
+                : room.getUsers().size();
+
         return new RoomResponse(
                 room.getId(),
                 room.getName(),
@@ -24,7 +35,7 @@ public record RoomResponse(
                 room.getRoomLayout().getDoorX(),
                 room.getRoomLayout().getDoorY(),
                 room.getRoomLayout().getDoorRotation().getValue(),
-                room.getUsers().size()
+                usersCount
         );
     }
 }
