@@ -1,4 +1,6 @@
-package com.nhg.game.infrastructure.networking;
+package com.nhg.game.infrastructure.networking.packet;
+
+import com.nhg.game.infrastructure.networking.Client;
 
 public interface PacketHandler<Header, Body> {
 
@@ -9,6 +11,6 @@ public interface PacketHandler<Header, Body> {
      * @param header received packet's header
      * @param body received packet's body
      */
-    void handle(Client client, Header header, Body body);
+    void handle(Client<?> client, Header header, Body body);
 
 }

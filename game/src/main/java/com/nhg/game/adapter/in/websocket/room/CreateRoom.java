@@ -1,14 +1,14 @@
 package com.nhg.game.adapter.in.websocket.room;
 
+import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.dto.CreateRoomRequest;
 import com.nhg.game.application.usecase.room.CreateRoomUseCase;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.networking.ClientUserMap;
-import com.nhg.game.infrastructure.networking.OutgoingPacket;
 
 public class CreateRoom extends IncomingPacket {
 

@@ -1,11 +1,11 @@
 package com.nhg.game.infrastructure.helper;
 
 
+import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 import com.nhg.game.infrastructure.networking.Client;
-import com.nhg.game.infrastructure.networking.ClientUserMap;
-import com.nhg.game.infrastructure.networking.Packet;
+import com.nhg.game.infrastructure.networking.packet.Packet;
 import lombok.NonNull;
 
 public class BroadcastHelper {

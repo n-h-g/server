@@ -1,5 +1,7 @@
-package com.nhg.game.infrastructure.networking;
+package com.nhg.game.infrastructure.networking.packet;
 
+
+import com.nhg.game.infrastructure.networking.Client;
 
 public interface ClientPacket<Header, Body> extends Packet<Header, Body> {
 

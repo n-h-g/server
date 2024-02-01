@@ -1,10 +1,12 @@
-package com.nhg.game.infrastructure.networking;
+package com.nhg.game.infrastructure.networking.packet;
 
 
+import com.nhg.game.infrastructure.networking.Client;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+
 import java.util.Map;
 
 @Slf4j
@@ -14,7 +16,7 @@ public class PacketHandlerIntJson implements PacketHandler<Integer, JSONObject> 
     private final Map<Integer, Class<? extends ClientPacket<Integer, JSONObject>>> clientPackets;
 
     @Override
-    public void handle(@NonNull Client client, @NonNull Integer header, JSONObject body) {
+    public void handle(@NonNull Client<?> client, @NonNull Integer header, JSONObject body) {
         try {
             final ClientPacket<Integer, JSONObject> packet = this.clientPackets.get(header).getDeclaredConstructor().newInstance();
 

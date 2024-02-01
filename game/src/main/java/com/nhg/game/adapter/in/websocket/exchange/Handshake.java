@@ -1,12 +1,12 @@
 package com.nhg.game.adapter.in.websocket.exchange;
 
+import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.usecase.user.FindUserUseCase;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.networking.ClientUserMap;
-import com.nhg.game.infrastructure.networking.OutgoingPacket;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 

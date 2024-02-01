@@ -1,5 +1,7 @@
 package com.nhg.game.infrastructure.networking;
 
+import com.nhg.game.infrastructure.networking.packet.Packet;
+
 public interface Client<ClientId> {
 
     ClientId getId();
