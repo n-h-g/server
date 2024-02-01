@@ -1,10 +1,10 @@
-package com.nhg.game.infrastructure.networking;
+package com.nhg.game.adapter.out.websocket;
 
-import com.fasterxml.jackson.databind.JsonSerializable;
+import com.nhg.game.infrastructure.networking.Client;
+import com.nhg.game.infrastructure.networking.packet.Packet;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

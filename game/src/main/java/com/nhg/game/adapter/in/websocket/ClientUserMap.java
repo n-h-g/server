@@ -1,6 +1,8 @@
-package com.nhg.game.infrastructure.networking;
+package com.nhg.game.adapter.in.websocket;
 
 import com.nhg.game.domain.user.User;
+import com.nhg.game.infrastructure.networking.Client;
+import com.nhg.game.infrastructure.networking.ClientRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

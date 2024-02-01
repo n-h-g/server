@@ -1,13 +1,13 @@
 package com.nhg.game.adapter.in.websocket.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.dto.UserResponse;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.networking.ClientUserMap;
-import com.nhg.game.infrastructure.networking.OutgoingPacket;
 
 public class UpdateUser extends IncomingPacket {
 

@@ -1,10 +1,10 @@
 package com.nhg.game.adapter.in.websocket.exchange;
 
+import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.networking.ClientUserMap;
-import com.nhg.game.infrastructure.networking.OutgoingPacket;
 
 
 public class Ping extends IncomingPacket {

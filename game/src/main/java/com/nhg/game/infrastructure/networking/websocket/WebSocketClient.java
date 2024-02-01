@@ -1,7 +1,7 @@
 package com.nhg.game.infrastructure.networking.websocket;
 
 import com.nhg.game.infrastructure.networking.Client;
-import com.nhg.game.infrastructure.networking.Packet;
+import com.nhg.game.infrastructure.networking.packet.Packet;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
