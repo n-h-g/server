@@ -1,9 +1,11 @@
 package com.nhg.game.domain.room.entity.component;
 
 import com.nhg.game.domain.shared.position.Rotation;
+import lombok.Getter;
 
 public class RotationComponent extends Component {
 
+    @Getter
     private Rotation rotation;
     private final boolean useDiagonalRotations;
 
