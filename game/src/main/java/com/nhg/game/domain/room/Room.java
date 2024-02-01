@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class Room implements Runnable {
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private User owner;
