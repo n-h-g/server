@@ -27,6 +27,11 @@ public class OutgoingPacket implements Packet<Integer, JSONObject> {
         this.body = new JSONObject();
     }
 
+    public OutgoingPacket(int header, JSONObject jsonObject) {
+        this(header);
+        this.body = jsonObject;
+    }
+
     public OutgoingPacket(int header, String data) {
         this(header);
 
