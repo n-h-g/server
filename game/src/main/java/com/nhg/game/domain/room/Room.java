@@ -3,6 +3,7 @@ package com.nhg.game.domain.room;
 
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.room.layout.RoomLayout;
+import com.nhg.game.domain.shared.position.Rotation;
 import com.nhg.game.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,7 +35,7 @@ public class Room implements Runnable {
         this.entities = new ConcurrentHashMap<>();
     }
 
-    public Room(String name, String description, User owner, String layout, int doorX, int doorY, int doorRotation) {
+    public Room(String name, String description, User owner, String layout, int doorX, int doorY, Rotation doorRotation) {
         this();
 
         this.name = name;
