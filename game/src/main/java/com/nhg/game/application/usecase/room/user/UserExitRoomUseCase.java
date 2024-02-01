@@ -2,6 +2,7 @@ package com.nhg.game.application.usecase.room.user;
 
 import com.nhg.common.domain.UseCase;
 import com.nhg.common.domain.event.DomainEventPublisher;
+import com.nhg.game.application.event.room.RemovedRoomEntityEvent;
 import com.nhg.game.application.event.room.UserExitRoomEvent;
 import com.nhg.game.application.exception.ProblemCode;
 import com.nhg.game.application.exception.UseCaseException;
@@ -30,6 +31,7 @@ public class UserExitRoomUseCase {
 
         room.userExit(user);
 
+        eventPublisher.publish(new RemovedRoomEntityEvent(entity.getId()));
         eventPublisher.publish(new UserExitRoomEvent(user.getId(), room.getId()));
 
         return entity;
