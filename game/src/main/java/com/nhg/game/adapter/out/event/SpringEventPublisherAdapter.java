@@ -1,14 +1,14 @@
 package com.nhg.game.adapter.out.event;
 
 import com.nhg.common.domain.event.DomainEvent;
-import com.nhg.game.application.event.GameEventPublisher;
+import com.nhg.common.domain.event.DomainEventPublisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class SpringEventPublisherAdapter implements GameEventPublisher {
+public class SpringEventPublisherAdapter implements DomainEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 

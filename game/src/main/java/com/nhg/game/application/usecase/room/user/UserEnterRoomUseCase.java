@@ -1,7 +1,7 @@
 package com.nhg.game.application.usecase.room.user;
 
 import com.nhg.common.domain.UseCase;
-import com.nhg.game.application.event.GameEventPublisher;
+import com.nhg.common.domain.event.DomainEventPublisher;
 import com.nhg.game.application.event.room.RoomActivatedEvent;
 import com.nhg.game.application.event.room.UserEnterRoomEvent;
 import com.nhg.game.application.exception.UseCaseException;
@@ -16,14 +16,14 @@ import lombok.RequiredArgsConstructor;
 public class UserEnterRoomUseCase {
 
     private final ActiveRoomRepository activeRoomRepository;
-    private final GameEventPublisher gameMessagePublisher;
+    private final DomainEventPublisher eventPublisher;
 
     public Room userEnterRoom(@NonNull User user, @NonNull Room room) throws UseCaseException {
         room = getActiveRoom(room);
 
         room.userEnter(user);
 
-        gameMessagePublisher.publish(new UserEnterRoomEvent(user.getId(), room.getId()));
+        eventPublisher.publish(new UserEnterRoomEvent(user.getId(), room.getId()));
 
         return room;
     }
@@ -33,7 +33,7 @@ public class UserEnterRoomUseCase {
 
             // The room was not present in the active rooms, activate it and publish the event.
             activeRoomRepository.add(room);
-            gameMessagePublisher.publish(new RoomActivatedEvent(room.getId()));
+            eventPublisher.publish(new RoomActivatedEvent(room.getId()));
 
             return room;
         });
