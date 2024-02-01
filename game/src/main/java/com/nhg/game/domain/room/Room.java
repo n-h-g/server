@@ -76,8 +76,6 @@ public class Room implements Runnable {
      */
     public void removeEntity(@NonNull Entity entity) {
         entities.remove(entity.getId());
-
-        //TODO event (use case)
     }
 
     @Override

@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:21-jdk
 
 ARG SERVICE_NAME
 ARG SERVICE_VERSION

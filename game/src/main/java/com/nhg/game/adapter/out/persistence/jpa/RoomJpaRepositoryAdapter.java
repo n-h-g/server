@@ -1,6 +1,7 @@
 package com.nhg.game.adapter.out.persistence.jpa;
 
 import com.nhg.game.adapter.out.persistence.jpa.entity.RoomJpa;
+import com.nhg.game.adapter.out.persistence.jpa.entity.UserJpa;
 import com.nhg.game.adapter.out.persistence.jpa.repository.RoomJpaRepository;
 import com.nhg.game.application.repository.RoomRepository;
 import com.nhg.game.domain.room.Room;
@@ -42,6 +43,7 @@ public class RoomJpaRepositoryAdapter implements RoomRepository {
 
     @Override
     public List<Room> getRoomsByOwner(User owner) {
-        return roomJpaRepository.findByOwner(owner);
+        return roomJpaRepository.findByOwner(UserJpa.fromDomain(owner))
+                .stream().map(RoomJpa::toRoom).toList();
     }
 }
