@@ -34,11 +34,11 @@ public class RoomLayout implements Layout {
     private int mapSizeX;
     private int mapSizeY;
 
-    public RoomLayout(String layout, int doorX, int doorY, int doorRotation) {
+    public RoomLayout(String layout, int doorX, int doorY, Rotation doorRotation) {
         this.layout = layout;
         this.doorX = doorX;
         this.doorY = doorY;
-        this.doorRotation = Rotation.intToRotation(doorRotation);
+        this.doorRotation = doorRotation;
 
         this.prepareTilesFromLayout();
     }

@@ -1,4 +1,4 @@
-package com.nhg.game.adapter.out.map;
+package com.nhg.game.adapter.out.persistence.inmemory;
 
 import com.nhg.game.application.repository.ActiveRoomRepository;
 import com.nhg.game.domain.room.Room;
@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class ActiveRoomMapAdapter implements ActiveRoomRepository {
+public class ActiveRoomRepositoryInMemoryAdapter implements ActiveRoomRepository {
 
     private final Map<Integer, Room> activeRooms = new ConcurrentHashMap<>();
 
