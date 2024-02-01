@@ -101,6 +101,10 @@ public class Entity {
         return components.get(type);
     }
 
+    public EnumMap<ComponentType, Component> getComponents() {
+        return components;
+    }
+
     /**
      * Create an entity from User.
      *
