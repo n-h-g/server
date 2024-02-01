@@ -4,9 +4,11 @@ import com.nhg.game.adapter.out.persistence.jpa.entity.RoomJpa;
 import com.nhg.game.adapter.out.persistence.jpa.repository.RoomJpaRepository;
 import com.nhg.game.application.repository.RoomRepository;
 import com.nhg.game.domain.room.Room;
+import com.nhg.game.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -36,5 +38,10 @@ public class RoomJpaRepositoryAdapter implements RoomRepository {
         if (roomJpa.isEmpty()) return;
 
         roomJpaRepository.delete(roomJpa.get());
+    }
+
+    @Override
+    public List<Room> getRoomsByOwner(User owner) {
+        return roomJpaRepository.findByOwner(owner);
     }
 }
