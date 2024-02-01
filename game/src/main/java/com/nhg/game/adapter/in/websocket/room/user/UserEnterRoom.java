@@ -15,6 +15,7 @@ import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 import com.nhg.game.infrastructure.helper.BroadcastHelper;
+import com.nhg.game.infrastructure.mapper.EntityToJsonMapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -29,6 +30,7 @@ public class UserEnterRoom extends IncomingPacket {
     private final UserExitRoomUseCase exitRoomUseCase;
     private final UserEntityRepository userEntityRepository;
     private final ObjectMapper objectMapper;
+    private final EntityToJsonMapper entityMapper;
 
     public UserEnterRoom() {
         clientUserMap = BeanRetriever.get(ClientUserMap.class);
@@ -37,6 +39,7 @@ public class UserEnterRoom extends IncomingPacket {
         exitRoomUseCase = BeanRetriever.get(UserExitRoomUseCase.class);
         userEntityRepository = BeanRetriever.get(UserEntityRepository.class);
         objectMapper = BeanRetriever.get(ObjectMapper.class);
+        entityMapper = BeanRetriever.get(EntityToJsonMapper.class);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class UserEnterRoom extends IncomingPacket {
         if (userEntityOpt.isPresent()) {
             BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
                     OutPacketHeaders.RemoveRoomEntity,
-                    objectMapper.writeValueAsString(userEntityOpt.get())
+                    entityMapper.entityToJson(userEntityOpt.get())
             ));
 
             exitRoomUseCase.userExitRoom(user, room);
@@ -89,7 +92,7 @@ public class UserEnterRoom extends IncomingPacket {
 
             client.sendMessage(new OutgoingPacket(
                     OutPacketHeaders.LoadRoomEntities,
-                    objectMapper.writeValueAsString(roomEntities)
+                    entityMapper.entitiesToJson(roomEntities)
             ));
         }
 
@@ -99,7 +102,7 @@ public class UserEnterRoom extends IncomingPacket {
 
             BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
                     OutPacketHeaders.AddRoomEntity,
-                    objectMapper.writeValueAsString(userEntity)
+                    entityMapper.entityToJson(userEntity)
             ));
         }
 
