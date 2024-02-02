@@ -1,11 +1,11 @@
 package com.nhg.game.adapter.out.websocket;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhg.common.domain.event.DomainEvent;
 import com.nhg.game.application.event.room.RemovedRoomEntityEvent;
 import com.nhg.game.application.event.room.UpdateRoomEntityEvent;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.infrastructure.helper.BroadcastHelper;
+import com.nhg.game.infrastructure.mapper.EntityToJsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class WebSocketDomainEventListener {
 
-    private final ObjectMapper objectMapper;
+    private final EntityToJsonMapper entityMapper;
 
     @EventListener
     public void handleEvent(DomainEvent domainEvent) {
@@ -28,7 +28,7 @@ public class WebSocketDomainEventListener {
 
                     BroadcastHelper.sendBroadcastMessage(entity.getRoom().getUsers().values(), new OutgoingPacket(
                             OutPacketHeaders.UpdateEntity,
-                            objectMapper.writeValueAsString(entity)
+                            entityMapper.entityToJson(entity)
                     ));
                 }
 
