@@ -1,6 +1,5 @@
 package com.nhg.game.infrastructure.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhg.game.infrastructure.context.ApplicationContextUtils;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -26,11 +25,6 @@ public class GameConfig {
     @Bean(name = "appCtxUtils")
     public ApplicationContextUtils applicationContextUtils() {
         return new ApplicationContextUtils();
-    }
-
-    @Bean(name = "objectMapper")
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
     }
 
 
