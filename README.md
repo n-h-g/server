@@ -1,17 +1,39 @@
-# NHG Server
+<p align="center"> 
+  <img src="https://github.com/n-h-g/.github/blob/main/assets/nhg_logo_rainbow.png" width="250"> <br>
+</p>
 
-## Description
+# NHG Server 
 
-## Installation
-- clone [server](https://gitlab.com/ballstorm/ballstorm-server) repository.
-- open cloned repository.
-- if you don't have SDK installed
-  - install directly from your IDE.
-  - install from website [Download SDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
-- Configure each service under `resources/application.yml` on the service folder
-  - Change the port `server > port` if these are busy on your machine
-  - Change database credentials at `spring > datasoruce`.
-- Create a database for each service that requires it, check this by looking under `resources/application.yml`
-  then check `spring > datasource > url`, there will be something like `jdbc:postgresql://host:port/db_name`,
-  finally create a database with the name you find under the heading `db_name`
-- Start the services you need.
+---
+## Installation 
+Follow these steps to install everything you need to run **NHG Server**:
+- Clone the repository.
+- Download [Docker](https://www.docker.com/).
+- Java SDK 21
+  - Install directly from your IDE.
+  - Install from website [Download SDK 21](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html).
+- Gradle
+  - Install directly from your IDE.
+  - Install from [Gradle website](https://gradle.org/install/) a Gradle version compatible with the Java version.
+
+> [!NOTE]  
+> Lombok is used, although it is not necessary to start the application, if you intend to work on the code, we recommend installing an Annotation Processing plugin for Lombok on your IDE.
+---
+
+## Build & Run
+
+### Build the application
+To build this application:
+- Open a terminal in the folder where you cloned the repository
+- Run the `gradle build` command.
+
+### Run the application
+To run this application:
+- Build the application.
+- Start docker.
+- Open a terminal in the folder where you cloned the repository.
+- Run the `docker-compose up` command.
+> [!TIP]  
+> If you're using IntelliJ IDEA you can directly run docker-compose from the IDE.
+> 
+> Open the `docker-compose.yml` and press the arrows button next to `services`.
