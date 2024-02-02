@@ -18,11 +18,11 @@
 ### Table Of Contents
 
 
-* [📃 Description](#%EF%B8%8F-installation)
-* [⬇️ Installation](#%EF%B8%8F-installation)
+* [📃 Description](#-description)
+* [⬇️ Installation](#-installation)
 * [🧰 Build & Run](#-build--run)
-  + [🛠️ Build the application](#%EF%B8%8F-build-the-application)
-  + [▶️ Run the application](#%EF%B8%8F-run-the-application)
+  + [🛠️ Build the application](#-build-the-application)
+  + [▶️ Run the application](#-run-the-application)
 
 ## 📃 Description
 
