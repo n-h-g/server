@@ -3,6 +3,7 @@
 </p>
 
 # NHG Server 
+![example workflow](https://github.com/n-h-g/server/actions/workflows/gradle.yml/badge.svg)
 > Issues status
 > 
 > [![Bug issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20bug?color=%23B60205&label=bug)](https://github.com/n-h-g/server/labels/type%3A%20bug)
