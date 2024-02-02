@@ -17,12 +17,16 @@
 
 ### Table Of Contents
 
-* [⬇️ Installation ](#%EF%B8%8F-installation)
+
+* [📃 Description](#%EF%B8%8F-installation)
+* [⬇️ Installation](#%EF%B8%8F-installation)
 * [🧰 Build & Run](#-build--run)
   + [🛠️ Build the application](#%EF%B8%8F-build-the-application)
   + [▶️ Run the application](#%EF%B8%8F-run-the-application)
 
-## ⬇️ Installation 
+## 📃 Description
+
+## ⬇️ Installation
 Follow these steps to install everything you need to run **NHG Server**:
 - Clone the repository.
 - Download [Docker](https://www.docker.com/).
