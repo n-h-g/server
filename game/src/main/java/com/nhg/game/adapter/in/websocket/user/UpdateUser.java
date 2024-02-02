@@ -1,22 +1,21 @@
 package com.nhg.game.adapter.in.websocket.user;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
-import com.nhg.game.application.dto.UserResponse;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
+import com.nhg.game.infrastructure.mapper.UserToJsonMapper;
 
 public class UpdateUser extends IncomingPacket {
 
     private final ClientUserMap clientUserMap;
-    private final ObjectMapper objectMapper;
+    private final UserToJsonMapper userMapper;
 
     public UpdateUser() {
         clientUserMap = BeanRetriever.get(ClientUserMap.class);
-        objectMapper = BeanRetriever.get(ObjectMapper.class);
+        userMapper = BeanRetriever.get(UserToJsonMapper.class);
     }
 
     @Override
@@ -27,7 +26,7 @@ public class UpdateUser extends IncomingPacket {
 
         client.sendMessage(new OutgoingPacket(
                 OutPacketHeaders.UpdateUserInformation,
-                objectMapper.writeValueAsString(UserResponse.fromDomain(user))
+                userMapper.userToJson(user)
         ));
     }
 }
