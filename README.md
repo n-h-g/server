@@ -18,14 +18,16 @@
 ### Table Of Contents
 
 
-* [📃 Description](#-description)
-* [⬇️ Installation](#-installation)
-* [🧰 Build & Run](#-build--run)
-  + [🛠️ Build the application](#-build-the-application)
-  + [▶️ Run the application](#-run-the-application)
+* [📃 Description](#description)
+* [⬇️ Installation](#installation)
+* [🧰 Build & Run](#build-run)
+  + [🛠️ Build the application](#build)
+  + [▶️ Run the application](#run)
 
+<span id="description"></span>
 ## 📃 Description
 
+<span id="installation"></span>
 ## ⬇️ Installation
 Follow these steps to install everything you need to run **NHG Server**:
 - Clone the repository.
@@ -42,13 +44,19 @@ Follow these steps to install everything you need to run **NHG Server**:
 
 ---
 
+
+<span id="build-run"></span>
 ## 🧰 Build & Run
 
+
+<span id="build"></span>
 ### 🛠️ Build the application
 To build this application:
 - Open a terminal in the folder where you cloned the repository
 - Run the `gradle build` command.
 
+
+<span id="run"></span>
 ### ▶️ Run the application
 To run this application:
 - Build the application.
