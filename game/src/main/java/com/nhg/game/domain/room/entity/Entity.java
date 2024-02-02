@@ -1,6 +1,7 @@
 package com.nhg.game.domain.room.entity;
 
 
+import com.nhg.common.domain.event.DomainEventPublisher;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.component.Component;
 import com.nhg.game.domain.room.entity.component.ComponentType;
@@ -34,12 +35,16 @@ public class Entity {
     @Getter
     private final Room room;
 
+    @Getter
+    private final DomainEventPublisher eventPublisher;
+
     private final EnumMap<ComponentType, Component> components;
 
-    public Entity(EntityType type, @NonNull Room room) {
+    public Entity(EntityType type, @NonNull Room room, @NonNull DomainEventPublisher eventPublisher) {
         this.id = UUID.randomUUID();
         this.type = type;
         this.room = room;
+        this.eventPublisher = eventPublisher;
         this.components = new EnumMap<>(ComponentType.class);
     }
 
@@ -105,8 +110,8 @@ public class Entity {
      *
      * @see User
      */
-    public static Entity fromUser(@NonNull User user, @NonNull Room room) {
-        return new Entity(EntityType.HUMAN, room)
+    public static Entity fromUser(@NonNull User user, @NonNull Room room, @NonNull DomainEventPublisher eventPublisher) {
+        return new Entity(EntityType.HUMAN, room, eventPublisher)
                 .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getDoorPosition3(), Position3.class))
                 .addComponent(ComponentType.BodyHeadRotation, Pair.of(room.getRoomLayout().getDoorRotation(), Rotation.class))
                 .addComponent(ComponentType.Action)

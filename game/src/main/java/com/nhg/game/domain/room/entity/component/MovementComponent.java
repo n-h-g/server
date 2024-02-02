@@ -1,7 +1,7 @@
 package com.nhg.game.domain.room.entity.component;
 
 
-import com.nhg.game.domain.room.Room;
+import com.nhg.game.application.event.room.UpdateRoomEntityEvent;
 import com.nhg.game.domain.room.entity.Action;
 import com.nhg.game.domain.room.layout.Tile;
 import com.nhg.game.domain.room.pathfinding.AStar;
@@ -106,7 +106,7 @@ public class MovementComponent extends Component {
             if (calculatedPath == null || calculatedPath.isEmpty()) {
                 if (actionComponent.hasAction(Action.MOVE)) {
                     actionComponent.removeAction(Action.MOVE);
-                    sendUpdate(entity.getRoom());
+                    sendUpdate();
                 }
 
                 return;
@@ -122,14 +122,14 @@ public class MovementComponent extends Component {
 
             positionComponent.setPosition(nextPosition);
 
-            sendUpdate(entity.getRoom());
+            sendUpdate();
         } catch (ComponentNotFoundException e) {
             log.error("There are require components for MovementComponent that are missing: " + e);
         }
     }
 
-    private void sendUpdate(Room room) {
-        // TODO
+    private void sendUpdate() {
+        entity.getEventPublisher().publish(new UpdateRoomEntityEvent(entity));
     }
 
 }

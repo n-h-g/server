@@ -23,7 +23,7 @@ public class UserEnterRoomUseCase {
     public Room userEnterRoom(@NonNull User user, @NonNull Room room) {
         room = getActiveRoom(room);
 
-        Entity entity = Entity.fromUser(user, room);
+        Entity entity = Entity.fromUser(user, room, eventPublisher);
 
         userEntityRepository.addUserEntity(user, entity);
         room.addEntity(entity);

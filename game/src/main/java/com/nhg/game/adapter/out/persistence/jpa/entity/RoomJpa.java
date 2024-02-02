@@ -17,6 +17,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 
 @Getter
 @Setter
@@ -56,7 +59,8 @@ public class RoomJpa {
     private Integer doorY;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "rotation default 'SOUTH'")
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "door_rotation", columnDefinition = "rotation default 'SOUTH'")
     private Rotation doorRotation;
 
     public Room toRoom() {
