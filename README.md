@@ -41,8 +41,8 @@ To run this application:
 > 
 > Open the `docker-compose.yml` and press the arrows button next to `services`.
 
-> [!IMPORTANT]  
-> Crucial information necessary for users to succeed.
+> [!IMPORTANT]
+> When you run the `docker-compose up` command docker creates the images and caches them and then starts the services, or, if they are already available in the cache, takes them from the cache and starts the services. If changes are made, if you run the command directly, they will not be visible since the cached images will be used. To solve this run the `docker-compose build --no-cache` command to recreate the images (remember to build the application first).
 
 ---
 
