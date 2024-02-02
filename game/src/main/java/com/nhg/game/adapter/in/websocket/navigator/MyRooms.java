@@ -1,14 +1,14 @@
 package com.nhg.game.adapter.in.websocket.navigator;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
-import com.nhg.game.application.dto.RoomResponse;
 import com.nhg.game.application.repository.RoomRepository;
+import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
+import com.nhg.game.infrastructure.mapper.RoomToJsonMapper;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public class MyRooms extends IncomingPacket {
 
     private final ClientUserMap clientUserMap;
     private final RoomRepository roomRepository;
-    private final ObjectMapper objectMapper;
+    private final RoomToJsonMapper roomToJsonMapper;
 
     public MyRooms() {
         clientUserMap = BeanRetriever.get(ClientUserMap.class);
         roomRepository = BeanRetriever.get(RoomRepository.class);
-        objectMapper = BeanRetriever.get(ObjectMapper.class);
+        roomToJsonMapper = BeanRetriever.get(RoomToJsonMapper.class);
     }
 
     @Override
@@ -30,12 +30,11 @@ public class MyRooms extends IncomingPacket {
 
         if (user == null) return;
 
-        List<RoomResponse> rooms = roomRepository.getRoomsByOwner(user).stream()
-                .map(RoomResponse::fromDomain).toList();
+        List<Room> rooms = roomRepository.getRoomsByOwner(user);
 
         client.sendMessage(new OutgoingPacket(
-                OutPacketHeaders.SendAllRooms,
-                objectMapper.writeValueAsString(rooms)
+                OutPacketHeaders.SendMyRooms,
+                roomToJsonMapper.roomsToNavigatorRoomsJson(rooms)
         ));
     }
 }
