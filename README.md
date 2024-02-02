@@ -5,7 +5,8 @@
 # NHG Server 
 
 ---
-## Installation 
+
+## ⬇️ Installation 
 Follow these steps to install everything you need to run **NHG Server**:
 - Clone the repository.
 - Download [Docker](https://www.docker.com/).
@@ -18,22 +19,31 @@ Follow these steps to install everything you need to run **NHG Server**:
 
 > [!NOTE]  
 > Lombok is used, although it is not necessary to start the application, if you intend to work on the code, we recommend installing an Annotation Processing plugin for Lombok on your IDE.
+
 ---
 
-## Build & Run
+## 🧰 Build & Run
 
-### Build the application
+### 🛠️ Build the application
 To build this application:
 - Open a terminal in the folder where you cloned the repository
 - Run the `gradle build` command.
 
-### Run the application
+### ▶️ Run the application
 To run this application:
 - Build the application.
 - Start docker.
 - Open a terminal in the folder where you cloned the repository.
 - Run the `docker-compose up` command.
+  
 > [!TIP]  
 > If you're using IntelliJ IDEA you can directly run docker-compose from the IDE.
 > 
 > Open the `docker-compose.yml` and press the arrows button next to `services`.
+
+> [!IMPORTANT]  
+> Crucial information necessary for users to succeed.
+
+---
+
+
