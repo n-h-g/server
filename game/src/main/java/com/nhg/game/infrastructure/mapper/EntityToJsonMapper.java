@@ -20,7 +20,7 @@ public class EntityToJsonMapper {
 
     public JSONObject entityToJson(@NonNull Entity entity) {
         JSONObject json = new JSONObject()
-                .put("id", entity)
+                .put("id", entity.getId())
                 .put("type", entity.getType().getCode());
 
         entity.getComponents().forEach((type, component) -> {
