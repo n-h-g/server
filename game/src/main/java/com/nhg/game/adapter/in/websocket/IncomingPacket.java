@@ -8,6 +8,7 @@ import com.nhg.game.adapter.in.websocket.room.CreateRoom;
 import com.nhg.game.adapter.in.websocket.room.user.UserEnterRoom;
 import com.nhg.game.adapter.in.websocket.room.user.UserExitRoom;
 import com.nhg.game.adapter.in.websocket.room.user.UserMove;
+import com.nhg.game.adapter.in.websocket.user.UpdateUser;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.packet.ClientPacket;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,7 @@ public abstract class IncomingPacket implements ClientPacket<Integer, JSONObject
                     Map.entry(8, UserEnterRoom.class),
                     Map.entry(9, UserExitRoom.class),
                     Map.entry(10, UserMove.class),
+                    Map.entry(15, UpdateUser.class),
                     Map.entry(36, CreateRoom.class)
             );
 }
