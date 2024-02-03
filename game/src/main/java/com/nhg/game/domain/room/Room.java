@@ -1,6 +1,8 @@
 package com.nhg.game.domain.room;
 
 
+import com.nhg.game.domain.item.Item;
+import com.nhg.game.domain.item.RoomItem;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.room.layout.RoomLayout;
 import com.nhg.game.domain.shared.position.Rotation;
@@ -26,10 +28,12 @@ public class Room implements Runnable {
     private RoomLayout roomLayout;
 
     private final Map<Integer, User> users;
+    private final Map<Integer, RoomItem> items;
     private final Map<UUID, Entity> entities;
 
     public Room() {
         this.users = new ConcurrentHashMap<>();
+        this.items = new ConcurrentHashMap<>();
         this.entities = new ConcurrentHashMap<>();
     }
 
@@ -50,6 +54,10 @@ public class Room implements Runnable {
         users.remove(user.getId());
     }
 
+    public void addItem(@NonNull RoomItem item) {
+        items.putIfAbsent(item.getId(), item);
+    }
+
     /**
      * Check if the room is empty.
      * The room is empty when it has 0 users inside.
@@ -66,7 +74,7 @@ public class Room implements Runnable {
      * @param entity the entity that needs to be added.
      */
     public void addEntity(@NonNull Entity entity) {
-        this.entities.putIfAbsent(entity.getId(), entity);
+        entities.putIfAbsent(entity.getId(), entity);
     }
 
     /**

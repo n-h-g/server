@@ -2,6 +2,8 @@ package com.nhg.game.adapter.in.websocket.packet;
 
 import com.nhg.game.adapter.in.websocket.packet.exchange.Handshake;
 import com.nhg.game.adapter.in.websocket.packet.exchange.Ping;
+import com.nhg.game.adapter.in.websocket.packet.room.item.PlaceItem;
+import com.nhg.game.adapter.in.websocket.packet.user.item.InventoryItems;
 import com.nhg.game.adapter.in.websocket.packet.navigator.AllRooms;
 import com.nhg.game.adapter.in.websocket.packet.navigator.MyRooms;
 import com.nhg.game.adapter.in.websocket.packet.room.CreateRoom;
@@ -43,7 +45,9 @@ public abstract class IncomingPacket implements ClientPacket<Integer, JSONObject
                     Map.entry(8, UserEnterRoom.class),
                     Map.entry(9, UserExitRoom.class),
                     Map.entry(10, UserMove.class),
+                    Map.entry(14, InventoryItems.class),
                     Map.entry(15, UpdateUser.class),
+                    Map.entry(25, PlaceItem.class),
                     Map.entry(36, CreateRoom.class)
             );
 }

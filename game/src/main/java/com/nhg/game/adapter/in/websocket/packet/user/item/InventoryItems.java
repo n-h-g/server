@@ -1,4 +1,4 @@
-package com.nhg.game.adapter.in.websocket.packet.item;
+package com.nhg.game.adapter.in.websocket.packet.user.item;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.mapper.ItemToJsonMapper;
