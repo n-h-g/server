@@ -1,9 +1,9 @@
 package com.nhg.game.adapter.in.websocket.packet.room.user;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
-import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
+import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;

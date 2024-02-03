@@ -1,7 +1,7 @@
 package com.nhg.game.adapter.in.websocket.packet.room.user;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
-import com.nhg.game.adapter.in.websocket.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.entity.EntityMoveToUseCase;
 import com.nhg.game.domain.room.entity.Entity;

@@ -1,7 +1,7 @@
 package com.nhg.game.adapter.in.websocket.packet.navigator;
 
-import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
+import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.ActiveRoomRepository;

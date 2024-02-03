@@ -1,6 +1,6 @@
 package com.nhg.game.infrastructure.networking.websocket;
 
-import com.nhg.game.adapter.in.websocket.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.ClientRepository;
 import com.nhg.game.infrastructure.networking.packet.PacketHandler;

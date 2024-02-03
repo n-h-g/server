@@ -1,4 +1,4 @@
-package com.nhg.game.adapter.in.websocket;
+package com.nhg.game.adapter.in.websocket.packet;
 
 import com.nhg.game.adapter.in.websocket.packet.exchange.Handshake;
 import com.nhg.game.adapter.in.websocket.packet.exchange.Ping;
