@@ -103,6 +103,10 @@ public class Entity {
         return components.get(type);
     }
 
+    public boolean hasComponent(ComponentType type) {
+        return components.containsKey(type);
+    }
+
     public EnumMap<ComponentType, Component> getComponents() {
         return components;
     }
