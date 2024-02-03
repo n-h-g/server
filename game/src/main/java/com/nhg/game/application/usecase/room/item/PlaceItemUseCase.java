@@ -33,7 +33,6 @@ public class PlaceItemUseCase {
 
         item.setEntity(entity);
         room.addEntity(entity);
-        room.addItem(item);
 
         return entity;
     }

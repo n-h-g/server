@@ -27,7 +27,6 @@ public class UserEnterRoomUseCase {
 
         userEntityRepository.addUserEntity(user, entity);
         room.addEntity(entity);
-        room.userEnter(user);
 
         eventPublisher.publish(new UserEnterRoomEvent(user.getId(), room.getId()));
 
