@@ -24,8 +24,4 @@ public class RotationComponent extends Component {
         return rotation;
     }
 
-    @Override
-    public void cycle() {
-
-    }
 }

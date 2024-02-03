@@ -1,6 +1,6 @@
 package com.nhg.game.domain.room.entity.component;
 
-import com.nhg.game.domain.item.RoomItem
+import com.nhg.game.domain.item.RoomItem;
 import lombok.Getter;
 import lombok.NonNull;
 
@@ -13,8 +13,4 @@ public class ItemComponent extends Component {
         this.item = item;
     }
 
-    @Override
-    public void cycle() {
-
-    }
 }

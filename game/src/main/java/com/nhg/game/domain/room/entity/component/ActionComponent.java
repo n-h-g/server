@@ -40,9 +40,4 @@ public class ActionComponent extends Component {
         return this.actions.contains(action);
     }
 
-
-    @Override
-    public void cycle() {
-
-    }
 }

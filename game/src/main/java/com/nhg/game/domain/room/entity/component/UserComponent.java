@@ -13,8 +13,4 @@ public class UserComponent extends Component {
         this.userId = user.getId();
     }
 
-    @Override
-    public void cycle() {
-
-    }
 }

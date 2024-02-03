@@ -14,8 +14,4 @@ public class NameComponent extends Component {
         this.name = name;
     }
 
-    @Override
-    public void cycle() {
-
-    }
 }

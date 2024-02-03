@@ -31,8 +31,4 @@ public class BodyHeadRotationComponent extends Component {
         headRotation = rotation;
     }
 
-    @Override
-    public void cycle() {
-
-    }
 }
