@@ -91,7 +91,7 @@ public class EntityToJsonMapper {
 
             case UserComponent cmp -> {
                 return new JSONObject()
-                        .put("id", cmp.getUserId());
+                        .put("id", cmp.getUser().getId());
             }
 
             default -> { return null; }

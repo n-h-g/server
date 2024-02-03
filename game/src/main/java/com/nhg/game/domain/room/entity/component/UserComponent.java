@@ -7,10 +7,10 @@ import lombok.NonNull;
 @Getter
 public class UserComponent extends Component {
 
-    private final int userId;
+    private final User user;
 
     public UserComponent(@NonNull User user) {
-        this.userId = user.getId();
+        this.user = user;
     }
 
 }
