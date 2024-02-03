@@ -1,11 +1,9 @@
 package com.nhg.game.adapter.in.websocket.room.user;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
-import com.nhg.game.application.dto.RoomResponse;
 import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.FindRoomUseCase;
 import com.nhg.game.application.usecase.room.user.UserEnterRoomUseCase;
@@ -15,6 +13,8 @@ import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 import com.nhg.game.infrastructure.helper.BroadcastHelper;
+import com.nhg.game.infrastructure.mapper.EntityToJsonMapper;
+import com.nhg.game.infrastructure.mapper.RoomToJsonMapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -28,7 +28,8 @@ public class UserEnterRoom extends IncomingPacket {
     private final UserEnterRoomUseCase enterRoomUseCase;
     private final UserExitRoomUseCase exitRoomUseCase;
     private final UserEntityRepository userEntityRepository;
-    private final ObjectMapper objectMapper;
+    private final EntityToJsonMapper entityMapper;
+    private final RoomToJsonMapper roomMapper;
 
     public UserEnterRoom() {
         clientUserMap = BeanRetriever.get(ClientUserMap.class);
@@ -36,7 +37,8 @@ public class UserEnterRoom extends IncomingPacket {
         enterRoomUseCase = BeanRetriever.get(UserEnterRoomUseCase.class);
         exitRoomUseCase = BeanRetriever.get(UserExitRoomUseCase.class);
         userEntityRepository = BeanRetriever.get(UserEntityRepository.class);
-        objectMapper = BeanRetriever.get(ObjectMapper.class);
+        entityMapper = BeanRetriever.get(EntityToJsonMapper.class);
+        roomMapper = BeanRetriever.get(RoomToJsonMapper.class);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class UserEnterRoom extends IncomingPacket {
         if (userEntityOpt.isPresent()) {
             BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
                     OutPacketHeaders.RemoveRoomEntity,
-                    objectMapper.writeValueAsString(userEntityOpt.get())
+                    entityMapper.entityToJson(userEntityOpt.get())
             ));
 
             exitRoomUseCase.userExitRoom(user, room);
@@ -82,14 +84,14 @@ public class UserEnterRoom extends IncomingPacket {
 
             client.sendMessage(new OutgoingPacket(
                     OutPacketHeaders.SendRoomData,
-                    objectMapper.writeValueAsString(RoomResponse.fromDomain(room))
+                    roomMapper.roomToJson(room)
             ));
 
             Collection<Entity> roomEntities = room.getEntities().values();
 
             client.sendMessage(new OutgoingPacket(
                     OutPacketHeaders.LoadRoomEntities,
-                    objectMapper.writeValueAsString(roomEntities)
+                    entityMapper.entitiesToJson(roomEntities)
             ));
         }
 
@@ -99,7 +101,7 @@ public class UserEnterRoom extends IncomingPacket {
 
             BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
                     OutPacketHeaders.AddRoomEntity,
-                    objectMapper.writeValueAsString(userEntity)
+                    entityMapper.entityToJson(userEntity)
             ));
         }
 
