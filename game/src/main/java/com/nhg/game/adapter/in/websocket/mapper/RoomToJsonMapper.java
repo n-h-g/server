@@ -52,10 +52,10 @@ public class RoomToJsonMapper {
     }
 
     private int getUsersCount(@NonNull Room room ) {
-        return room.getUsers().isEmpty()
+        return room.isEmpty()
                 ? activeRoomRepository.findById(room.getId())
-                .map(activeRoom -> activeRoom.getUsers().size())
+                .map(activeRoom -> activeRoom.getEntities().usersCount())
                 .orElse(0)
-                : room.getUsers().size();
+                : room.getEntities().usersCount();
     }
 }

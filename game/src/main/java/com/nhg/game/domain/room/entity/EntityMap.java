@@ -66,6 +66,10 @@ public class EntityMap implements Iterable<Entity> {
         return !users.isEmpty();
     }
 
+    public int usersCount() {
+        return users.size();
+    }
+
     @Override
     @NonNull
     public Iterator<Entity> iterator() {
