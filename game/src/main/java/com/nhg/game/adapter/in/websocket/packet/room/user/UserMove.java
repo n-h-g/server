@@ -1,4 +1,4 @@
-package com.nhg.game.adapter.in.websocket.room.user;
+package com.nhg.game.adapter.in.websocket.packet.room.user;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;

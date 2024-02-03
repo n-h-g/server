@@ -1,8 +1,7 @@
-package com.nhg.game.infrastructure.mapper;
+package com.nhg.game.adapter.in.websocket.mapper;
 
 import com.nhg.game.application.repository.ActiveRoomRepository;
 import com.nhg.game.domain.room.Room;
-import com.nhg.game.domain.room.entity.Entity;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;

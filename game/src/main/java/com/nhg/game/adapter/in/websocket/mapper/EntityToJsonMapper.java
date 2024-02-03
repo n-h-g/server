@@ -1,4 +1,4 @@
-package com.nhg.game.infrastructure.mapper;
+package com.nhg.game.adapter.in.websocket.mapper;
 
 
 import com.nhg.game.domain.room.entity.Entity;

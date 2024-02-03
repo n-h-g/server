@@ -1,14 +1,14 @@
-package com.nhg.game.adapter.in.websocket.item;
+package com.nhg.game.adapter.in.websocket.packet.item;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.mapper.ItemToJsonMapper;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.usecase.item.GetInventoryItemsUseCase;
 import com.nhg.game.domain.item.Item;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.mapper.ItemToJsonMapper;
 
 import java.util.List;
 

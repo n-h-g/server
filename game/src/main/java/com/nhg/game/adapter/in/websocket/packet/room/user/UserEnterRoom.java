@@ -1,7 +1,9 @@
-package com.nhg.game.adapter.in.websocket.room.user;
+package com.nhg.game.adapter.in.websocket.packet.room.user;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
+import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
@@ -13,8 +15,6 @@ import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 import com.nhg.game.infrastructure.helper.BroadcastHelper;
-import com.nhg.game.infrastructure.mapper.EntityToJsonMapper;
-import com.nhg.game.infrastructure.mapper.RoomToJsonMapper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
