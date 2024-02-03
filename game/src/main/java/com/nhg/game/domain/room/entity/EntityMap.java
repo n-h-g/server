@@ -17,14 +17,14 @@ import java.util.function.Consumer;
 public class EntityMap implements Iterable<Entity> {
 
     private final Map<UUID, Entity> entities = new ConcurrentHashMap<>();
-    private final Map<Integer, User> users = new ConcurrentHashMap<>();;
+    private final Map<Integer, User> users = new ConcurrentHashMap<>();
     private final Map<Integer, RoomItem> items = new ConcurrentHashMap<>();
 
     public void add(@NonNull Entity entity) {
         entities.put(entity.getId(), entity);
 
         if (entity.hasComponent(ComponentType.User)) {
-            User user = ((UserComponent) entity.getComponent(ComponentType.User)).getUser();;
+            User user = ((UserComponent) entity.getComponent(ComponentType.User)).getUser();
 
             users.put(user.getId(), user);
         } else if (entity.hasComponent(ComponentType.Item)) {
@@ -40,7 +40,7 @@ public class EntityMap implements Iterable<Entity> {
         if (entity == null) return;
 
         if (entity.hasComponent(ComponentType.User)) {
-            User user = ((UserComponent) entity.getComponent(ComponentType.User)).getUser();;
+            User user = ((UserComponent) entity.getComponent(ComponentType.User)).getUser();
 
             users.put(user.getId(), user);
         } else if (entity.hasComponent(ComponentType.Item)) {
