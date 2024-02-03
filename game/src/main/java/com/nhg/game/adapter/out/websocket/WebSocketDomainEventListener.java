@@ -1,11 +1,11 @@
 package com.nhg.game.adapter.out.websocket;
 
 import com.nhg.common.domain.event.DomainEvent;
+import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
 import com.nhg.game.application.event.room.RemovedRoomEntityEvent;
 import com.nhg.game.application.event.room.UpdateRoomEntityEvent;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.infrastructure.helper.BroadcastHelper;
-import com.nhg.game.infrastructure.mapper.EntityToJsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

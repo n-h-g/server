@@ -1,14 +1,14 @@
-package com.nhg.game.adapter.in.websocket;
+package com.nhg.game.adapter.in.websocket.packet;
 
-import com.nhg.game.adapter.in.websocket.exchange.Handshake;
-import com.nhg.game.adapter.in.websocket.exchange.Ping;
-import com.nhg.game.adapter.in.websocket.navigator.AllRooms;
-import com.nhg.game.adapter.in.websocket.navigator.MyRooms;
-import com.nhg.game.adapter.in.websocket.room.CreateRoom;
-import com.nhg.game.adapter.in.websocket.room.user.UserEnterRoom;
-import com.nhg.game.adapter.in.websocket.room.user.UserExitRoom;
-import com.nhg.game.adapter.in.websocket.room.user.UserMove;
-import com.nhg.game.adapter.in.websocket.user.UpdateUser;
+import com.nhg.game.adapter.in.websocket.packet.exchange.Handshake;
+import com.nhg.game.adapter.in.websocket.packet.exchange.Ping;
+import com.nhg.game.adapter.in.websocket.packet.navigator.AllRooms;
+import com.nhg.game.adapter.in.websocket.packet.navigator.MyRooms;
+import com.nhg.game.adapter.in.websocket.packet.room.CreateRoom;
+import com.nhg.game.adapter.in.websocket.packet.room.user.UserEnterRoom;
+import com.nhg.game.adapter.in.websocket.packet.room.user.UserExitRoom;
+import com.nhg.game.adapter.in.websocket.packet.room.user.UserMove;
+import com.nhg.game.adapter.in.websocket.packet.user.UpdateUser;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.packet.ClientPacket;
 import lombok.AllArgsConstructor;
