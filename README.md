@@ -3,17 +3,21 @@
 </p>
 
 # NHG Server 
-![example workflow](https://github.com/n-h-g/server/actions/workflows/gradle.yml/badge.svg)
+![example workflow](https://github.com/n-h-g/server/actions/workflows/gradle.yml/badge.svg?style=flat-square)
 > Issues status
 > 
-> [![Bug issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20bug?color=%23B60205&label=bug)](https://github.com/n-h-g/server/labels/type%3A%20bug)
-> [![Performance issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20performance?color=%23D93F0B&label=performance)](https://github.com/n-h-g/server/labels/type%3A%20performance)
-> [![Refactoring issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20refactoring?color=%23E99695&label=refactoring)](https://github.com/n-h-g/server/labels/type%3A%20refactoring)
-> [![Security issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20security?color=%230E8A16&label=security)](https://github.com/n-h-g/server/labels/type%3A%20security)
-> [![Documentation issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20documentation?color=%23006B75&label=documentation)](https://github.com/n-h-g/server/labels/type%3A%20documentation)
-> [![Feature issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20feature?color=%230052CC&label=feature)](https://github.com/n-h-g/server/labels/type%3A%20feature)
+> [![Bug issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20bug?style=flat-square&color=%23B60205&label=bug)](https://github.com/n-h-g/server/labels/type%3A%20bug)
+> [![Performance issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20performance?style=flat-square&color=%23D93F0B&label=performance)](https://github.com/n-h-g/server/labels/type%3A%20performance)
+> [![Refactoring issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20refactoring?style=flat-square&color=%23E99695&label=refactoring)](https://github.com/n-h-g/server/labels/type%3A%20refactoring)
+> [![Security issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20security?style=flat-square&color=%230E8A16&label=security)](https://github.com/n-h-g/server/labels/type%3A%20security)
+> [![Documentation issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20documentation?style=flat-square&color=%23006B75&label=documentation)](https://github.com/n-h-g/server/labels/type%3A%20documentation)
+> [![Feature issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20feature?style=flat-square&color=%230052CC&label=feature)](https://github.com/n-h-g/server/labels/type%3A%20feature)
 
-<a href="https://discord.gg/PSbCGaVWr5"><img src="https://img.shields.io/badge/join-discord-7289da.svg?sanitize=true"></a>
+
+> Join our Discord server
+>
+> [![Discord](https://img.shields.io/discord/953057939743207454?style=for-the-badge&logo=discord&color=7289DA&logoColor=fff)](https://discord.gg/PSbCGaVWr5)
+
 ---
 
 ### Table Of Contents
