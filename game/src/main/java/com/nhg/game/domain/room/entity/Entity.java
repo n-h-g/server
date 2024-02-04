@@ -4,6 +4,7 @@ package com.nhg.game.domain.room.entity;
 import com.nhg.common.domain.event.DomainEventPublisher;
 import com.nhg.game.domain.item.ItemType;
 import com.nhg.game.domain.item.RoomItem;
+import com.nhg.game.domain.item.interaction.Interaction;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.component.Component;
 import com.nhg.game.domain.room.entity.component.ComponentType;
@@ -136,8 +137,8 @@ public class Entity {
     public static Entity fromItem(@NonNull RoomItem item, @NonNull Room room, @NonNull DomainEventPublisher eventPublisher) {
         Entity entity = new Entity(EntityType.ITEM, room, eventPublisher)
                 .addComponent(ComponentType.Name, Pair.of(item.getPrototype().getName(), String.class))
-                .addComponent(ComponentType.Item, Pair.of(item, RoomItem.class));
-                //.addComponent(ComponentType.Interaction, Pair.of(Interaction.fromItem(item), Interaction.class));
+                .addComponent(ComponentType.Item, Pair.of(item, RoomItem.class))
+                .addComponent(ComponentType.Interaction, Pair.of(Interaction.fromItem(item), Interaction.class));
 
         if (item.getPrototype().getItemType() == ItemType.FLOOR_ITEM) {
             entity

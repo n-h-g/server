@@ -11,9 +11,9 @@ public enum ComponentType {
     BodyHeadRotation("bh_rot", BodyHeadRotationComponent.class),
     Action("action", ActionComponent.class),
     HumanAspect("aspect", HumanAspectComponent.class),
-    Movement("movement", MovementComponent.class);
+    Movement("movement", MovementComponent.class),
     //Behaviour("behaviour", BehaviourComponent.class),
-    //Interaction("interaction", InteractionComponent.class);
+    Interaction("interaction", InteractionComponent.class);
 
     @Getter
     private final String name;
