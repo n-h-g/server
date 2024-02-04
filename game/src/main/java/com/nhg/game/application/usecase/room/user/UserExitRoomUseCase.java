@@ -29,8 +29,6 @@ public class UserExitRoomUseCase {
         room.removeEntity(entity);
         userEntityRepository.removeEntityByUserId(user.getId());
 
-        room.userExit(user);
-
         eventPublisher.publish(new RemovedRoomEntityEvent(entity));
         eventPublisher.publish(new UserExitRoomEvent(user.getId(), room.getId()));
 
