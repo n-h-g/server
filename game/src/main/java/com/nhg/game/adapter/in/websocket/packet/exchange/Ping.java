@@ -20,6 +20,10 @@ public class Ping extends IncomingPacket {
 
         boolean doLogin = !clientUserMap.containsClientId(client.getId());
 
-        client.sendMessage(new OutgoingPacket(OutPacketHeaders.Pong, doLogin));
+        OutgoingPacket.send(
+                client,
+                OutPacketHeaders.Pong,
+                doLogin
+        );
     }
 }

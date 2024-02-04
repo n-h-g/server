@@ -1,4 +1,4 @@
-package com.nhg.game.adapter.in.websocket.packet.item;
+package com.nhg.game.adapter.in.websocket.packet.user.item;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.mapper.ItemToJsonMapper;
@@ -32,9 +32,10 @@ public class InventoryItems extends IncomingPacket {
 
         List<Item> items = inventoryItemsUseCase.byOwner(user);
 
-        client.sendMessage(new OutgoingPacket(
+        OutgoingPacket.send(
+                client,
                 OutPacketHeaders.InventoryItems,
                 itemMapper.itemsToJson(items)
-        ));
+        );
     }
 }

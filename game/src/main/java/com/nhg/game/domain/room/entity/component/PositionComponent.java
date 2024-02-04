@@ -18,9 +18,4 @@ public class PositionComponent extends Component {
         this.position = position;
     }
 
-    @Override
-    public void cycle() {
-
-    }
-
 }

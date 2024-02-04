@@ -12,5 +12,5 @@ public abstract class Component {
         this.entity = entity;
     }
 
-    public abstract void cycle();
+    public void cycle() {};
 }

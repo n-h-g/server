@@ -24,9 +24,10 @@ public class UpdateUser extends IncomingPacket {
 
         if (user == null) return;
 
-        client.sendMessage(new OutgoingPacket(
+        OutgoingPacket.send(
+                client,
                 OutPacketHeaders.UpdateUserInformation,
                 userMapper.userToJson(user)
-        ));
+        );
     }
 }

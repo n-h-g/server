@@ -17,8 +17,4 @@ public class HumanAspectComponent extends Component {
         this.gender = gender;
     }
 
-    @Override
-    public void cycle() {
-
-    }
 }

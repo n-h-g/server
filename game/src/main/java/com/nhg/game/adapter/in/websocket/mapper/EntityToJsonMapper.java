@@ -6,6 +6,7 @@ import com.nhg.game.domain.room.entity.component.ActionComponent;
 import com.nhg.game.domain.room.entity.component.BodyHeadRotationComponent;
 import com.nhg.game.domain.room.entity.component.Component;
 import com.nhg.game.domain.room.entity.component.HumanAspectComponent;
+import com.nhg.game.domain.room.entity.component.InteractionComponent;
 import com.nhg.game.domain.room.entity.component.NameComponent;
 import com.nhg.game.domain.room.entity.component.PositionComponent;
 import com.nhg.game.domain.room.entity.component.RotationComponent;
@@ -91,7 +92,12 @@ public class EntityToJsonMapper {
 
             case UserComponent cmp -> {
                 return new JSONObject()
-                        .put("id", cmp.getUserId());
+                        .put("id", cmp.getUser().getId());
+            }
+
+            case InteractionComponent cmp -> {
+                return new JSONObject()
+                        .put("extra_data", cmp.getInteraction().getExtraData());
             }
 
             default -> { return null; }

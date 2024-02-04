@@ -32,9 +32,10 @@ public class MyRooms extends IncomingPacket {
 
         List<Room> rooms = roomRepository.getRoomsByOwner(user);
 
-        client.sendMessage(new OutgoingPacket(
+        OutgoingPacket.send(
+                client,
                 OutPacketHeaders.SendMyRooms,
                 roomToJsonMapper.roomsToNavigatorRoomsJson(rooms)
-        ));
+        );
     }
 }

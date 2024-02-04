@@ -42,7 +42,11 @@ public class CreateRoom extends IncomingPacket {
 
         if (room == null) return;
 
-        client.sendMessage(new OutgoingPacket(OutPacketHeaders.SendRoomId, room.getId()));
+        OutgoingPacket.send(
+                client,
+                OutPacketHeaders.SendRoomId,
+                room.getId()
+        );
     }
 }
 
