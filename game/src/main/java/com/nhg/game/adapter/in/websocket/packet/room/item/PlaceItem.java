@@ -38,20 +38,21 @@ public class PlaceItem extends IncomingPacket {
 
         if (entityOpt.isEmpty()) return;
 
-        Room room = entityOpt.get().getRoom();
+        Entity userEntity = entityOpt.get();
+        Room room = userEntity.getRoom();
 
         int itemId = body.getInt("id");
         int x = body.getInt("x");
         int y = body.getInt("y");
         float z = body.getFloat("z"); // TODO: Remove it
 
-        Entity entity = placeItemUseCase.placeItem(room, itemId, x, y, z);
-        if (entity == null) return;
+        Entity itemEntity = placeItemUseCase.placeItem(room, userEntity, itemId, x, y, z);
+        if (itemEntity == null) return;
 
         OutgoingPacket.send(
                 room.getEntities().getUsers(),
                 OutPacketHeaders.AddRoomEntity,
-                entityToJsonMapper.entityToJson(entity)
+                entityToJsonMapper.entityToJson(itemEntity)
         );
 
     }
