@@ -4,6 +4,7 @@ import com.nhg.game.adapter.out.persistence.jpa.item.ItemJpa;
 import com.nhg.game.adapter.out.persistence.jpa.repository.ItemJpaRepository;
 import com.nhg.game.application.repository.ItemRepository;
 import com.nhg.game.domain.item.Item;
+import com.nhg.game.domain.item.RoomItem;
 import com.nhg.game.domain.user.User;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,10 @@ public class ItemJpaRepositoryAdapter implements ItemRepository {
     public Optional<Item> findItemById(int itemId) {
         return itemJpaRepository.findById(itemId)
                 .map(ItemJpa::toItem);
+    }
+
+    @Override
+    public void unsetRoomForItem(RoomItem item) {
+        itemJpaRepository.unsetRoomForItem(item.getId());
     }
 }

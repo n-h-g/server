@@ -7,6 +7,8 @@ import com.nhg.game.domain.item.Item;
 import com.nhg.game.domain.item.RoomItem;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
+import com.nhg.game.domain.room.entity.component.ComponentType;
+import com.nhg.game.domain.room.entity.component.InteractionComponent;
 import com.nhg.game.domain.shared.position.Position3;
 import com.nhg.game.domain.shared.position.Rotation;
 import lombok.NonNull;
@@ -22,23 +24,34 @@ public class PlaceItemUseCase {
     private final DomainEventPublisher eventPublisher;
 
     // TODO: Z should be calculated directly from server
-    public Entity placeItem(@NonNull Room room, int itemId, int x, int y, float z) {
+    public Entity placeItem(@NonNull Room room, @NonNull Entity userEntity, int itemId, int x, int y, float z) {
         Optional<Item> itemOpt = itemRepository.findItemById(itemId);
 
         if (itemOpt.isEmpty()) return null;
 
         RoomItem item = itemToRoomItem(itemOpt.get(), x, y, z);
 
-        Entity entity = Entity.fromItem(item, room, eventPublisher);
+        Entity itemEntity = Entity.fromItem(item, room, eventPublisher);
 
-        item.setEntity(entity);
-        room.addEntity(entity);
+        item.setEntity(itemEntity);
+        room.addEntity(itemEntity);
 
-        return entity;
+        interactionOnPlace(itemEntity, userEntity);
+
+        return itemEntity;
     }
 
     private RoomItem itemToRoomItem(Item item, int x, int y, float z) {
         return new RoomItem(item.getId(), item.getPrototype(), item.getOwner(),
                             Rotation.NORTH, new Position3(x, y, z), "");
+    }
+
+    private void interactionOnPlace(Entity itemEntity, Entity userEntity) {
+        InteractionComponent interactionComponent =
+                (InteractionComponent) itemEntity.getComponent(ComponentType.Interaction);
+
+        if (interactionComponent == null) return;
+
+        interactionComponent.onPlace(userEntity);
     }
 }

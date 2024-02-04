@@ -1,31 +1,28 @@
 package com.nhg.game.adapter.in.websocket.packet.room.item;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
-import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
 import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
-import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
-import com.nhg.game.application.usecase.room.item.PlaceItemUseCase;
+import com.nhg.game.application.usecase.room.item.PickUpItemUseCase;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public class PlaceItem extends IncomingPacket {
+public class PickUpItem extends IncomingPacket {
 
     private final ClientUserMap clientUserMap;
-    private final PlaceItemUseCase placeItemUseCase;
-    private final EntityToJsonMapper entityToJsonMapper;
     private final UserEntityRepository userEntityRepository;
+    private final PickUpItemUseCase pickUpItemUseCase;
 
-    public PlaceItem() {
+
+    public PickUpItem() {
         clientUserMap = BeanRetriever.get(ClientUserMap.class);
-        placeItemUseCase = BeanRetriever.get(PlaceItemUseCase.class);
-        entityToJsonMapper = BeanRetriever.get(EntityToJsonMapper.class);
         userEntityRepository = BeanRetriever.get(UserEntityRepository.class);
+        pickUpItemUseCase = BeanRetriever.get(PickUpItemUseCase.class);
     }
 
     @Override
@@ -41,19 +38,12 @@ public class PlaceItem extends IncomingPacket {
         Entity userEntity = entityOpt.get();
         Room room = userEntity.getRoom();
 
-        int itemId = body.getInt("id");
-        int x = body.getInt("x");
-        int y = body.getInt("y");
-        float z = body.getFloat("z"); // TODO: Remove it
+        UUID itemEntityId = UUID.fromString(body.getString("id"));
 
-        Entity itemEntity = placeItemUseCase.placeItem(room, userEntity, itemId, x, y, z);
+        Entity itemEntity = room.getEntities().getEntity(itemEntityId);
+
         if (itemEntity == null) return;
 
-        OutgoingPacket.send(
-                room.getEntities().getUsers(),
-                OutPacketHeaders.AddRoomEntity,
-                entityToJsonMapper.entityToJson(itemEntity)
-        );
-
+        pickUpItemUseCase.pickUpItem(userEntity, itemEntity, room);
     }
 }
