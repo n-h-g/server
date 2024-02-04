@@ -5,12 +5,12 @@ import com.nhg.account.application.exception.ProblemCode;
 import com.nhg.account.application.exception.UseCaseException;
 import com.nhg.account.application.repository.AccountRepository;
 import com.nhg.account.domain.Account;
+import com.nhg.common.domain.UseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-@Service
+@UseCase
 @RequiredArgsConstructor
 public class RegisterAccountUseCase {
 
