@@ -34,7 +34,7 @@ public class MultiStateInteraction implements Interaction {
     }
 
     @Override
-    public String getExtraData(Entity entity) {
+    public String getExtraData() {
         return extraData.toString();
     }
 }

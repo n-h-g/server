@@ -13,7 +13,7 @@ public interface Interaction {
     default void onStandIn(Entity entity, Entity interactingEntity) {}
     default void onPlace(Entity entity, Entity interactingEntity) {}
     default void onPickUp(Entity entity, Entity interactingEntity) {}
-    default String getExtraData(Entity entity) { return ""; }
+    default String getExtraData() { return ""; }
 
 
     static Interaction fromItem(RoomItem item) {

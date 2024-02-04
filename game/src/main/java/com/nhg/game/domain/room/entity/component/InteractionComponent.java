@@ -2,7 +2,9 @@ package com.nhg.game.domain.room.entity.component;
 
 import com.nhg.game.domain.item.interaction.Interaction;
 import com.nhg.game.domain.room.entity.Entity;
+import lombok.Getter;
 
+@Getter
 public class InteractionComponent extends Component implements Interaction {
     private final Interaction interaction;
 
