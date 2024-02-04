@@ -24,9 +24,10 @@ public class AllRooms extends IncomingPacket {
     public void handle() throws Exception {
         List<Room> rooms = activeRoomRepository.getAll();
 
-        client.sendMessage(new OutgoingPacket(
+        OutgoingPacket.send(
+                client,
                 OutPacketHeaders.SendAllRooms,
                 roomToJsonMapper.roomsToNavigatorRoomsJson(rooms)
-        ));
+        );
     }
 }

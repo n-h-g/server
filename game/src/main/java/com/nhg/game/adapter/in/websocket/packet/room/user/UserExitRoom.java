@@ -10,7 +10,6 @@ import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.helper.BroadcastHelper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;
@@ -49,10 +48,11 @@ public class UserExitRoom extends IncomingPacket {
 
         if (entity == null) return;
 
-        BroadcastHelper.sendBroadcastMessage(room.getUsers().values(), new OutgoingPacket(
+        OutgoingPacket.send(
+                room.getEntities().getUsers(),
                 OutPacketHeaders.RemoveRoomEntity,
                 entity.getId().toString()
-        ));
+        );
     }
 
 }

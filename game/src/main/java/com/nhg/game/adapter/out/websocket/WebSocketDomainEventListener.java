@@ -5,7 +5,6 @@ import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
 import com.nhg.game.application.event.room.RemovedRoomEntityEvent;
 import com.nhg.game.application.event.room.UpdateRoomEntityEvent;
 import com.nhg.game.domain.room.entity.Entity;
-import com.nhg.game.infrastructure.helper.BroadcastHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -26,19 +25,21 @@ public class WebSocketDomainEventListener {
                 case UpdateRoomEntityEvent event -> {
                     Entity entity = event.getEntity();
 
-                    BroadcastHelper.sendBroadcastMessage(entity.getRoom().getUsers().values(), new OutgoingPacket(
+                    OutgoingPacket.send(
+                            entity.getRoom().getEntities().getUsers(),
                             OutPacketHeaders.UpdateEntity,
                             entityMapper.entityToJson(entity)
-                    ));
+                    );
                 }
 
                 case RemovedRoomEntityEvent event -> {
                     Entity entity = event.getEntity();
 
-                    BroadcastHelper.sendBroadcastMessage(entity.getRoom().getUsers().values(), new OutgoingPacket(
+                    OutgoingPacket.send(
+                            entity.getRoom().getEntities().getUsers(),
                             OutPacketHeaders.RemoveRoomEntity,
                             entity.getId().toString()
-                    ));
+                    );
                 }
 
                 default -> { }

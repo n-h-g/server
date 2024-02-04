@@ -1,17 +1,17 @@
 package com.nhg.game.adapter.in.websocket.packet.room.item;
 
+import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
+import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
-import com.nhg.game.domain.room.Room;
-import com.nhg.game.adapter.in.websocket.ClientUserMap;
-import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.application.usecase.room.item.PlaceItemUseCase;
+import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.helper.BroadcastHelper;
+
 import java.util.Optional;
 
 public class PlaceItem extends IncomingPacket {
@@ -48,9 +48,11 @@ public class PlaceItem extends IncomingPacket {
         Entity entity = placeItemUseCase.placeItem(room, itemId, x, y, z);
         if (entity == null) return;
 
-        BroadcastHelper.sendBroadcastMessage(room.getUsers().values(), new OutgoingPacket(
+        OutgoingPacket.send(
+                room.getEntities().getUsers(),
                 OutPacketHeaders.AddRoomEntity,
                 entityToJsonMapper.entityToJson(entity)
-        ));
+        );
+
     }
 }

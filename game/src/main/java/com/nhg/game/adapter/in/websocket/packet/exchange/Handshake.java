@@ -50,7 +50,11 @@ public class Handshake extends IncomingPacket {
 
         clientUserMap.put(client.getId(), optUser.get());
 
-        client.sendMessage(new OutgoingPacket(OutPacketHeaders.LoginMessageCheck, true));
+        OutgoingPacket.send(
+                client,
+                OutPacketHeaders.LoginMessageCheck,
+                true
+        );
     }
 
     /*

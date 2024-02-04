@@ -7,6 +7,7 @@ import com.nhg.game.domain.room.entity.component.UserComponent;
 import com.nhg.game.domain.user.User;
 import lombok.NonNull;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Spliterator;
@@ -56,6 +57,14 @@ public class EntityMap implements Iterable<Entity> {
 
     public User getUser(int userId) {
         return users.get(userId);
+    }
+
+    public Collection<User> getUsers() {
+        return users.values();
+    }
+
+    public Collection<Entity> values() {
+        return entities.values();
     }
 
     public RoomItem getItem(int itemId) {

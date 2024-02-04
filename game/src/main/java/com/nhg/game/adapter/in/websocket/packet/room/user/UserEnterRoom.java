@@ -14,7 +14,6 @@ import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
-import com.nhg.game.infrastructure.helper.BroadcastHelper;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -63,16 +62,17 @@ public class UserEnterRoom extends IncomingPacket {
         Room room = optRoom.get();
 
         // users who were already in the room.
-        Collection<User> roomUsers = room.getUsers().values();
+        Collection<User> roomUsers = room.getEntities().getUsers();
 
         Optional<Entity> userEntityOpt = userEntityRepository.findEntityByUserId(user.getId());
 
         // the user already had an entity in the room, remove it before entering.
         if (userEntityOpt.isPresent()) {
-            BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
+            OutgoingPacket.send(
+                    roomUsers,
                     OutPacketHeaders.RemoveRoomEntity,
                     entityMapper.entityToJson(userEntityOpt.get())
-            ));
+            );
 
             exitRoomUseCase.userExitRoom(user, room);
         }
@@ -81,28 +81,31 @@ public class UserEnterRoom extends IncomingPacket {
 
         //  load the room for the user who just entered.
         {
-
-            client.sendMessage(new OutgoingPacket(
+            OutgoingPacket.send(
+                    client,
                     OutPacketHeaders.SendRoomData,
                     roomMapper.roomToJson(room)
-            ));
+            );
 
             Collection<Entity> roomEntities = room.getEntities().values();
 
-            client.sendMessage(new OutgoingPacket(
+            OutgoingPacket.send(
+                    client,
                     OutPacketHeaders.LoadRoomEntities,
                     entityMapper.entitiesToJson(roomEntities)
-            ));
+            );
+
         }
 
         // add the new entity to all clients that were already in the room.
         {
             Entity userEntity = userEntityRepository.findEntityByUserId(user.getId()).get();
 
-            BroadcastHelper.sendBroadcastMessage(roomUsers, new OutgoingPacket(
+            OutgoingPacket.send(
+                    roomUsers,
                     OutPacketHeaders.AddRoomEntity,
                     entityMapper.entityToJson(userEntity)
-            ));
+            );
         }
 
     }

@@ -1,11 +1,14 @@
 package com.nhg.game.adapter.out.websocket;
 
+import com.nhg.game.adapter.in.websocket.ClientUserMap;
+import com.nhg.game.domain.user.User;
+import com.nhg.game.infrastructure.context.BeanRetriever;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.packet.Packet;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 @Getter
@@ -22,50 +25,33 @@ public class OutgoingPacket implements Packet<Integer, JSONObject> {
         return "{\"header\": " + this.getHeader() + ", \"body\": " + this.body.toString() + "}";
     }
 
-    public OutgoingPacket(int header) {
+    private OutgoingPacket(int header) {
         this.header = header;
         this.body = new JSONObject();
     }
 
-    public OutgoingPacket(int header, JSONObject jsonObject) {
-        this(header);
-        this.body = jsonObject;
-    }
+    public static void send(@NonNull Client<?> client, int header, @NonNull Object data) {
+        OutgoingPacket packet = new OutgoingPacket(header);
 
-    public OutgoingPacket(int header, String data) {
-        this(header);
-
-        try {
-            try {
-                this.body = new JSONObject(data);
-            } catch (JSONException e) {
-                this.body.put("data", data);
-            }
-        } catch (JSONException e) {
-            log.error("Error creating packet with id: " + header);
+        if (data instanceof JSONObject jsonObject) {
+            packet.body = jsonObject;
+        } else {
+            packet.body.put("data", data);
         }
 
+        client.sendMessage(packet);
     }
 
-    public OutgoingPacket(int header, boolean data) {
-        this(header);
+    public static void send(@NonNull Iterable<User> users, int header, @NonNull Object data) {
+        ClientUserMap clientUserMap = BeanRetriever.get(ClientUserMap.class);
 
-        try {
-            this.body.put("data", data);
-        } catch (JSONException e) {
-            log.error("Error creating packet with id: " + header);
-        }
+        users.forEach(user -> {
+            if (user == null) return;
 
+            Client<?> client = clientUserMap.getClient(user.getId());
+
+            send(client, header, data);
+        });
     }
 
-    public OutgoingPacket(int header, int data) {
-        this(header);
-
-        try {
-            this.body.put("data", data);
-        } catch (JSONException e) {
-            log.error("Error creating packet with id: " + header);
-        }
-
-    }
 }

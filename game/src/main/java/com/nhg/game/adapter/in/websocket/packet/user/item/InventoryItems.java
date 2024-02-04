@@ -32,9 +32,10 @@ public class InventoryItems extends IncomingPacket {
 
         List<Item> items = inventoryItemsUseCase.byOwner(user);
 
-        client.sendMessage(new OutgoingPacket(
+        OutgoingPacket.send(
+                client,
                 OutPacketHeaders.InventoryItems,
                 itemMapper.itemsToJson(items)
-        ));
+        );
     }
 }
