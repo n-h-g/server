@@ -28,7 +28,8 @@
 * [🧰 Build & Run](#build-run)
   + [🛠️ Build the application](#build)
   + [▶️ Run the application](#run)
-
+* [✨ Contributors](#contributors)
+  
 <span id="description"></span>
 ## 📃 Description
 
@@ -60,7 +61,6 @@ To build this application:
 - Open a terminal in the folder where you cloned the repository
 - Run the `gradle build` command.
 
-
 <span id="run"></span>
 ### ▶️ Run the application
 To run this application:
@@ -77,6 +77,10 @@ To run this application:
 > [!IMPORTANT]
 > When you run the `docker-compose up` command docker creates the images and caches them and then starts the services, or, if they are already available in the cache, takes them from the cache and starts the services. If changes are made, if you run the command directly, they will not be visible since the cached images will be used. To solve this run the `docker-compose build --no-cache` command to recreate the images (remember to build the application first).
 
----
+<span id="contributors"></span>
+## ✨ Contributors
+Contributions are welcomed!
+
+<a href="https://github.com/n-h-g/server/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=n-h-g/server"></a>
 
 
