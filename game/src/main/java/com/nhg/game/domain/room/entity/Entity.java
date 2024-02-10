@@ -26,19 +26,16 @@ import java.util.UUID;
  *
  * @see Room
  */
+@Getter
 @Slf4j
 public class Entity {
 
-    @Getter
     private final UUID id;
 
-    @Getter
     private final EntityType type;
 
-    @Getter
     private final Room room;
 
-    @Getter
     private final DomainEventPublisher eventPublisher;
 
     private final EnumMap<ComponentType, Component> components;
@@ -106,10 +103,6 @@ public class Entity {
 
     public boolean hasComponent(ComponentType type) {
         return components.containsKey(type);
-    }
-
-    public EnumMap<ComponentType, Component> getComponents() {
-        return components;
     }
 
     /**
