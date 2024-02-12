@@ -12,6 +12,7 @@
 > [![Security issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20security?style=flat-square&color=%230E8A16&label=security)](https://github.com/n-h-g/server/labels/type%3A%20security)
 > [![Documentation issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20documentation?style=flat-square&color=%23006B75&label=documentation)](https://github.com/n-h-g/server/labels/type%3A%20documentation)
 > [![Feature issues](https://img.shields.io/github/issues/n-h-g/server/type%3A%20feature?style=flat-square&color=%230052CC&label=feature)](https://github.com/n-h-g/server/labels/type%3A%20feature)
+> [![Good first issues](https://img.shields.io/github/issues/n-h-g/server/good%20first%20issue?style=flat-square&color=%239937DC&label=good%20first%20issue)](https://github.com/n-h-g/server/labels/good%20first%20issue)
 
 
 > Join our Discord server
