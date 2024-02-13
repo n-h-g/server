@@ -11,6 +11,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +24,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class ItemPrototypeJpa {
 
@@ -75,6 +79,24 @@ public class ItemPrototypeJpa {
                 .allowInventoryStack(allowInventoryStack)
                 .allowSit(allowSit)
                 .allowLay(allowLay)
+                .build();
+    }
+
+    public static ItemPrototypeJpa fromDomain(ItemPrototype prototype) {
+        return ItemPrototypeJpa.builder()
+                .id(prototype.getId())
+                .itemType(prototype.getItemType())
+                .name(prototype.getName())
+                .interaction(prototype.getInteraction())
+                .stateCount(prototype.getStateCount())
+                .width(prototype.getWidth())
+                .length(prototype.getLength())
+                .height(prototype.getHeight())
+                .allowStack(prototype.isAllowStack())
+                .allowWalk(prototype.isAllowWalk())
+                .allowInventoryStack(prototype.isAllowInventoryStack())
+                .allowSit(prototype.isAllowSit())
+                .allowLay(prototype.isAllowLay())
                 .build();
     }
 }

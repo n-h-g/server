@@ -1,8 +1,6 @@
 package com.nhg.game.application.usecase.room.item;
 
 import com.nhg.common.domain.UseCase;
-import com.nhg.common.domain.event.DomainEventPublisher;
-import com.nhg.game.application.event.room.RemovedRoomEntityEvent;
 import com.nhg.game.application.repository.ItemRepository;
 import com.nhg.game.application.usecase.room.RoomSharedUseCase;
 import com.nhg.game.domain.item.ItemType;
@@ -11,44 +9,48 @@ import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.room.entity.component.ComponentType;
 import com.nhg.game.domain.room.entity.component.InteractionComponent;
+import com.nhg.game.domain.shared.position.Position2;
+import com.nhg.game.domain.shared.position.Position3;
 import com.nhg.game.domain.user.User;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @UseCase
 @RequiredArgsConstructor
-public class PickUpItemUseCase {
+public class MoveItemUseCase {
 
-    private final ItemRepository itemRepository;
     private final RoomSharedUseCase roomSharedUseCase;
-    private final DomainEventPublisher eventPublisher;
+    private final ItemRepository itemRepository;
 
 
-    public void pickUpItem(@NonNull Entity userEntity, @NonNull Entity itemEntity, @NonNull Room room) {
+    public void moveItem(@NonNull Entity userEntity, @NonNull Entity itemEntity,
+                         @NonNull Room room, @NonNull Position2 position) {
         User user = roomSharedUseCase.getUserFromEntity(userEntity);
         RoomItem item = roomSharedUseCase.getItemFromEntity(itemEntity);
 
         if (user == null || item == null) return;
 
-        interactionOnPickUp(itemEntity, userEntity);
+        interactionOnMove(itemEntity, userEntity);
+
+        //TODO: calc z from room heightmap
+        Position3 newPosition = new Position3(position, 0);
+        item.setPosition(newPosition);
 
         if (item.getPrototype().getItemType() == ItemType.FLOOR_ITEM) {
             roomSharedUseCase.updateRoomTile(room, item);
         }
 
-        itemRepository.unsetRoomForItem(item);
-        room.removeEntity(itemEntity);
-
-        eventPublisher.publish(new RemovedRoomEntityEvent(itemEntity));
-
+        itemRepository.save(item);
     }
 
-    private void interactionOnPickUp(Entity itemEntity, Entity userEntity) {
+    private void interactionOnMove(Entity itemEntity, Entity userEntity) {
         InteractionComponent interactionComponent =
                 (InteractionComponent) itemEntity.getComponent(ComponentType.Interaction);
 
         if (interactionComponent == null) return;
 
-        interactionComponent.onPickUp(userEntity);
+        interactionComponent.onMove(userEntity);
     }
+
+
 }

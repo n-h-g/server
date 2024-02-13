@@ -16,6 +16,12 @@ public class Position3 {
     private int y;
     private float z;
 
+    public Position3(Position2 position2, float z) {
+        this.x = position2.getX();
+        this.y = position2.getY();
+        this.z = z;
+    }
+
     public Position2 toPosition2() {
         return new Position2(x,y);
     }
