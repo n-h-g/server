@@ -11,7 +11,6 @@ import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.room.entity.component.ComponentType;
 import com.nhg.game.domain.room.entity.component.InteractionComponent;
-import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.user.User;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +33,7 @@ public class PickUpItemUseCase {
         interactionOnPickUp(itemEntity, userEntity);
 
         if (item.getPrototype().getItemType() == ItemType.FLOOR_ITEM) {
-            updateRoomTile(room, item);
+            roomSharedUseCase.updateRoomTile(room, item);
         }
 
         itemRepository.unsetRoomForItem(item);
@@ -51,11 +50,5 @@ public class PickUpItemUseCase {
         if (interactionComponent == null) return;
 
         interactionComponent.onPickUp(userEntity);
-    }
-
-    private void updateRoomTile(Room room, RoomItem item) {
-        Position2 pos = item.getPosition().toPosition2();
-
-        //TODO: update tile at position
     }
 }
