@@ -12,6 +12,7 @@ import java.util.Objects;
 public class Friendship {
 
     @AllArgsConstructor
+    @Getter
     public static class Id implements Serializable {
         /**
          * One of the two users who forms the friendship.
