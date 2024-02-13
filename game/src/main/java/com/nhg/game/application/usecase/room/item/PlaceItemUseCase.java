@@ -38,6 +38,8 @@ public class PlaceItemUseCase {
 
         interactionOnPlace(itemEntity, userEntity);
 
+        itemRepository.save(item);
+
         return itemEntity;
     }
 
