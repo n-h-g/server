@@ -20,6 +20,14 @@ public class ItemJpaRepositoryAdapter implements ItemRepository {
     private final ItemJpaRepository itemJpaRepository;
 
     @Override
+    public void save(RoomItem item) {
+        ItemJpa itemJpa = itemJpaRepository.findById(item.getId())
+                .orElseGet(() -> ItemJpa.fromDomain(item));
+
+        itemJpaRepository.save(itemJpa);
+    }
+
+    @Override
     public List<Item> getInventoryItemsByOwner(@NonNull User owner) {
         return itemJpaRepository.inventoryItemsByOwnerId(owner.getId())
                 .stream().map(ItemJpa::toItem).toList();

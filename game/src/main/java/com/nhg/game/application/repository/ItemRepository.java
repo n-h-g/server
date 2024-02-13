@@ -9,6 +9,8 @@ import java.util.Optional;
 
 public interface ItemRepository {
 
+    void save(RoomItem item);
+
     List<Item> getInventoryItemsByOwner(User owner);
 
     Optional<Item> findItemById(int itemId);
