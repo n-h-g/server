@@ -17,6 +17,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,6 +28,8 @@ import org.hibernate.type.SqlTypes;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "items")
 public class ItemJpa {
@@ -83,5 +87,19 @@ public class ItemJpa {
                 new Position3(x, y, z),
                 extraData
         );
+    }
+
+    public static ItemJpa fromDomain(RoomItem item) {
+        return ItemJpa.builder()
+                .id(item.getId())
+                .room(RoomJpa.fromDomain(item.getEntity().getRoom()))
+                .owner(UserJpa.fromDomain(item.getOwner()))
+                .rotation(item.getRotation())
+                .x(item.getPosition().getX())
+                .y(item.getPosition().getY())
+                .z(item.getPosition().getZ())
+                .extraData(item.getExtraData())
+                .prototype(ItemPrototypeJpa.fromDomain(item.getPrototype()))
+                .build();
     }
 }
