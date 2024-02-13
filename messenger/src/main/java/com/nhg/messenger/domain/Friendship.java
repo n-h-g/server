@@ -1,21 +1,18 @@
-package com.nhg.messenger.model;
+package com.nhg.messenger.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
 @Setter
-@Entity
-@NoArgsConstructor
 public class Friendship {
 
-    @Getter
-    @Setter
     @AllArgsConstructor
-    @Embeddable
+    @Getter
     public static class Id implements Serializable {
         /**
          * One of the two users who forms the friendship.
@@ -47,7 +44,6 @@ public class Friendship {
         }
     }
 
-    @EmbeddedId
     private Id id;
 
     /**
@@ -60,4 +56,5 @@ public class Friendship {
         this.id = new Id(user1, user2);
         this.pending = pending;
     }
+
 }

@@ -33,7 +33,7 @@ public class CreateRoom extends IncomingPacket {
         int doorX = body.getInt("door_x");
         int doorY = body.getInt("door_y");
         int doorDir = body.getInt("door_dir");
-        int maxUsers = body.getInt("maxUsers");
+        int maxUsers = body.getInt("max_users");
 
 
         Room room = createRoomUseCase.createRoom(

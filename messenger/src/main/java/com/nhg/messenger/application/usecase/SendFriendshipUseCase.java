@@ -1,16 +1,18 @@
-package com.nhg.messenger.service;
+package com.nhg.messenger.application.usecase;
 
-import com.nhg.messenger.model.Friendship;
-import com.nhg.messenger.repository.FriendshipRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import com.nhg.common.domain.UseCase;
+import com.nhg.messenger.application.port.repository.FriendshipRepository;
+import com.nhg.messenger.domain.Friendship;
+import lombok.RequiredArgsConstructor;
 
-@Service
-@AllArgsConstructor
-public class FriendshipService {
+import java.util.Optional;
+
+@UseCase
+@RequiredArgsConstructor
+public class SendFriendshipUseCase {
+
     private final FriendshipRepository friendshipRepository;
-    private final RestTemplate restTemplate;
+
 
     /**
      * Sends a friendship request.
@@ -20,14 +22,16 @@ public class FriendshipService {
      * @return true if a friendship is made, false if the friend already exists or
      *         if a pending friend request is created.
      */
-    public boolean requestFriendship(int fromId, int toId) {
-        Friendship friendship = friendshipRepository.getFriendshipsByIds(fromId, toId);
+    public boolean sendFriendship(int fromId, int toId) {
+        Optional<Friendship> friendshipOpt = friendshipRepository.findByIds(fromId, toId);
 
         // users are not friend and there is not a friendship request pending
-        if (friendship == null) {
+        if (friendshipOpt.isEmpty()) {
             friendshipRepository.save(new Friendship(fromId, toId, true));
             return false;
         }
+
+        Friendship friendship = friendshipOpt.get();
 
         // users are already friends
         if (!friendship.isPending() || friendship.getId().getUser1() == fromId) return false;
@@ -35,8 +39,9 @@ public class FriendshipService {
         // there was a pending friendship request
         friendship.setPending(false);
         friendshipRepository.save(friendship);
-        return true;
-    }
 
+        return true;
+
+    }
 
 }
