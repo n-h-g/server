@@ -8,4 +8,5 @@ include(":moderation")
 include(":messenger")
 
 include 'common'
+include 'messenger'
 
