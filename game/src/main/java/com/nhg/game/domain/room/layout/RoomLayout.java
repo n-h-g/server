@@ -29,11 +29,12 @@ public class RoomLayout implements Layout {
     private final Rotation doorRotation;
 
     private Tile[][] tiles;
+    private float[][] heightmap;
 
     public RoomLayout(String layout, Position2 doorPosition, Rotation doorRotation) {
         this.layout = layout;
 
-        this.prepareTilesFromLayout();
+        this.prepareTilesAndHeightmapFromLayout();
 
         float doorZ = getTile(doorPosition).getPosition().getZ();
         this.doorPosition = new Position3(doorPosition, doorZ);
@@ -54,7 +55,7 @@ public class RoomLayout implements Layout {
      * <!--    /
      * <!--   Y
      */
-    private void prepareTilesFromLayout() {
+    private void prepareTilesAndHeightmapFromLayout() {
         String[] layoutRows = layout.split("/");
 
         if (layoutRows.length == 0) throw new IllegalArgumentException("Wrong layout syntax");
@@ -63,6 +64,7 @@ public class RoomLayout implements Layout {
         int mapSizeX = layoutRows.length;
 
         this.tiles = new Tile[mapSizeX][mapSizeY];
+        this.heightmap = new float[mapSizeX][mapSizeY];
 
         for (int x = 0; x < mapSizeX; x++) {
             for (int y = 0; y < mapSizeY; y++) {
@@ -79,6 +81,7 @@ public class RoomLayout implements Layout {
                         : Integer.parseInt(Character.toString(tile));
 
                 this.tiles[x][y] = new Tile(new Position3(x,y,z));
+                this.heightmap[x][y] = z;
             }
         }
     }
@@ -92,6 +95,21 @@ public class RoomLayout implements Layout {
      */
     public Tile getTile(Position2 position) throws IndexOutOfBoundsException {
         return tiles[position.getX()][position.getY()];
+    }
+
+    public float getHeightAtPosition(Position2 position) throws IndexOutOfBoundsException {
+        return this.heightmap[position.getX()][position.getY()];
+    }
+
+    public void setHeightAtPosition(Position2 position, float height) throws IndexOutOfBoundsException {
+        Tile tile = getTile(position);
+
+        if (height < tile.getPosition().getZ()) {
+            this.heightmap[position.getX()][position.getY()] = tile.getPosition().getZ();
+            return;
+        }
+
+        this.heightmap[position.getX()][position.getY()] = height;
     }
 
 }

@@ -2,7 +2,8 @@ package com.nhg.game.application.usecase.room.item;
 
 import com.nhg.common.domain.UseCase;
 import com.nhg.game.application.repository.ItemRepository;
-import com.nhg.game.application.usecase.room.RoomSharedUseCase;
+import com.nhg.game.application.usecase.room.RoomUtils;
+import com.nhg.game.application.usecase.room.entity.EntityUtils;
 import com.nhg.game.domain.item.ItemType;
 import com.nhg.game.domain.item.RoomItem;
 import com.nhg.game.domain.room.Room;
@@ -18,15 +19,14 @@ import lombok.RequiredArgsConstructor;
 @UseCase
 @RequiredArgsConstructor
 public class MoveItemUseCase {
-
-    private final RoomSharedUseCase roomSharedUseCase;
+    
     private final ItemRepository itemRepository;
 
 
     public void moveItem(@NonNull Entity userEntity, @NonNull Entity itemEntity,
                          @NonNull Room room, @NonNull Position2 position) {
-        User user = roomSharedUseCase.getUserFromEntity(userEntity);
-        RoomItem item = roomSharedUseCase.getItemFromEntity(itemEntity);
+        User user = EntityUtils.getUserFromEntity(userEntity);
+        RoomItem item = EntityUtils.getItemFromEntity(itemEntity);
 
         if (user == null || item == null) return;
 
@@ -39,7 +39,7 @@ public class MoveItemUseCase {
         item.setPosition(newPosition);
 
         if (item.getPrototype().getItemType() == ItemType.FLOOR_ITEM) {
-            roomSharedUseCase.updateRoomTile(room, item);
+            RoomUtils.updateRoomTile(room, item);
         }
 
         itemRepository.save(item);
