@@ -32,17 +32,11 @@ public class MoveItemUseCase {
 
         interactionOnMove(itemEntity, userEntity);
 
-        // TODO: heightmap
-        float z = room.getRoomLayout().getTile(position).getPosition().getZ();
-        Position3 newPosition = new Position3(position, z);
-
-        item.setPosition(newPosition);
+        setNewPosition(item, room, position);
 
         if (item.getPrototype().getItemType() == ItemType.FLOOR_ITEM) {
             RoomUtils.updateRoomTile(room, item);
         }
-
-        itemRepository.save(item);
     }
 
     private void interactionOnMove(Entity itemEntity, Entity userEntity) {
@@ -52,6 +46,16 @@ public class MoveItemUseCase {
         if (interactionComponent == null) return;
 
         interactionComponent.onMove(userEntity);
+    }
+
+    private void setNewPosition(RoomItem item, Room room, Position2 position) {
+        // TODO: heightmap
+        float z = room.getRoomLayout().getTile(position).getPosition().getZ();
+        Position3 newPosition = new Position3(position, z);
+
+        item.setPosition(newPosition);
+
+        itemRepository.save(item);
     }
 
 
