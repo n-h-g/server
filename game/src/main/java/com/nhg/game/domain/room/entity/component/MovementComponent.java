@@ -77,11 +77,11 @@ public class MovementComponent extends Component {
      */
     public void calculatePath() {
         try {
-            Position3 position = getPositionComponent().getPosition();
+            Position2 position = getPositionComponent().getPosition().toPosition2();
 
             calculatedPath = pathfinder.findPath(
-                    entity.getRoom().getRoomLayout().getTile(position.getX(), position.getY()),
-                    entity.getRoom().getRoomLayout().getTile(destination.getX(), destination.getY()),
+                    entity.getRoom().getRoomLayout().getTile(position),
+                    entity.getRoom().getRoomLayout().getTile(destination),
                     entity.getRoom().getRoomLayout());
 
             log.debug("Calculate Path from current " + position + " to destination " + destination);

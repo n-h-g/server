@@ -4,6 +4,7 @@ import com.nhg.common.domain.UseCase;
 import com.nhg.game.application.dto.CreateRoomRequest;
 import com.nhg.game.application.repository.RoomRepository;
 import com.nhg.game.domain.room.Room;
+import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.shared.position.Rotation;
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +21,7 @@ public class CreateRoomUseCase {
                 request.description(),
                 request.owner(),
                 request.layout(),
-                request.doorX(),
-                request.doorY(),
+                new Position2(request.doorX(), request.doorY()),
                 Rotation.intToRotation(request.doorDirection())
         );
 

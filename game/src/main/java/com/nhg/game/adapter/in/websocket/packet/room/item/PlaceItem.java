@@ -9,6 +9,7 @@ import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.item.PlaceItemUseCase;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
+import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 
@@ -42,11 +43,9 @@ public class PlaceItem extends IncomingPacket {
         Room room = userEntity.getRoom();
 
         int itemId = body.getInt("id");
-        int x = body.getInt("x");
-        int y = body.getInt("y");
-        float z = body.getFloat("z"); // TODO: Remove it
+        Position2 position = new Position2(body.getInt("x"), body.getInt("y"));
 
-        Entity itemEntity = placeItemUseCase.placeItem(room, userEntity, itemId, x, y, z);
+        Entity itemEntity = placeItemUseCase.placeItem(room, userEntity, itemId, position);
         if (itemEntity == null) return;
 
         OutgoingPacket.send(

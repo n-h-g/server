@@ -1,19 +1,12 @@
 package com.nhg.game.domain.room.layout;
 
-
+import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.shared.position.Position3;
 import com.nhg.game.domain.shared.position.Rotation;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.stream.Stream;
 
-@Slf4j
-@Getter
-@Setter
-@NoArgsConstructor
 public class RoomLayout implements Layout {
 
     /**
@@ -26,21 +19,26 @@ public class RoomLayout implements Layout {
      * <!-- 0 1 1 1 1 2 /
      * <!-- 0 1 1 1 1 2 /
      */
-    private String layout;
-    private int doorX;
-    private int doorY;
-    private Rotation doorRotation;
-    private Tile[][] tiles;
-    private int mapSizeX;
-    private int mapSizeY;
+    @Getter
+    private final String layout;
 
-    public RoomLayout(String layout, int doorX, int doorY, Rotation doorRotation) {
+    @Getter
+    private final Position3 doorPosition;
+
+    @Getter
+    private final Rotation doorRotation;
+
+    private Tile[][] tiles;
+
+    public RoomLayout(String layout, Position2 doorPosition, Rotation doorRotation) {
         this.layout = layout;
-        this.doorX = doorX;
-        this.doorY = doorY;
-        this.doorRotation = doorRotation;
 
         this.prepareTilesFromLayout();
+
+        float doorZ = getTile(doorPosition).getPosition().getZ();
+        this.doorPosition = new Position3(doorPosition, doorZ);
+
+        this.doorRotation = doorRotation;
     }
 
 
@@ -61,8 +59,8 @@ public class RoomLayout implements Layout {
 
         if (layoutRows.length == 0) throw new IllegalArgumentException("Wrong layout syntax");
 
-        mapSizeY = Stream.of(layoutRows).map(String::length).max(Integer::compareTo).get();
-        mapSizeX = layoutRows.length;
+        int mapSizeY = Stream.of(layoutRows).map(String::length).max(Integer::compareTo).get();
+        int mapSizeX = layoutRows.length;
 
         this.tiles = new Tile[mapSizeX][mapSizeY];
 
@@ -88,28 +86,12 @@ public class RoomLayout implements Layout {
     /**
      * Get the tile on the given position on this layout.
      *
-     * @param x position
-     * @param y position
+     * @param position the tile position.
      * @return the tile on the given x and y position.
      * @throws IndexOutOfBoundsException when x or y are greater than the map size
      */
-    public Tile getTile(int x, int y) throws IndexOutOfBoundsException {
-        return tiles[x][y];
-    }
-
-    /**
-     * Get the coordinates of the door as Position3.
-     *
-     * @return Position3 representing X,Y and Z coordinates of the door.
-     *
-     * @see Position3
-     */
-    public Position3 getDoorPosition3() {
-        return new Position3(
-                doorX,
-                doorY,
-                getTile(doorX, doorY).getPosition().getZ()
-        );
+    public Tile getTile(Position2 position) throws IndexOutOfBoundsException {
+        return tiles[position.getX()][position.getY()];
     }
 
 }

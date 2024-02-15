@@ -5,6 +5,7 @@ import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.entity.EntityMoveToUseCase;
 import com.nhg.game.domain.room.entity.Entity;
+import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 
@@ -32,11 +33,10 @@ public class UserMove extends IncomingPacket  {
 
         if (entityOpt.isEmpty()) return;
 
-        int x = body.getInt("x");
-        int y = body.getInt("y");
+        Position2 destination = new Position2(body.getInt("x"), body.getInt("y"));
 
         Entity entity = entityOpt.get();
 
-        entityMoveToUseCase.moveTo(entity, x, y);
+        entityMoveToUseCase.moveTo(entity, destination);
     }
 }

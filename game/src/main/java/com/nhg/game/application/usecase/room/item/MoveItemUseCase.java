@@ -32,8 +32,10 @@ public class MoveItemUseCase {
 
         interactionOnMove(itemEntity, userEntity);
 
-        //TODO: calc z from room heightmap
-        Position3 newPosition = new Position3(position, 0);
+        // TODO: heightmap
+        float z = room.getRoomLayout().getTile(position).getPosition().getZ();
+        Position3 newPosition = new Position3(position, z);
+
         item.setPosition(newPosition);
 
         if (item.getPrototype().getItemType() == ItemType.FLOOR_ITEM) {
