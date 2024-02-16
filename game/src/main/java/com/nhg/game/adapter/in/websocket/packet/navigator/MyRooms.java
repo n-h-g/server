@@ -1,31 +1,30 @@
 package com.nhg.game.adapter.in.websocket.packet.navigator;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
-import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.RoomRepository;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.user.User;
-import com.nhg.game.infrastructure.context.BeanRetriever;
+import com.nhg.game.infrastructure.networking.Client;
+import com.nhg.game.infrastructure.networking.packet.ClientPacket;
+import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 
 import java.util.List;
 
-public class MyRooms extends IncomingPacket {
+@RequiredArgsConstructor
+@IncomingPacket(header = 7)
+public class MyRooms implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
     private final RoomRepository roomRepository;
     private final RoomToJsonMapper roomToJsonMapper;
 
-    public MyRooms() {
-        clientUserMap = BeanRetriever.get(ClientUserMap.class);
-        roomRepository = BeanRetriever.get(RoomRepository.class);
-        roomToJsonMapper = BeanRetriever.get(RoomToJsonMapper.class);
-    }
-
     @Override
-    public void handle() throws Exception {
+    public void handle(Client<?> client, JSONObject body) {
         User user = clientUserMap.getUser(client.getId());
 
         if (user == null) return;

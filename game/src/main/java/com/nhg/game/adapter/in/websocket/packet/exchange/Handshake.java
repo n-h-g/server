@@ -1,33 +1,32 @@
 package com.nhg.game.adapter.in.websocket.packet.exchange;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
-import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.usecase.user.FindUserUseCase;
 import com.nhg.game.domain.user.User;
-import com.nhg.game.infrastructure.context.BeanRetriever;
+import com.nhg.game.infrastructure.networking.Client;
+import com.nhg.game.infrastructure.networking.packet.ClientPacket;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
 @Slf4j
-public class Handshake extends IncomingPacket {
+@RequiredArgsConstructor
+@IncomingPacket(header = 1)
+public class Handshake implements ClientPacket<JSONObject> {
 
     private final RestTemplate restTemplate;
     private final FindUserUseCase findUser;
     private final ClientUserMap clientUserMap;
 
-    public Handshake() {
-        restTemplate = BeanRetriever.get("restTemplate", RestTemplate.class);
-        findUser = BeanRetriever.get(FindUserUseCase.class);
-        clientUserMap = BeanRetriever.get(ClientUserMap.class);
-    }
-
 
     @Override
-    public void handle() throws Exception {
+    public void handle(Client<?> client, JSONObject body) {
         String id = body.getString("sso");
 
         // TODO get the user from jwt

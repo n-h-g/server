@@ -1,9 +1,9 @@
 package com.nhg.game.adapter.in.websocket.packet.room.user;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
-import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
@@ -13,14 +13,19 @@ import com.nhg.game.application.usecase.room.user.UserExitRoomUseCase;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
-import com.nhg.game.infrastructure.context.BeanRetriever;
+import com.nhg.game.infrastructure.networking.Client;
+import com.nhg.game.infrastructure.networking.packet.ClientPacket;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 
 import java.util.Collection;
 import java.util.Optional;
 
 @Slf4j
-public class UserEnterRoom extends IncomingPacket {
+@RequiredArgsConstructor
+@IncomingPacket(header = 8)
+public class UserEnterRoom implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
     private final FindRoomUseCase findRoomUseCase;
@@ -30,18 +35,8 @@ public class UserEnterRoom extends IncomingPacket {
     private final EntityToJsonMapper entityMapper;
     private final RoomToJsonMapper roomMapper;
 
-    public UserEnterRoom() {
-        clientUserMap = BeanRetriever.get(ClientUserMap.class);
-        findRoomUseCase = BeanRetriever.get(FindRoomUseCase.class);
-        enterRoomUseCase = BeanRetriever.get(UserEnterRoomUseCase.class);
-        exitRoomUseCase = BeanRetriever.get(UserExitRoomUseCase.class);
-        userEntityRepository = BeanRetriever.get(UserEntityRepository.class);
-        entityMapper = BeanRetriever.get(EntityToJsonMapper.class);
-        roomMapper = BeanRetriever.get(RoomToJsonMapper.class);
-    }
-
     @Override
-    public void handle() throws Exception {
+    public void handle(Client<?> client, JSONObject body) {
         User user = clientUserMap.getUser(client.getId());
 
         if (user == null) return;

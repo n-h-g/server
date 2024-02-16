@@ -1,6 +1,6 @@
 package com.nhg.game.infrastructure.configuration;
 
-import com.nhg.game.infrastructure.networking.packet.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;

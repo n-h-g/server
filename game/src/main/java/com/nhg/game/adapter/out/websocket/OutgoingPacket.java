@@ -4,7 +4,7 @@ import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.context.BeanRetriever;
 import com.nhg.game.infrastructure.networking.Client;
-import com.nhg.game.infrastructure.networking.packet.Packet;
+import com.nhg.game.infrastructure.networking.packet.ServerPacket;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import org.json.JSONObject;
 @Getter
 @Setter
 @Slf4j
-public class OutgoingPacket implements Packet<Integer, JSONObject> {
+public class OutgoingPacket implements ServerPacket<Integer, JSONObject> {
 
     protected Integer header;
     protected JSONObject body;

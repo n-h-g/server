@@ -1,33 +1,32 @@
 package com.nhg.game.adapter.in.websocket.packet.room.item;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
-import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.item.MoveItemUseCase;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.user.User;
-import com.nhg.game.infrastructure.context.BeanRetriever;
+import com.nhg.game.infrastructure.networking.Client;
+import com.nhg.game.infrastructure.networking.packet.ClientPacket;
+import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class MoveItem extends IncomingPacket {
+@RequiredArgsConstructor
+@IncomingPacket(header = 26)
+public class MoveItem implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
     private final UserEntityRepository userEntityRepository;
     private final MoveItemUseCase moveItemUseCase;
 
 
-    public MoveItem() {
-        clientUserMap = BeanRetriever.get(ClientUserMap.class);
-        userEntityRepository = BeanRetriever.get(UserEntityRepository.class);
-        moveItemUseCase = BeanRetriever.get(MoveItemUseCase.class);
-    }
-
     @Override
-    public void handle() throws Exception {
+    public void handle(Client<?> client, JSONObject body) {
         User user = clientUserMap.getUser(client.getId());
 
         if (user == null) return;
