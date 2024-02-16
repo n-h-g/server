@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/game/users")
+@RequestMapping("api/v1/game/rooms")
 public class RoomController {
 
     private final FindRoomUseCase findRoomUseCase;

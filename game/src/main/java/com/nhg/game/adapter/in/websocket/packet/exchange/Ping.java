@@ -1,22 +1,23 @@
 package com.nhg.game.adapter.in.websocket.packet.exchange;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
-import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
-import com.nhg.game.infrastructure.context.BeanRetriever;
+import com.nhg.game.infrastructure.networking.Client;
+import com.nhg.game.infrastructure.networking.packet.ClientPacket;
+import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 
 
-public class Ping extends IncomingPacket {
+@RequiredArgsConstructor
+@IncomingPacket(header = 4)
+public class Ping implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
 
-    public Ping() {
-        clientUserMap = BeanRetriever.get(ClientUserMap.class);
-    }
-
     @Override
-    public void handle() {
+    public void handle(Client<?> client, JSONObject body) {
 
         boolean doLogin = !clientUserMap.containsClientId(client.getId());
 

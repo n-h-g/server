@@ -1,6 +1,6 @@
 package com.nhg.game.infrastructure.networking;
 
-import com.nhg.game.infrastructure.networking.packet.Packet;
+import com.nhg.game.infrastructure.networking.packet.ServerPacket;
 
 public interface Client<ClientId> {
 
@@ -11,7 +11,7 @@ public interface Client<ClientId> {
      *
      * @param packet packet that contains the message.
      */
-    void sendMessage(Packet<?,?> packet);
+    void sendMessage(ServerPacket<?,?> packet);
 
     /**
      * Disconnect this client.

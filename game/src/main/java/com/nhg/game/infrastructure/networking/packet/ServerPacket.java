@@ -6,7 +6,7 @@ package com.nhg.game.infrastructure.networking.packet;
  * @param <Header> Class for representing the packet header.
  * @param <Body> Class for representing the packet Body.
  */
-public interface Packet<Header, Body> {
+public interface ServerPacket<Header, Body> {
 
     Header getHeader();
     void setHeader(Header header);

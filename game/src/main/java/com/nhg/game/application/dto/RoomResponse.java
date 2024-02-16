@@ -20,8 +20,8 @@ public record RoomResponse(
                 room.getDescription(),
                 room.getRoomLayout().getLayout(),
                 room.getOwner(),
-                room.getRoomLayout().getDoorX(),
-                room.getRoomLayout().getDoorY(),
+                room.getRoomLayout().getDoorPosition().getX(),
+                room.getRoomLayout().getDoorPosition().getY(),
                 room.getRoomLayout().getDoorRotation().getValue(),
                 100
         );

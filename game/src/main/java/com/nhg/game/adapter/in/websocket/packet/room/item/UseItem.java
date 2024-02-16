@@ -3,7 +3,7 @@ package com.nhg.game.adapter.in.websocket.packet.room.item;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
-import com.nhg.game.application.usecase.room.item.RotateItemUseCase;
+import com.nhg.game.application.usecase.room.item.UseItemUseCase;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.user.User;
@@ -16,12 +16,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 28)
-public class RotateItem implements ClientPacket<JSONObject> {
+@IncomingPacket(header = 29)
+public class UseItem implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
+    private final UseItemUseCase useItemUseCase;
     private final UserEntityRepository userEntityRepository;
-    private final RotateItemUseCase rotateItemUseCase;
 
     @Override
     public void handle(Client<?> client, JSONObject body) {
@@ -42,6 +42,6 @@ public class RotateItem implements ClientPacket<JSONObject> {
 
         if (itemEntity == null) return;
 
-        rotateItemUseCase.rotateItem(userEntity, itemEntity, room);
+        useItemUseCase.useItem(userEntity, itemEntity, room);
     }
 }

@@ -1,7 +1,7 @@
 package com.nhg.game.infrastructure.networking.websocket;
 
 import com.nhg.game.infrastructure.networking.Client;
-import com.nhg.game.infrastructure.networking.packet.Packet;
+import com.nhg.game.infrastructure.networking.packet.ServerPacket;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.TextMessage;
@@ -24,7 +24,7 @@ public class WebSocketClient implements Client<String> {
     }
 
     @Override
-    public void sendMessage(@NonNull Packet<?,?> packet) {
+    public void sendMessage(@NonNull ServerPacket<?,?> packet) {
         try {
             session.sendMessage(new TextMessage(packet.toString()));
         } catch (IOException e) {

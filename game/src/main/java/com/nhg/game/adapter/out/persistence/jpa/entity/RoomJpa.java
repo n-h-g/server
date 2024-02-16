@@ -1,6 +1,7 @@
 package com.nhg.game.adapter.out.persistence.jpa.entity;
 
 import com.nhg.game.domain.room.Room;
+import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.shared.position.Rotation;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.Type;
 import org.hibernate.type.SqlTypes;
 
 @Getter
@@ -64,7 +64,7 @@ public class RoomJpa {
     private Rotation doorRotation;
 
     public Room toRoom() {
-        Room room = new Room(name, description, owner.toUser(), layout, doorX, doorY, doorRotation);
+        Room room = new Room(name, description, owner.toUser(), layout, new Position2(doorX, doorY), doorRotation);
         room.setId(id);
 
         return room;
@@ -76,8 +76,8 @@ public class RoomJpa {
                 .description(room.getDescription())
                 .owner(UserJpa.fromDomain(room.getOwner()))
                 .layout(room.getRoomLayout().getLayout())
-                .doorX(room.getRoomLayout().getDoorX())
-                .doorY(room.getRoomLayout().getDoorY())
+                .doorX(room.getRoomLayout().getDoorPosition().getX())
+                .doorY(room.getRoomLayout().getDoorPosition().getY())
                 .doorRotation(room.getRoomLayout().getDoorRotation())
                 .build();
 

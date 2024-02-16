@@ -12,10 +12,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EntityMoveToUseCase {
 
-    public void moveTo(@NonNull Entity entity, int x, int y) {
+    public void moveTo(@NonNull Entity entity, @NonNull Position2 destination) {
         MovementComponent mc = (MovementComponent) entity.getComponent(ComponentType.Movement);
 
-        mc.setDestination(new Position2(x,y));
+        mc.setDestination(destination);
         mc.calculatePath();
     }
 }

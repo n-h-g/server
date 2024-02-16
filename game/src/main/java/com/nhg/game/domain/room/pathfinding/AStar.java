@@ -110,7 +110,7 @@ public class AStar implements Pathfinder {
                     Tile adjTile;
 
                     try {
-                        adjTile = layout.getTile(adjPosition.getX(), adjPosition.getY());
+                        adjTile = layout.getTile(adjPosition);
                     } catch (IndexOutOfBoundsException e) {
                         continue;
                     }

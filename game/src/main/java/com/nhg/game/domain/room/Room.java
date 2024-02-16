@@ -4,6 +4,7 @@ package com.nhg.game.domain.room;
 import com.nhg.game.domain.room.entity.Entity;
 import com.nhg.game.domain.room.entity.EntityMap;
 import com.nhg.game.domain.room.layout.RoomLayout;
+import com.nhg.game.domain.shared.position.Position2;
 import com.nhg.game.domain.shared.position.Rotation;
 import com.nhg.game.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -28,13 +29,13 @@ public class Room implements Runnable {
         this.entities = new EntityMap();
     }
 
-    public Room(String name, String description, User owner, String layout, int doorX, int doorY, Rotation doorRotation) {
+    public Room(String name, String description, User owner, String layout, Position2 doorPosition, Rotation doorRotation) {
         this();
 
         this.name = name;
         this.description = description;
         this.owner = owner;
-        this.roomLayout = new RoomLayout(layout, doorX, doorY, doorRotation);
+        this.roomLayout = new RoomLayout(layout, doorPosition, doorRotation);
     }
 
     /**

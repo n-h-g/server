@@ -1,42 +1,48 @@
 package com.nhg.game.infrastructure.networking.packet;
 
-
+import com.nhg.game.adapter.in.websocket.IncomingPacket;
+import com.nhg.game.infrastructure.context.ApplicationContextUtils;
 import com.nhg.game.infrastructure.networking.Client;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class PacketHandlerIntJson implements PacketHandler<Integer, JSONObject> {
 
-    private final Map<Integer, Class<? extends ClientPacket<Integer, JSONObject>>> clientPackets;
+    private final Map<Integer, ClientPacket<JSONObject>> clientPackets = getBeanPackets();
 
     @Override
     public void handle(@NonNull Client<?> client, @NonNull Integer header, JSONObject body) {
         try {
-            final ClientPacket<Integer, JSONObject> packet = this.clientPackets.get(header).getDeclaredConstructor().newInstance();
+            final ClientPacket<JSONObject> packet = this.clientPackets.get(header);
 
-            packet.setHeader(header);
-            packet.setBody(body);
-            packet.setClient(client);
-            packet.handle();
+            packet.handle(client, body);
 
         } catch (Exception e) {
             log.error("Error in packet handling: " + e);
         }
     }
 
-    /**
-     * Register the client packet, so it will be available for future handling.
-     *
-     * @param header packet header
-     * @param packet packet class
-     */
-    private void registerClientPacket(@NonNull Integer header, @NonNull Class<? extends ClientPacket<Integer, JSONObject>> packet) {
-        this.clientPackets.putIfAbsent(header, packet);
+    @SuppressWarnings("unchecked")
+    private static Map<Integer, ClientPacket<JSONObject>> getBeanPackets() {
+        Map<Integer, ClientPacket<JSONObject>> cp = new HashMap<>();
+
+        ApplicationContextUtils.getApplicationContext().getBeansWithAnnotation(IncomingPacket.class)
+                .forEach((beanName, bean) -> {
+                    IncomingPacket annotation = bean.getClass().getAnnotation(IncomingPacket.class);
+                    int header = annotation.header();
+
+                    cp.put(header, (ClientPacket<JSONObject>) bean);
+                });
+
+        return cp;
     }
 }
