@@ -1,4 +1,4 @@
-package com.nhg.game.infrastructure.networking.packet;
+package com.nhg.game.adapter.in.websocket;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
