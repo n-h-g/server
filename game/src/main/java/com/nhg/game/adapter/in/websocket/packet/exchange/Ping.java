@@ -1,5 +1,6 @@
 package com.nhg.game.adapter.in.websocket.packet.exchange;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeader;
@@ -11,7 +12,7 @@ import org.json.JSONObject;
 
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 4)
+@IncomingPacket(header = InPacketHeader.Ping)
 public class Ping implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;

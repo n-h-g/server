@@ -1,5 +1,6 @@
 package com.nhg.game.adapter.in.websocket.packet.room.user;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
@@ -15,7 +16,7 @@ import org.json.JSONObject;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 10)
+@IncomingPacket(header = InPacketHeader.UserMove)
 public class UserMove implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;

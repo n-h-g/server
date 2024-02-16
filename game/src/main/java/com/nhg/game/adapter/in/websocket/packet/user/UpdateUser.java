@@ -1,5 +1,6 @@
 package com.nhg.game.adapter.in.websocket.packet.user;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.UserToJsonMapper;
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 15)
+@IncomingPacket(header = InPacketHeader.UpdateUser)
 public class UpdateUser implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;

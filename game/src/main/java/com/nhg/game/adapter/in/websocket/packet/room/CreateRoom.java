@@ -1,5 +1,6 @@
 package com.nhg.game.adapter.in.websocket.packet.room;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeader;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 36)
+@IncomingPacket(header = InPacketHeader.CreateRoom)
 public class CreateRoom implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;

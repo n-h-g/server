@@ -1,5 +1,6 @@
 package com.nhg.game.adapter.in.websocket.packet.exchange;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.out.websocket.OutPacketHeader;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
-@IncomingPacket(header = 1)
+@IncomingPacket(header = InPacketHeader.Handshake)
 public class Handshake implements ClientPacket<JSONObject> {
 
     private final RestTemplate restTemplate;
