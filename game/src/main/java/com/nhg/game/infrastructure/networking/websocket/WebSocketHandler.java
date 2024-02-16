@@ -1,10 +1,8 @@
 package com.nhg.game.infrastructure.networking.websocket;
 
-import com.nhg.game.adapter.in.websocket.packet.IncomingPacket;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.ClientRepository;
 import com.nhg.game.infrastructure.networking.packet.PacketHandler;
-import com.nhg.game.infrastructure.networking.packet.PacketHandlerIntJson;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +21,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     private final ClientRepository<String> clients;
 
-    private final PacketHandler<Integer, JSONObject> packetHandler =
-            new PacketHandlerIntJson(IncomingPacket.HeaderClassMap);
+    private final PacketHandler<Integer, JSONObject> packetHandler;
 
     @Override
     public void handleTextMessage(@NonNull WebSocketSession session, @NonNull TextMessage message) {
