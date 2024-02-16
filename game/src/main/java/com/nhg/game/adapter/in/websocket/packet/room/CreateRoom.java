@@ -2,7 +2,7 @@ package com.nhg.game.adapter.in.websocket.packet.room;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.dto.CreateRoomRequest;
 import com.nhg.game.application.usecase.room.CreateRoomUseCase;
@@ -44,7 +44,7 @@ public class CreateRoom implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.SendRoomId,
+                OutPacketHeader.SendRoomId,
                 room.getId()
         );
     }

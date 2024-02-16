@@ -2,7 +2,7 @@ package com.nhg.game.adapter.in.websocket.packet.exchange;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.usecase.user.FindUserUseCase;
 import com.nhg.game.domain.user.User;
@@ -51,7 +51,7 @@ public class Handshake implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.LoginMessageCheck,
+                OutPacketHeader.LoginMessageCheck,
                 true
         );
     }

@@ -2,7 +2,7 @@ package com.nhg.game.adapter.in.websocket.packet.exchange;
 
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.infrastructure.networking.Client;
 import com.nhg.game.infrastructure.networking.packet.ClientPacket;
@@ -23,7 +23,7 @@ public class Ping implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.Pong,
+                OutPacketHeader.Pong,
                 doLogin
         );
     }

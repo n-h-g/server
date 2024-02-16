@@ -1,7 +1,7 @@
 package com.nhg.game.adapter.out.websocket;
 
-public final class OutPacketHeaders {
-    private OutPacketHeaders() {
+public final class OutPacketHeader {
+    private OutPacketHeader() {
     }
 
     //region# Handshake and generic (0 to 99)

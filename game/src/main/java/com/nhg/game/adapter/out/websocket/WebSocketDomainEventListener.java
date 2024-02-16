@@ -27,7 +27,7 @@ public class WebSocketDomainEventListener {
 
                     OutgoingPacket.send(
                             entity.getRoom().getEntities().getUsers(),
-                            OutPacketHeaders.UpdateEntity,
+                            OutPacketHeader.UpdateEntity,
                             entityMapper.entityToJson(entity)
                     );
                 }
@@ -37,7 +37,7 @@ public class WebSocketDomainEventListener {
 
                     OutgoingPacket.send(
                             entity.getRoom().getEntities().getUsers(),
-                            OutPacketHeaders.RemoveRoomEntity,
+                            OutPacketHeader.RemoveRoomEntity,
                             entity.getId().toString()
                     );
                 }

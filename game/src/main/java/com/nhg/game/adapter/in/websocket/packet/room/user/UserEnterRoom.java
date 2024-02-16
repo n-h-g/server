@@ -4,7 +4,7 @@ import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.FindRoomUseCase;
@@ -65,7 +65,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
         if (userEntityOpt.isPresent()) {
             OutgoingPacket.send(
                     roomUsers,
-                    OutPacketHeaders.RemoveRoomEntity,
+                    OutPacketHeader.RemoveRoomEntity,
                     entityMapper.entityToJson(userEntityOpt.get())
             );
 
@@ -78,7 +78,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
         {
             OutgoingPacket.send(
                     client,
-                    OutPacketHeaders.SendRoomData,
+                    OutPacketHeader.SendRoomData,
                     roomMapper.roomToJson(room)
             );
 
@@ -86,7 +86,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
 
             OutgoingPacket.send(
                     client,
-                    OutPacketHeaders.LoadRoomEntities,
+                    OutPacketHeader.LoadRoomEntities,
                     entityMapper.entitiesToJson(roomEntities)
             );
 
@@ -98,7 +98,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
 
             OutgoingPacket.send(
                     roomUsers,
-                    OutPacketHeaders.AddRoomEntity,
+                    OutPacketHeader.AddRoomEntity,
                     entityMapper.entityToJson(userEntity)
             );
         }

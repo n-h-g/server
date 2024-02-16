@@ -2,7 +2,7 @@ package com.nhg.game.adapter.in.websocket.packet.navigator;
 
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.ActiveRoomRepository;
 import com.nhg.game.domain.room.Room;
@@ -27,7 +27,7 @@ public class AllRooms implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.SendAllRooms,
+                OutPacketHeader.SendAllRooms,
                 roomToJsonMapper.roomsToNavigatorRoomsJson(rooms)
         );
     }

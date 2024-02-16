@@ -3,7 +3,7 @@ package com.nhg.game.adapter.in.websocket.packet.user.item;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.ItemToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.usecase.item.GetInventoryItemsUseCase;
 import com.nhg.game.domain.item.Item;
@@ -33,7 +33,7 @@ public class InventoryItems implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.InventoryItems,
+                OutPacketHeader.InventoryItems,
                 itemMapper.itemsToJson(items)
         );
     }

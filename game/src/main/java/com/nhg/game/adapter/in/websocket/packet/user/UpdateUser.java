@@ -3,7 +3,7 @@ package com.nhg.game.adapter.in.websocket.packet.user;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.UserToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.networking.Client;
@@ -26,7 +26,7 @@ public class UpdateUser implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.UpdateUserInformation,
+                OutPacketHeader.UpdateUserInformation,
                 userMapper.userToJson(user)
         );
     }
