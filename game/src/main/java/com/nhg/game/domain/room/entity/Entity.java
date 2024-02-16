@@ -116,7 +116,7 @@ public class Entity {
      */
     public static Entity fromUser(@NonNull User user, @NonNull Room room, @NonNull DomainEventPublisher eventPublisher) {
         return new Entity(EntityType.HUMAN, room, eventPublisher)
-                .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getDoorPosition3(), Position3.class))
+                .addComponent(ComponentType.Position, Pair.of(room.getRoomLayout().getDoorPosition(), Position3.class))
                 .addComponent(ComponentType.BodyHeadRotation, Pair.of(room.getRoomLayout().getDoorRotation(), Rotation.class))
                 .addComponent(ComponentType.Action)
                 .addComponent(ComponentType.Movement)

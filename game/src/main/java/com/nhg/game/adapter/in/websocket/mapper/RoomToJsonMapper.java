@@ -22,8 +22,8 @@ public class RoomToJsonMapper {
                 .put("desc", room.getDescription())
                 .put("max_users", 100)
                 .put("layout", room.getRoomLayout().getLayout())
-                .put("door_x", room.getRoomLayout().getDoorX())
-                .put("door_y", room.getRoomLayout().getDoorY())
+                .put("door_x", room.getRoomLayout().getDoorPosition().getX())
+                .put("door_y", room.getRoomLayout().getDoorPosition().getY())
                 .put("users_count", getUsersCount(room))
                 .put("owner_id", room.getOwner().getId())
                 .put("owner_name", room.getOwner().getUsername());
