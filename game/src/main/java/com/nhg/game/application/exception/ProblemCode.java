@@ -5,7 +5,9 @@ import lombok.Getter;
 @Getter
 public enum ProblemCode {
     ROOM_DOES_NOT_EXIST("room_does_not_exist"),
-    ENTITY_DOES_NOT_EXIST("entity_does_not_exist");
+    ENTITY_DOES_NOT_EXIST("entity_does_not_exist"),
+
+    MAX_ITEMS("max_items");
 
 
     private final String code;
