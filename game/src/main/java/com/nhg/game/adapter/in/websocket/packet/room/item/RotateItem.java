@@ -1,5 +1,6 @@
 package com.nhg.game.adapter.in.websocket.packet.room.item;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 28)
+@IncomingPacket(header = InPacketHeader.RotateItem)
 public class RotateItem implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;

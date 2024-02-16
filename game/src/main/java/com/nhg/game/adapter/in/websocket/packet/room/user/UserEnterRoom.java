@@ -1,10 +1,11 @@
 package com.nhg.game.adapter.in.websocket.packet.room.user;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.FindRoomUseCase;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
-@IncomingPacket(header = 8)
+@IncomingPacket(header = InPacketHeader.UserEnterRoom)
 public class UserEnterRoom implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
@@ -65,7 +66,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
         if (userEntityOpt.isPresent()) {
             OutgoingPacket.send(
                     roomUsers,
-                    OutPacketHeaders.RemoveRoomEntity,
+                    OutPacketHeader.RemoveRoomEntity,
                     entityMapper.entityToJson(userEntityOpt.get())
             );
 
@@ -78,7 +79,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
         {
             OutgoingPacket.send(
                     client,
-                    OutPacketHeaders.SendRoomData,
+                    OutPacketHeader.SendRoomData,
                     roomMapper.roomToJson(room)
             );
 
@@ -86,7 +87,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
 
             OutgoingPacket.send(
                     client,
-                    OutPacketHeaders.LoadRoomEntities,
+                    OutPacketHeader.LoadRoomEntities,
                     entityMapper.entitiesToJson(roomEntities)
             );
 
@@ -98,7 +99,7 @@ public class UserEnterRoom implements ClientPacket<JSONObject> {
 
             OutgoingPacket.send(
                     roomUsers,
-                    OutPacketHeaders.AddRoomEntity,
+                    OutPacketHeader.AddRoomEntity,
                     entityMapper.entityToJson(userEntity)
             );
         }

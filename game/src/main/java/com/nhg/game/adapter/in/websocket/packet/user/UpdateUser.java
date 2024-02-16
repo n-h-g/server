@@ -1,9 +1,10 @@
 package com.nhg.game.adapter.in.websocket.packet.user;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.UserToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.domain.user.User;
 import com.nhg.game.infrastructure.networking.Client;
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 15)
+@IncomingPacket(header = InPacketHeader.UpdateUser)
 public class UpdateUser implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
@@ -26,7 +27,7 @@ public class UpdateUser implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.UpdateUserInformation,
+                OutPacketHeader.UpdateUserInformation,
                 userMapper.userToJson(user)
         );
     }

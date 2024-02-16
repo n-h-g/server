@@ -1,8 +1,9 @@
 package com.nhg.game.adapter.in.websocket.packet.room.user;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.usecase.room.FindRoomUseCase;
 import com.nhg.game.application.usecase.room.user.UserExitRoomUseCase;
@@ -19,7 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
-@IncomingPacket(header = 9)
+@IncomingPacket(header = InPacketHeader.UserExitRoom)
 public class UserExitRoom implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
@@ -49,7 +50,7 @@ public class UserExitRoom implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 room.getEntities().getUsers(),
-                OutPacketHeaders.RemoveRoomEntity,
+                OutPacketHeader.RemoveRoomEntity,
                 entity.getId().toString()
         );
     }

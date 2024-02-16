@@ -1,9 +1,10 @@
 package com.nhg.game.adapter.in.websocket.packet.room.item;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.EntityToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.UserEntityRepository;
 import com.nhg.game.application.usecase.room.item.PlaceItemUseCase;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 25)
+@IncomingPacket(header = InPacketHeader.PlaceItem)
 public class PlaceItem implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
@@ -48,7 +49,7 @@ public class PlaceItem implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 room.getEntities().getUsers(),
-                OutPacketHeaders.AddRoomEntity,
+                OutPacketHeader.AddRoomEntity,
                 entityToJsonMapper.entityToJson(itemEntity)
         );
 

@@ -1,9 +1,10 @@
 package com.nhg.game.adapter.in.websocket.packet.user.item;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.ItemToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.usecase.item.GetInventoryItemsUseCase;
 import com.nhg.game.domain.item.Item;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 14)
+@IncomingPacket(header = InPacketHeader.InventoryItems)
 public class InventoryItems implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
@@ -33,7 +34,7 @@ public class InventoryItems implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.InventoryItems,
+                OutPacketHeader.InventoryItems,
                 itemMapper.itemsToJson(items)
         );
     }

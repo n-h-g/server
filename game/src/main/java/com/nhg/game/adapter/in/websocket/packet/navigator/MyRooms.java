@@ -1,9 +1,10 @@
 package com.nhg.game.adapter.in.websocket.packet.navigator;
 
+import com.nhg.game.adapter.in.InPacketHeader;
 import com.nhg.game.adapter.in.websocket.ClientUserMap;
 import com.nhg.game.adapter.in.websocket.IncomingPacket;
 import com.nhg.game.adapter.in.websocket.mapper.RoomToJsonMapper;
-import com.nhg.game.adapter.out.websocket.OutPacketHeaders;
+import com.nhg.game.adapter.out.websocket.OutPacketHeader;
 import com.nhg.game.adapter.out.websocket.OutgoingPacket;
 import com.nhg.game.application.repository.RoomRepository;
 import com.nhg.game.domain.room.Room;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 @RequiredArgsConstructor
-@IncomingPacket(header = 7)
+@IncomingPacket(header = InPacketHeader.MyRooms)
 public class MyRooms implements ClientPacket<JSONObject> {
 
     private final ClientUserMap clientUserMap;
@@ -33,7 +34,7 @@ public class MyRooms implements ClientPacket<JSONObject> {
 
         OutgoingPacket.send(
                 client,
-                OutPacketHeaders.SendMyRooms,
+                OutPacketHeader.SendMyRooms,
                 roomToJsonMapper.roomsToNavigatorRoomsJson(rooms)
         );
     }
