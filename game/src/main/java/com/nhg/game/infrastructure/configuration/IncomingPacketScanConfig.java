@@ -1,6 +1,6 @@
 package com.nhg.game.infrastructure.configuration;
 
-import com.nhg.game.infrastructure.networking.packet.BeanPacket;
+import com.nhg.game.infrastructure.networking.packet.IncomingPacket;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.FilterType;
 @ComponentScan(
         basePackages = "com.nhg.game.adapter.in.websocket.packet",
         includeFilters = @ComponentScan.Filter(
-                type = FilterType.ANNOTATION, value = BeanPacket.class
+                type = FilterType.ANNOTATION, value = IncomingPacket.class
         )
 )
-public class BeanPacketScanConfig { }
+public class IncomingPacketScanConfig { }
