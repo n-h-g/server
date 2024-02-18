@@ -1,14 +1,21 @@
 package com.nhg.game.application.usecase.room;
 
-import com.nhg.game.domain.item.RoomItem;
-import com.nhg.game.domain.room.Room;
+import com.nhg.game.domain.room.layout.RoomLayout;
+import com.nhg.game.domain.room.layout.Tile;
 import com.nhg.game.domain.shared.position.Position2;
 
 public final class RoomUtils {
 
-    public static void updateRoomTile(Room room, RoomItem item) {
-        Position2 pos = item.getPosition().toPosition2();
+    public static void updateRoomHeightmapAt(RoomLayout layout, Position2 position, float height) {
+        layout.setHeightAtPosition(position, height);
+    }
 
-        //TODO: update tile at position
+    public static void updateRoomTileStateAt(RoomLayout layout, Position2 position, Tile.State state) {
+        layout.getTile(position).setState(state);
+    }
+
+    public static void updateRoomLayoutAt(RoomLayout layout, Position2 position, Tile.State state, float height) {
+        updateRoomTileStateAt(layout, position, state);
+        updateRoomHeightmapAt(layout, position, height);
     }
 }
