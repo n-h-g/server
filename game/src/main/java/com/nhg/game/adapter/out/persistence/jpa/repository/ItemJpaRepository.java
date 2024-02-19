@@ -15,6 +15,8 @@ public interface ItemJpaRepository extends JpaRepository<ItemJpa, Integer> {
     @Query(value = "SELECT * FROM items WHERE owner_id = :ownerId AND room_id IS NULL", nativeQuery = true)
     List<ItemJpa> inventoryItemsByOwnerId(@Param("ownerId") int ownerId);
 
+    List<ItemJpa> getItemsByRoomId(@Param("roomId") int roomId);
+
     @Modifying
     @Query(value = "UPDATE items SET room_id = null WHERE id = :itemId", nativeQuery = true)
     void unsetRoomForItem(@Param("itemId") int itemId);
