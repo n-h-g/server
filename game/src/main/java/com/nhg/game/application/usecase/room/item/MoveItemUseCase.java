@@ -29,9 +29,7 @@ public class MoveItemUseCase {
 
         interactionOnMove(itemEntity, userEntity);
 
-        RoomItemUtils.moveItemAtOrThrow(room, item, position);
-
-        itemRepository.save(item);
+        RoomItemUtils.moveItemAtOrThrow(room, item, position, itemRepository);
     }
 
     private void interactionOnMove(Entity itemEntity, Entity userEntity) {
