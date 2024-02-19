@@ -27,6 +27,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
         ItemJpa itemJpa = itemJpaRepository.findById(item.getId())
                 .orElseGet(() -> ItemJpa.fromDomain(item));
 
+        roomItemCache.addItem(item.getEntity().getRoom().getId(), item);
         itemJpaRepository.save(itemJpa);
     }
 
@@ -51,5 +52,10 @@ public class ItemRepositoryAdapter implements ItemRepository {
     @Override
     public Collection<RoomItem> getRoomItemsAtPosition(int roomId, Position2 position) {
         return roomItemCache.getItemsAt(roomId, position);
+    }
+
+    @Override
+    public RoomItem getHighestItemAtPosition(int roomId, Position2 position) {
+        return roomItemCache.getHighestItemAt(roomId, position);
     }
 }

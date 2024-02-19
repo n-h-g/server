@@ -20,5 +20,7 @@ public interface ItemRepository {
 
     Collection<RoomItem> getRoomItemsAtPosition(int roomId, Position2 position);
 
+    RoomItem getHighestItemAtPosition(int roomId, Position2 position);
+
 
 }
