@@ -4,6 +4,7 @@ import com.nhg.game.domain.item.RoomItem;
 import com.nhg.game.domain.shared.position.Position2;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
@@ -30,6 +31,10 @@ public class RoomItemInMemoryCache {
 
             return Float.compare(height1, height2);
         }
+    }
+
+    public void addItems(int roomId, Collection<RoomItem> items) {
+        items.forEach((item) -> addItem(roomId, item));
     }
 
     public void addItem(int roomId, RoomItem item) {
