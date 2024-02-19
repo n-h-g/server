@@ -7,7 +7,7 @@ import com.nhg.game.domain.user.User;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
+import java.util.Collection;
 
 @UseCase
 @RequiredArgsConstructor
@@ -15,7 +15,7 @@ public class GetInventoryItemsUseCase {
 
     private final ItemRepository itemRepository;
 
-    public List<Item> byOwner(@Nonnull User owner) {
+    public Collection<Item> byOwner(@Nonnull User owner) {
         return itemRepository.getInventoryItemsByOwner(owner);
     }
 }

@@ -14,7 +14,7 @@ import com.nhg.game.infrastructure.networking.packet.ClientPacket;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
 
-import java.util.List;
+import java.util.Collection;
 
 @RequiredArgsConstructor
 @IncomingPacket(header = InPacketHeader.InventoryItems)
@@ -30,7 +30,7 @@ public class InventoryItems implements ClientPacket<JSONObject> {
 
         if (user == null) return;
 
-        List<Item> items = inventoryItemsUseCase.byOwner(user);
+        Collection<Item> items = inventoryItemsUseCase.byOwner(user);
 
         OutgoingPacket.send(
                 client,
