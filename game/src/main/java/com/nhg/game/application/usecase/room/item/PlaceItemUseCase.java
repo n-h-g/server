@@ -33,7 +33,7 @@ public class PlaceItemUseCase {
         RoomItem item = itemToRoomItem(itemOpt.get());
 
         // if the item can't be placed throws an exception.
-        RoomItemUtils.moveItemAtOrThrow(room, item, position);
+        RoomItemUtils.moveItemAtOrThrow(room, item, position, itemRepository);
 
         // create and set the entity for the item
         Entity itemEntity = Entity.fromItem(item, room, eventPublisher);
@@ -41,8 +41,6 @@ public class PlaceItemUseCase {
         room.addEntity(itemEntity);
 
         interactionOnPlace(itemEntity, userEntity);
-
-        itemRepository.save(item);
 
         return itemEntity;
     }
