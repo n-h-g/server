@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -35,6 +36,16 @@ public class ItemRepositoryAdapter implements ItemRepository {
     public Collection<Item> getInventoryItemsByOwner(@NonNull User owner) {
         return itemJpaRepository.inventoryItemsByOwnerId(owner.getId())
                 .stream().map(ItemJpa::toItem).toList();
+    }
+
+    @Override
+    public Collection<RoomItem> getItemsByRoomId(int roomId) {
+        List<RoomItem> items = itemJpaRepository.getItemsByRoomId(roomId)
+                .stream().map(ItemJpa::toRoomItem).toList();
+
+        roomItemCache.addItems(roomId, items);
+
+        return items;
     }
 
     @Override
