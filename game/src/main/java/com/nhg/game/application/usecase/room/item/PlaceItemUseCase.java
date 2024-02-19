@@ -2,12 +2,8 @@ package com.nhg.game.application.usecase.room.item;
 
 import com.nhg.common.domain.UseCase;
 import com.nhg.common.domain.event.DomainEventPublisher;
-import com.nhg.game.application.exception.ProblemCode;
-import com.nhg.game.application.exception.UseCaseException;
 import com.nhg.game.application.repository.ItemRepository;
-import com.nhg.game.application.usecase.room.RoomConstants;
 import com.nhg.game.domain.item.Item;
-import com.nhg.game.domain.item.ItemPrototype;
 import com.nhg.game.domain.item.RoomItem;
 import com.nhg.game.domain.room.Room;
 import com.nhg.game.domain.room.entity.Entity;
@@ -34,40 +30,26 @@ public class PlaceItemUseCase {
 
         if (itemOpt.isEmpty()) return null;
 
-        Item item = itemOpt.get();
-
-        // TODO: heightmap
-        float z = room.getRoomLayout().getTile(position).getPosition().getZ();
-        Position3 itemPosition = new Position3(position, z);
+        RoomItem item = itemToRoomItem(itemOpt.get());
 
         // if the item can't be placed throws an exception.
-        canPlaceItemAtOrThrow(room, item.getPrototype(), itemPosition);
+        RoomItemUtils.moveItemAtOrThrow(room, item, position);
 
-        RoomItem roomItem = itemToRoomItem(item, itemPosition);
-
-        Entity itemEntity = Entity.fromItem(roomItem, room, eventPublisher);
-
-        roomItem.setEntity(itemEntity);
+        // create and set the entity for the item
+        Entity itemEntity = Entity.fromItem(item, room, eventPublisher);
+        item.setEntity(itemEntity);
         room.addEntity(itemEntity);
 
         interactionOnPlace(itemEntity, userEntity);
 
-        itemRepository.save(roomItem);
+        itemRepository.save(item);
 
         return itemEntity;
     }
 
-    private void canPlaceItemAtOrThrow(Room room, ItemPrototype itemPrototype, Position3 position) throws UseCaseException {
-        if (room.getEntities().itemsCount() == RoomConstants.MAX_ITEMS)
-            throw new UseCaseException(ProblemCode.MAX_ITEMS);
-
-        if (position.getZ() > RoomConstants.MAX_HEIGHT)
-            throw new UseCaseException(ProblemCode.MAX_HEIGHT);
-    }
-
-    private RoomItem itemToRoomItem(Item item, Position3 position) {
+    private RoomItem itemToRoomItem(Item item) {
         return new RoomItem(item.getId(), item.getPrototype(), item.getOwner(),
-                            Rotation.NORTH, position, "");
+                            Rotation.NORTH, Position3.Zero, "");
     }
 
     private void interactionOnPlace(Entity itemEntity, Entity userEntity) {
