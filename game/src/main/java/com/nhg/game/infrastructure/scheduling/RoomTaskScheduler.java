@@ -6,6 +6,9 @@ import com.nhg.game.application.event.room.RoomDeletedEvent;
 import com.nhg.game.application.event.room.UserExitRoomEvent;
 import com.nhg.game.application.repository.ActiveRoomRepository;
 import com.nhg.game.domain.room.Room;
+import com.nhg.game.infrastructure.event.InfrastructureEventPublisher;
+import com.nhg.game.infrastructure.event.room.RoomTaskStartedEvent;
+import com.nhg.game.infrastructure.event.room.RoomTaskStoppedEvent;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +47,8 @@ public class RoomTaskScheduler {
 
     private final ActiveRoomRepository activeRoomRepository;
 
+    private final InfrastructureEventPublisher eventPublisher;
+
     private final Map<Integer, ScheduledFuture<?>> activeRoomsTasks = new ConcurrentHashMap<>();
 
 
@@ -79,6 +84,8 @@ public class RoomTaskScheduler {
         ScheduledFuture<?> task = taskScheduler.scheduleAtFixedRate(room, Duration.ofMillis(MillisBetweenRoomUpdates));
 
         activeRoomsTasks.put(room.getId(), task);
+
+        eventPublisher.publish(new RoomTaskStartedEvent(room.getId()));
 
         log.debug("Task started for room "+ room.getId());
     }
@@ -116,5 +123,7 @@ public class RoomTaskScheduler {
         if (task != null && task.cancel(true)) {
             log.debug("Task stopped for room "+ room.getId());
         }
+
+        eventPublisher.publish(new RoomTaskStoppedEvent(room.getId()));
     }
 }
