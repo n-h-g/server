@@ -14,6 +14,8 @@ public interface ItemRepository {
 
     Collection<Item> getInventoryItemsByOwner(User owner);
 
+    Collection<RoomItem> getItemsByRoomId(int roomId);
+
     Optional<Item> findItemById(int itemId);
 
     void unsetRoomForItem(RoomItem item);
